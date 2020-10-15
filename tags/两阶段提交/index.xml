@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>两阶段提交 on Sang&#39;s Blog</title>
+    <link>https://gitsang.github.io/tags/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4/</link>
+    <description>Recent content in 两阶段提交 on Sang&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 17 Sep 2020 15:54:19 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[RocketMQ - 5] 关于 Rocketmq 事务消息和两阶段提交的理解</title>
+      <link>https://gitsang.github.io/2020/09/rocketmq-5-%E5%85%B3%E4%BA%8E-rocketmq-%E4%BA%8B%E5%8A%A1%E6%B6%88%E6%81%AF%E5%92%8C%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E7%9A%84%E7%90%86%E8%A7%A3/</link>
+      <pubDate>Thu, 17 Sep 2020 15:54:19 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/2020/09/rocketmq-5-%E5%85%B3%E4%BA%8E-rocketmq-%E4%BA%8B%E5%8A%A1%E6%B6%88%E6%81%AF%E5%92%8C%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E7%9A%84%E7%90%86%E8%A7%A3/</guid>
+      <description>&lt;p&gt;本文主要是对事务、事务消息、两阶段提交中概念的理解和解读&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

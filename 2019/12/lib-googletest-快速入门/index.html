@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.76.5 with theme Tranquilpeak 0.4.7-BETA">
+<meta name="author" content="Sang.Chen">
+<meta name="keywords" content="">
+<meta name="description" content="">
+
+
+<meta property="og:description" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[LIB] googletest 快速入门">
+<meta name="twitter:title" content="[LIB] googletest 快速入门">
+<meta property="og:url" content="https://gitsang.github.io/2019/12/lib-googletest-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/">
+<meta property="twitter:url" content="https://gitsang.github.io/2019/12/lib-googletest-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/">
+<meta property="og:site_name" content="Sang&#39;s Blog">
+<meta property="og:description" content="">
+<meta name="twitter:description" content="">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2019-12-15T14:53:28">
+  
+  
+    <meta property="article:modified_time" content="2019-12-15T14:53:28">
+  
+  
+  
+    
+      <meta property="article:section" content="Library">
+    
+  
+  
+    
+      <meta property="article:tag" content="googletest">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://gitsang.github.io/images/port.jpg">
+  <meta property="twitter:image" content="https://gitsang.github.io/images/port.jpg">
+
+
+  <meta property="og:image" content="https://gitsang.github.io/images/port.jpg">
+  <meta property="twitter:image" content="https://gitsang.github.io/images/port.jpg">
+
+
+
+
+  <meta property="og:image" content="https://gitsang.github.io/images/avatar.jpg">
+  <meta property="twitter:image" content="https://gitsang.github.io/images/avatar.jpg">
+
+
+    <title>[LIB] googletest 快速入门</title>
+
+    <link rel="icon" href="https://gitsang.github.io/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://gitsang.github.io/2019/12/lib-googletest-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://gitsang.github.io/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://gitsang.github.io/">Sang&#39;s Blog</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://gitsang.github.io/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://gitsang.github.io/images/avatar.jpg" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://gitsang.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://gitsang.github.io/images/avatar.jpg" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Sang.Chen</h4>
+        
+          <h5 class="sidebar-profile-bio">我们所经历的每个日常，都是连续发生的奇迹</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://gitsang.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://gitsang.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://gitsang.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://gitsang.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://gitsang.github.io/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/gitsang" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/12141217/oversang" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://gitsang.github.io/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+  <div class="post-header-cover
+              text-center
+              post-header-cover--partial"
+       style="background-image:url('/images/port.jpg')"
+       data-behavior="4">
+    
+      <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      [LIB] googletest 快速入门
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2019-12-15T14:53:28&#43;08:00">
+        
+  December 15, 2019
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://gitsang.github.io/categories/library">Library</a>
+    
+  
+
+  </div>
+
+</div>
+    
+  </div>
+
+
+      <div id="main" data-behavior="4"
+        class="hasCover
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <h1 id="using-googletest">Using googletest</h1>
+<h2 id="1-install">1. Install</h2>
+<h3 id="11-get-package">1.1 Get package</h3>
+<p>Using git clone.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ git clone https://github.com/google/googletest.git
+</code></pre></div><p>Using wget to achieve tar package, you can find newest tar address at <code>README.md</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ wget https://github.com/google/googletest/archive/release-1.10.0.tar.gz
+$ tar -zxvf release-1.10.0.tar.gz
+</code></pre></div><h3 id="12-make--install">1.2 Make &amp; Install</h3>
+<p>Both <code>cmake</code> or <code>cmake3</code> is ok.</p>
+<p>Read <code>googletest/googletest/README.md</code> for more infomation.</p>
+<pre><code>$ cd googletest
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+$ sudo make install
+</code></pre><h3 id="13-attention-when-cmake-processing">1.3 Attention when cmake processing</h3>
+<pre><code>-- The C compiler identification is GNU 4.8.5
+-- The CXX compiler identification is GNU 4.8.5
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found PythonInterp: /usr/bin/python (found version &quot;2.7.5&quot;)
+-- Looking for pthread.h
+-- Looking for pthread.h - found
+-- Looking for pthread_create
+-- Looking for pthread_create - not found
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - found
+-- Found Threads: TRUE
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /root/project/googletest-release-1.10.0/build
+</code></pre><p>In the above log, pthread_create is finally found in pthread, so it is not found on the way, but it should be fine.</p>
+<h2 id="2-simple-test">2. Simple Test</h2>
+<h3 id="21-testing-code">2.1 Testing code</h3>
+<ul>
+<li><code>add.cc</code></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">add</span>(<span style="color:#66d9ef">int</span> a, <span style="color:#66d9ef">int</span> b) {
+    <span style="color:#66d9ef">return</span> a <span style="color:#f92672">+</span> b;
+}
+</code></pre></div><ul>
+<li><code>testAdd.cpp</code></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;gtest/gtest.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">extern</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">add</span>(<span style="color:#66d9ef">int</span> a, <span style="color:#66d9ef">int</span> b);
+
+TEST(testCase, test0) {
+    EXPECT_EQ(add(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>), <span style="color:#ae81ff">5</span>);
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv) {
+    testing<span style="color:#f92672">::</span>InitGoogleTest(<span style="color:#f92672">&amp;</span>argc, argv);
+    <span style="color:#66d9ef">return</span> RUN_ALL_TESTS();
+}
+</code></pre></div><h3 id="22-compile-and-run">2.2 Compile and Run</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ g++ add.cpp testAdd.cpp -lgtest -lpthread
+$ ./a.out
+<span style="color:#f92672">[==========]</span> Running <span style="color:#ae81ff">1</span> test from <span style="color:#ae81ff">1</span> test <span style="color:#66d9ef">case</span>.
+<span style="color:#f92672">[</span>----------<span style="color:#f92672">]</span> Global test environment set-up.
+<span style="color:#f92672">[</span>----------<span style="color:#f92672">]</span> <span style="color:#ae81ff">1</span> test from testCase
+<span style="color:#f92672">[</span> RUN      <span style="color:#f92672">]</span> testCase.test0
+<span style="color:#f92672">[</span>       OK <span style="color:#f92672">]</span> testCase.test0 <span style="color:#f92672">(</span><span style="color:#ae81ff">0</span> ms<span style="color:#f92672">)</span>
+<span style="color:#f92672">[</span>----------<span style="color:#f92672">]</span> <span style="color:#ae81ff">1</span> test from testCase <span style="color:#f92672">(</span><span style="color:#ae81ff">0</span> ms total<span style="color:#f92672">)</span>
+
+<span style="color:#f92672">[</span>----------<span style="color:#f92672">]</span> Global test environment tear-down
+<span style="color:#f92672">[==========]</span> <span style="color:#ae81ff">1</span> test from <span style="color:#ae81ff">1</span> test <span style="color:#66d9ef">case</span> ran. <span style="color:#f92672">(</span><span style="color:#ae81ff">0</span> ms total<span style="color:#f92672">)</span>
+<span style="color:#f92672">[</span>  PASSED  <span style="color:#f92672">]</span> <span style="color:#ae81ff">1</span> test.
+</code></pre></div><p><code>-lgtest</code> is used for linking <code>libgtest.a</code></p>
+<p>If using <code>-lgtest_main</code>, you can coding without main() function</p>
+<hr>
+<h2 id="q--a">Q &amp; A</h2>
+<h3 id="q1-undefined-reference-when-linking-with-googletest">Q1: Undefined reference when linking with googletest</h3>
+<h4 id="a">A:</h4>
+<p>If you downloaded the gtest source directly and used the make install from the downloaded gtest repository it may have installed header files under <code>/usr/local/include/gtest</code>.</p>
+<p>If you later use apt-get (yum install) to install the gtest, it installs the header files under <code>/usr/include/gtest</code>.</p>
+<p>If the version installed from the debian package is newer, your Makefile can pick up the older header files from <code>/usr/include</code> and give you link errors even though you are correctly linking the new <code>libgtest.a</code> archive.</p>
+<p>The solution is to look for <code>/usr/local/include/gtest</code> and <code>/usr/include/gtest</code> to see if they both exist. If they do then delete the older directory.</p>
+<p>If <code>/usr/include/gtest</code> is the older directory, you may want to remove it by uninstalling the <code>libgtest-dev</code> package.</p>
+<h3 id="q2-could-not-find-cmake_root">Q2: Could not find CMAKE_ROOT</h3>
+<pre><code>CMake Error: Could not find CMAKE_ROOT !!!
+CMake has most likely not been installed correctly.
+Modules directory not found in
+/usr/local/share/cmake-3.11
+cmake version 3.11.0-rc4
+
+CMake suite maintained and supported by Kitware (kitware.com/cmake).
+</code></pre><h4 id="a-1">A:</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ wget https://cmake.org/files/v3.12/cmake-3.12.0-rc1.tar.gz
+$ tar -zxvf cmake-3.12.0-rc1.tar.gz
+$ cd cmake-3.12.0-rc1
+$ ./bootstrap
+$ gmake
+$ gmake install
+</code></pre></div><h3 id="q3-compile-error">Q3: Compile error</h3>
+<h4 id="a-2">A:</h4>
+<p>add <code>-std=c++11</code> when compile</p>
+<pre><code>$ g++ *.cpp -lgtest -lpthread -std=c++11
+</code></pre><h2 id="reference">Reference</h2>
+<p><a href="https://stackoverflow.com/questions/39207940/undefined-reference-when-linking-with-googletest">https://stackoverflow.com/questions/39207940/undefined-reference-when-linking-with-googletest</a></p>
+<p><a href="https://qiita.com/shohirose/items/30e39949d8bf990b0462">https://qiita.com/shohirose/items/30e39949d8bf990b0462</a></p>
+<p><a href="http://senlinzhan.github.io/2017/10/08/gtest/">http://senlinzhan.github.io/2017/10/08/gtest/</a></p>
+<p><a href="http://www.manongjc.com/article/68895.html">http://www.manongjc.com/article/68895.html</a></p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://gitsang.github.io/tags/googletest/">googletest</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://gitsang.github.io/2019/10/lib-curl-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/" data-tooltip="[LIB] curl 快速入门">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://gitsang.github.io/2020/01/linux-yum-%E5%91%BD%E4%BB%A4%E7%AE%80%E4%BB%8B/" data-tooltip="[Linux] yum 命令简介">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://gitsang.github.io/2019/12/lib-googletest-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 Sang.Chen. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://gitsang.github.io/2019/10/lib-curl-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/" data-tooltip="[LIB] curl 快速入门">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://gitsang.github.io/2020/01/linux-yum-%E5%91%BD%E4%BB%A4%E7%AE%80%E4%BB%8B/" data-tooltip="[Linux] yum 命令简介">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://gitsang.github.io/2019/12/lib-googletest-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fgitsang.github.io%2F2019%2F12%2Flib-googletest-%25E5%25BF%25AB%25E9%2580%259F%25E5%2585%25A5%25E9%2597%25A8%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://gitsang.github.io/images/avatar.jpg" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Sang.Chen</h4>
+    
+      <div id="about-card-bio">我们所经历的每个日常，都是连续发生的奇迹</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        C/C++/Go
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Xiamen
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://gitsang.github.io/images/gaussian.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://gitsang.github.io/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/gitsang.github.io\/2019\/12\/lib-googletest-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8\/';
+          
+            this.page.identifier = '\/2019\/12\/lib-googletest-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'gitsang';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

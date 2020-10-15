@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.76.5 with theme Tranquilpeak 0.4.7-BETA">
+<meta name="author" content="Sang.Chen">
+<meta name="keywords" content="Minecraft">
+<meta name="description" content="">
+
+
+<meta property="og:description" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Minecraft] 搭建ELK日志系统">
+<meta name="twitter:title" content="[Minecraft] 搭建ELK日志系统">
+<meta property="og:url" content="https://gitsang.github.io/2020/05/minecraft-%E6%90%AD%E5%BB%BAelk%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F/">
+<meta property="twitter:url" content="https://gitsang.github.io/2020/05/minecraft-%E6%90%AD%E5%BB%BAelk%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F/">
+<meta property="og:site_name" content="Sang&#39;s Blog">
+<meta property="og:description" content="">
+<meta name="twitter:description" content="">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2020-05-16T22:29:30">
+  
+  
+    <meta property="article:modified_time" content="2020-05-16T22:29:30">
+  
+  
+  
+    
+      <meta property="article:section" content="Minecraft">
+    
+  
+  
+    
+      <meta property="article:tag" content="运维">
+    
+      <meta property="article:tag" content="Minecraft">
+    
+      <meta property="article:tag" content="elk">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://gitsang.github.io/images/gaussian.jpg">
+  <meta property="twitter:image" content="https://gitsang.github.io/images/gaussian.jpg">
+
+
+  <meta property="og:image" content="https://gitsang.github.io/images/gaussian.jpg">
+  <meta property="twitter:image" content="https://gitsang.github.io/images/gaussian.jpg">
+
+
+
+
+  <meta property="og:image" content="https://gitsang.github.io/images/avatar.jpg">
+  <meta property="twitter:image" content="https://gitsang.github.io/images/avatar.jpg">
+
+
+    <title>[Minecraft] 搭建ELK日志系统</title>
+
+    <link rel="icon" href="https://gitsang.github.io/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://gitsang.github.io/2020/05/minecraft-%E6%90%AD%E5%BB%BAelk%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://gitsang.github.io/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://gitsang.github.io/">Sang&#39;s Blog</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://gitsang.github.io/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://gitsang.github.io/images/avatar.jpg" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://gitsang.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://gitsang.github.io/images/avatar.jpg" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Sang.Chen</h4>
+        
+          <h5 class="sidebar-profile-bio">我们所经历的每个日常，都是连续发生的奇迹</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://gitsang.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://gitsang.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://gitsang.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://gitsang.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://gitsang.github.io/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/gitsang" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/12141217/oversang" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://gitsang.github.io/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+  <div class="post-header-cover
+              text-center
+              post-header-cover--partial"
+       style="background-image:url('/images/gaussian.jpg')"
+       data-behavior="4">
+    
+      <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      [Minecraft] 搭建ELK日志系统
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2020-05-16T22:29:30&#43;08:00">
+        
+  May 16, 2020
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://gitsang.github.io/categories/minecraft">Minecraft</a>
+    
+  
+
+  </div>
+
+</div>
+    
+  </div>
+
+
+      <div id="main" data-behavior="4"
+        class="hasCover
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <h1 id="搭建elk日志系统">搭建ELK日志系统</h1>
+<h2 id="1-elk-简介">1. elk 简介</h2>
+<p><a href="https://www.elastic.co/cn/what-is/elk-stack">官网</a>介绍:</p>
+<p>“ELK”是三个开源项目的首字母缩写，这三个项目分别是：Elasticsearch、Logstash 和 Kibana。</p>
+<p>Elasticsearch 是一个搜索和分析引擎。Logstash 是服务器端数据处理管道，能够同时从多个来源采集数据，转换数据，然后将数据发送到诸如 Elasticsearch 等“存储库”中。Kibana 则可以让用户在 Elasticsearch 中使用图形和图表对数据进行可视化。</p>
+<p>Elastic Stack 是 ELK Stack 的更新换代产品。</p>
+<h2 id="2-搭建过程简述">2. 搭建过程简述</h2>
+<p>本次搭建我们采用 docker 安装 sebp/elk 的方式，一键部署 elk 系统，这比每个系统单独部署会省去许多不必要的麻烦。</p>
+<p>这样的搭建方式我们仅仅需要安装运行 elk 和 filebeats 就可以完成了</p>
+<p>搭建完成后通过 ip:5601 就可以访问到日志展示的页面了</p>
+<h2 id="3-开始搭建">3. 开始搭建</h2>
+<h3 id="31-环境搭建">3.1 环境搭建</h3>
+<p>首先需要为你的系统安装 docker 环境，对于没接触过 docker 的同学，你可以将其简单理解为虚拟机（当然 docker 和虚拟机有本质的区别，有兴趣的可以自行搜索），docker 的安装很简单，对于 Linux / MacOS 几乎都只需要一条命令就可以安装完成了，而 Windows 则比较特殊，exe 安装包使用下一步安装法也很容易安装完成，但实际上 windows 平台某些版本是无法安装成功的，比如家庭版 windows，不过对于服务器，应该很少有人用 windows 搭建的吧。</p>
+<p>当然官方也提供了十分简介友好的快速入门教程 <a href="https://www.docker.com/get-started">https://www.docker.com/get-started</a> 包括了安装、使用和一些进阶操作，即使是英语苦手，也能轻松地入门，十分推荐大家去看一眼。</p>
+<p>这里就仅以 CentOS 7.8 为例进行安装</p>
+<pre><code># 更新包管理工具
+yum update
+# 安装 docker
+yum install docker
+# 启动 docker
+service docker start
+</code></pre><p>到这步为止，docker 就算安装完成了</p>
+<h3 id="32-拉取-elk-镜像并运行">3.2 拉取 elk 镜像并运行</h3>
+<p>docker 拥有非常完善地 hub，你可以在 <a href="https://hub.docker.com/">https://hub.docker.com/</a> 找到各类的镜像。</p>
+<p>我们在其中搜索 <code>sebp/elk</code> 就可以找到我们想要的镜像了，同样，如果你想要对每个服务单独安装，你也可以搜索 <code>elasticsearch</code> <code>kibana</code> <code>logstash</code> 查看。</p>
+<p><img src="https://raw.githubusercontent.com/gitsang/gallery/master/page/202005281456-elk_dockerhub.png" alt="202005281456-elk_dockerhub.png"></p>
+<p>在 Overview 标签中，我们复制 Docker Pull Command <code>docker pull sebp/elk</code> 到系统中运行，即可完成镜像的拉取（国内的服务器可能会有些慢），如果你想要安装其他版本的 elk，也可以点击 Tags 标签获取其他版本的拉取方式。</p>
+<p>等待拉取结束后，运行</p>
+<pre><code>docker run --name elk -it -d \
+        -p 5601:5601 -p 5044:5044 -p 9200:9200 -p 9300:9300 \
+        sebp/elk
+</code></pre><p>其中：</p>
+<ul>
+<li>&ndash;name 用于指定 docker 名称</li>
+<li>-d 表示在后台运行 (detach)</li>
+<li>-it 用于保持 STDIN 开启和开启终端登录 (是为了使能够进入容器进行操作且退出时容器不会自动关闭)</li>
+<li>-p 表示端口的映射关系，如 <code>-p 5601:5601</code> 就表示将 docker 的 5601 端口映射到主机的 5601 端口</li>
+</ul>
+<p>第一次运行可以不加 <code>-d</code> 参数，这样做能够方便你看到出现了哪些错误。</p>
+<p>等待一段时间后通过浏览器输入 <code>ip:5601</code> 如果能够登录到 kibana 界面，那么 elk 就算是搭建成功了（对于性能不太好的机器 kibana 的加载可能会比较慢，耐心等待即可）</p>
+<p><strong>如果你出现 vm.max_map_count 不足的错误，可以参考<a href="https://www.jianshu.com/p/04f4d7b4a1d3">这篇文章</a>增加配置</strong></p>
+<h3 id="33-安装-filebeats">3.3 安装 filebeats</h3>
+<p>filebeats 作为 Elastic Stack 的新成员，主要负责日志的收集工作。</p>
+<p>你可以在 <a href="https://www.elastic.co/cn/beats/filebeat">https://www.elastic.co/cn/beats/filebeat</a> 找到 filebeats 对应各系统的安装包进行安装。</p>
+<p>同样以 CentOS 为例，下载并解压 filebeat</p>
+<pre><code>wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.7.0-linux-x86_64.tar.gz
+tar zxvf https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.7.0-linux-x86_64.tar.gz
+</code></pre><p>然后修改以下 filebeat 的配置，让 filebeat 知道我们需要采集的是哪个日志文件，用 vim (或其他文本编辑器) 打开配置文件</p>
+<pre><code>cd filebeat-7.7.0-linux-x86_64
+vim filebeat.yml
+</code></pre><p>修改 <code>filebeat.inputs:</code> <code>output.**:</code> 下的几个参数</p>
+<pre><code>filebeat.inputs:
+- type: log
+    enable: true # 这个一定要设置为 true 否则不会应用下面的参数
+    paths:
+        - /path/to/your/logfile # 这里填写你的 log 文件路径
+
+# elasticsearch 和 logstash 只能二者选其一，不使用的需要将其注释掉
+# 这里先以直接发送到 elasticsearch 为例
+# 因为如果使用 logstash 还需要进行额外的设置
+
+output.elasticsearch:
+    hosts: [&quot;localhost:9200&quot;]
+
+#output.logstash:
+    #hosts: [&quot;localhost:5044&quot;]
+</code></pre><p>设置完成后保存退出，然后运行</p>
+<pre><code>./filebeat -e -c filebeat.yml -d &quot;publish&quot;
+</code></pre><p>然后到 <code>ip:5601/app/infra#/logs</code> 下如果能够查看到你的日志文件就说明成功了</p>
+<p><img src="https://raw.githubusercontent.com/gitsang/gallery/master/page/202005281456-kibana_logpage.png" alt="202005281456-kibana_logpage.png"></p>
+<p>就可以终止 filebeats 然后在后台运行</p>
+<pre><code>nohup ./filebeat -e -c filebeat.yml -d &quot;publish&quot; &gt; filebeat.log 2&gt;&amp;1 &amp;
+</code></pre><h2 id="4-对于性能不足的服务器进行的优化">4. 对于性能不足的服务器进行的优化</h2>
+<p>如果使用上述方式，会消耗大约 2G 的内存，对于一些小型服务器，可能不足以支撑（比如我的 1C2G）</p>
+<p>这时候就需要对 elk docker 进行一些限制了</p>
+<h3 id="41-分配-swap">4.1 分配 swap</h3>
+<pre><code># 设置 swap 文件
+dd if=/dev/zero of=/tmp/swap bs=1MB count=6144
+# 创建(格式化) swap 
+mkswap /tmp/swap
+# 启动 swap
+swapon /tmp/swap
+# 查看 swap 使用情况
+# free -h
+# 设置开机自启
+echo &quot;/tmp/swap swap swap defaults 0 0&quot; &gt;&gt; /etc/fstab
+</code></pre><h3 id="42-docker-run-参数调优">4.2 docker run 参数调优</h3>
+<pre><code>docker run --name elk -it -d \
+        -p 5601:5601 -p 5044:5044 -p 9200:9200 -p 9300:9300 \
+        -e ELASTICSEARCH_START=1 \
+        -e KIBANA_START=1 \
+        -e LOGSTASH_START=0 \
+        -e ES_HEAP_SIZE=&quot;256m&quot; \
+        -m 512M --memory-swap=2048M \
+        sebp/elk
+</code></pre><p>由于 filebeats 将数据直接发送到了 elasticsearch 所以 logstash 就不需要运行了，可以通过这只环境变量 <code>LOGSTASH_START=0</code> 禁止其运行， <code>ES_HEAP_SIZE=&quot;256m&quot;</code> 限制 elasticsearch 堆栈使用大小，<code>-m 512M --memory-swap=2048M</code> 从 docker 层面限制 elk 容器能够使用的最大物理内存和 swap</p>
+<p>对于其他的参数及环境变量的配置可以通过 <a href="https://elk-docker.readthedocs.io/">https://elk-docker.readthedocs.io/</a> 了解，文档中对各个参数的用途都有详细的说明</p>
+<h3 id="43-其他调优方式">4.3 其他调优方式</h3>
+<p>如果你有多台服务器，你也可以将 elk 部署到其他的性能较好的服务器上，然后通过 filebeats 指定对应的 ip 向其发送信息。这样也能最大程度地减少服务器负担。特别是对于多个服务器都需要采集数据的情况下，在每一台机器都部署一个 elk 完全没有必要。</p>
+<h2 id="5-单独拉取每个系统镜像">5. 单独拉取每个系统镜像</h2>
+<p>仅作参考，如果你需要单独部署每个服务（或者你就是不想使用 sebp/elk），你可以参考以下方法</p>
+<p>其实就是单独拉取镜像然后部署，修改配置</p>
+<pre><code>docker pull elasticsearch:7.7.0
+
+docker run -d --name elasticsearch \
+        --restart=always \
+        -p 9200:9200 -p 9300:9300 \
+        -e ES_JAVA_OPTS=&quot;-Xms128m -Xmx128m&quot; \
+        -e &quot;discovery.type=single-node&quot; \
+        -m 128M --memory-swap=256M \
+        docker.io/elasticsearch:7.7.0
+</code></pre><pre><code>docker pull kibana:7.7.0
+
+docker run -d --name kibana \
+        --restart=always \
+        -p 5601:5601 \
+        -m 256M --memory-swap=512M \
+        docker.io/kibana:7.7.0
+
+docker exec -it kibana bash
+
+vi config/kibana.yml
+
+# 修改 elasticsearch.hosts
+
+exit
+
+docker restart kibana
+</code></pre><hr>
+<h2 id="参考">参考</h2>
+<p>swap:
+<a href="https://www.jianshu.com/p/36a81d5ec54e">https://www.jianshu.com/p/36a81d5ec54e</a>
+<a href="https://blog.csdn.net/yabingshi_tech/article/details/77323617">https://blog.csdn.net/yabingshi_tech/article/details/77323617</a></p>
+<p>docker 限制内存
+<a href="https://www.hangge.com/blog/cache/detail_2413.html">https://www.hangge.com/blog/cache/detail_2413.html</a></p>
+<p>elk curl
+<a href="http://www.ruanyifeng.com/blog/2017/08/elasticsearch.html">http://www.ruanyifeng.com/blog/2017/08/elasticsearch.html</a></p>
+<p>mcbbs
+<a href="https://www.mcbbs.net/thread-863367-1-1.html">https://www.mcbbs.net/thread-863367-1-1.html</a></p>
+<p>vm.max_map_count 不足
+<a href="https://www.jianshu.com/p/04f4d7b4a1d3">https://www.jianshu.com/p/04f4d7b4a1d3</a></p>
+<p>elk-docker 安装
+<a href="https://wsgzao.github.io/post/elk/">https://wsgzao.github.io/post/elk/</a></p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://gitsang.github.io/tags/%E8%BF%90%E7%BB%B4/">运维</a>
+
+  <a class="tag tag--primary tag--small" href="https://gitsang.github.io/tags/minecraft/">Minecraft</a>
+
+  <a class="tag tag--primary tag--small" href="https://gitsang.github.io/tags/elk/">elk</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://gitsang.github.io/2020/05/java-springmvc-%E5%8F%8A%E5%85%B6%E6%B3%A8%E8%A7%A3/" data-tooltip="[Java] SpringMVC 及其注解">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://gitsang.github.io/2020/05/rocketmq-1-%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%AE%80%E4%BB%8B/" data-tooltip="[RocketMQ - 1] 消息队列简介">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://gitsang.github.io/2020/05/minecraft-%E6%90%AD%E5%BB%BAelk%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 Sang.Chen. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://gitsang.github.io/2020/05/java-springmvc-%E5%8F%8A%E5%85%B6%E6%B3%A8%E8%A7%A3/" data-tooltip="[Java] SpringMVC 及其注解">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://gitsang.github.io/2020/05/rocketmq-1-%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%AE%80%E4%BB%8B/" data-tooltip="[RocketMQ - 1] 消息队列简介">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://gitsang.github.io/2020/05/minecraft-%E6%90%AD%E5%BB%BAelk%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fgitsang.github.io%2F2020%2F05%2Fminecraft-%25E6%2590%25AD%25E5%25BB%25BAelk%25E6%2597%25A5%25E5%25BF%2597%25E7%25B3%25BB%25E7%25BB%259F%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://gitsang.github.io/images/avatar.jpg" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Sang.Chen</h4>
+    
+      <div id="about-card-bio">我们所经历的每个日常，都是连续发生的奇迹</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        C/C++/Go
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Xiamen
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://gitsang.github.io/images/gaussian.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://gitsang.github.io/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/gitsang.github.io\/2020\/05\/minecraft-%E6%90%AD%E5%BB%BAelk%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F\/';
+          
+            this.page.identifier = '\/2020\/05\/minecraft-%E6%90%AD%E5%BB%BAelk%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'gitsang';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

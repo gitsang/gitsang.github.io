@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>RocketMQ on Sang&#39;s Blog</title>
+    <link>https://gitsang.github.io/categories/rocketmq/</link>
+    <description>Recent content in RocketMQ on Sang&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 17 Sep 2020 15:54:19 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/categories/rocketmq/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[RocketMQ - 5] 关于 Rocketmq 事务消息和两阶段提交的理解</title>
+      <link>https://gitsang.github.io/2020/09/rocketmq-5-%E5%85%B3%E4%BA%8E-rocketmq-%E4%BA%8B%E5%8A%A1%E6%B6%88%E6%81%AF%E5%92%8C%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E7%9A%84%E7%90%86%E8%A7%A3/</link>
+      <pubDate>Thu, 17 Sep 2020 15:54:19 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/2020/09/rocketmq-5-%E5%85%B3%E4%BA%8E-rocketmq-%E4%BA%8B%E5%8A%A1%E6%B6%88%E6%81%AF%E5%92%8C%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E7%9A%84%E7%90%86%E8%A7%A3/</guid>
+      <description>&lt;p&gt;本文主要是对事务、事务消息、两阶段提交中概念的理解和解读&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>[RocketMQ - 3] RocketMQ 部署及编程示例</title>
+      <link>https://gitsang.github.io/2020/05/rocketmq-3-rocketmq-%E9%83%A8%E7%BD%B2%E5%8F%8A%E7%BC%96%E7%A8%8B%E7%A4%BA%E4%BE%8B/</link>
+      <pubDate>Wed, 27 May 2020 10:58:12 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/2020/05/rocketmq-3-rocketmq-%E9%83%A8%E7%BD%B2%E5%8F%8A%E7%BC%96%E7%A8%8B%E7%A4%BA%E4%BE%8B/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>[RocketMQ - 2] RocketMQ 核心概念及术语</title>
+      <link>https://gitsang.github.io/2020/05/rocketmq-2-rocketmq-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E5%8F%8A%E6%9C%AF%E8%AF%AD/</link>
+      <pubDate>Tue, 26 May 2020 09:33:46 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/2020/05/rocketmq-2-rocketmq-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E5%8F%8A%E6%9C%AF%E8%AF%AD/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>[RocketMQ - 1] 消息队列简介</title>
+      <link>https://gitsang.github.io/2020/05/rocketmq-1-%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%AE%80%E4%BB%8B/</link>
+      <pubDate>Fri, 22 May 2020 15:44:34 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/2020/05/rocketmq-1-%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%AE%80%E4%BB%8B/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>[RocketMQ - 4] RocketMQ 快速入门</title>
+      <link>https://gitsang.github.io/2020/05/rocketmq-4-rocketmq-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Thu, 14 May 2020 14:53:28 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/2020/05/rocketmq-4-rocketmq-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Sang&#39;s Blog</title>
+    <link>https://gitsang.github.io/tags/</link>
+    <description>Recent content in Tags on Sang&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 17 Sep 2020 15:54:19 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>RocketMQ</title>
+      <link>https://gitsang.github.io/tags/rocketmq/</link>
+      <pubDate>Thu, 17 Sep 2020 15:54:19 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/rocketmq/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Transaction</title>
+      <link>https://gitsang.github.io/tags/transaction/</link>
+      <pubDate>Thu, 17 Sep 2020 15:54:19 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/transaction/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>两阶段提交</title>
+      <link>https://gitsang.github.io/tags/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4/</link>
+      <pubDate>Thu, 17 Sep 2020 15:54:19 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>事务消息</title>
+      <link>https://gitsang.github.io/tags/%E4%BA%8B%E5%8A%A1%E6%B6%88%E6%81%AF/</link>
+      <pubDate>Thu, 17 Sep 2020 15:54:19 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/%E4%BA%8B%E5%8A%A1%E6%B6%88%E6%81%AF/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>closure</title>
+      <link>https://gitsang.github.io/tags/closure/</link>
+      <pubDate>Thu, 23 Jul 2020 15:00:35 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/closure/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tcp</title>
+      <link>https://gitsang.github.io/tags/tcp/</link>
+      <pubDate>Wed, 15 Jul 2020 17:24:53 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/tcp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43;</title>
+      <link>https://gitsang.github.io/tags/c&#43;&#43;/</link>
+      <pubDate>Thu, 28 May 2020 15:22:06 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/c&#43;&#43;/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>git</title>
+      <link>https://gitsang.github.io/tags/git/</link>
+      <pubDate>Wed, 27 May 2020 17:33:00 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/git/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>elk</title>
+      <link>https://gitsang.github.io/tags/elk/</link>
+      <pubDate>Sat, 16 May 2020 22:29:30 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/elk/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Minecraft</title>
+      <link>https://gitsang.github.io/tags/minecraft/</link>
+      <pubDate>Sat, 16 May 2020 22:29:30 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/minecraft/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>运维</title>
+      <link>https://gitsang.github.io/tags/%E8%BF%90%E7%BB%B4/</link>
+      <pubDate>Sat, 16 May 2020 22:29:30 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/%E8%BF%90%E7%BB%B4/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Java</title>
+      <link>https://gitsang.github.io/tags/java/</link>
+      <pubDate>Thu, 14 May 2020 14:53:28 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/java/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>https://gitsang.github.io/tags/linux/</link>
+      <pubDate>Thu, 14 May 2020 14:53:28 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>postgresql</title>
+      <link>https://gitsang.github.io/tags/postgresql/</link>
+      <pubDate>Thu, 14 May 2020 14:53:28 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/postgresql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>redis</title>
+      <link>https://gitsang.github.io/tags/redis/</link>
+      <pubDate>Thu, 14 May 2020 14:53:28 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/redis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Spring</title>
+      <link>https://gitsang.github.io/tags/spring/</link>
+      <pubDate>Thu, 14 May 2020 14:53:28 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/spring/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>thrift</title>
+      <link>https://gitsang.github.io/tags/thrift/</link>
+      <pubDate>Thu, 14 May 2020 14:53:28 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/thrift/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vim</title>
+      <link>https://gitsang.github.io/tags/vim/</link>
+      <pubDate>Thu, 07 May 2020 20:45:49 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/vim/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>网络</title>
+      <link>https://gitsang.github.io/tags/%E7%BD%91%E7%BB%9C/</link>
+      <pubDate>Sat, 14 Mar 2020 14:53:28 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/%E7%BD%91%E7%BB%9C/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>yum</title>
+      <link>https://gitsang.github.io/tags/yum/</link>
+      <pubDate>Tue, 14 Jan 2020 14:53:28 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/yum/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>googletest</title>
+      <link>https://gitsang.github.io/tags/googletest/</link>
+      <pubDate>Sun, 15 Dec 2019 14:53:28 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/googletest/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>curl</title>
+      <link>https://gitsang.github.io/tags/curl/</link>
+      <pubDate>Tue, 15 Oct 2019 14:53:28 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/curl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gdb</title>
+      <link>https://gitsang.github.io/tags/gdb/</link>
+      <pubDate>Wed, 09 Oct 2019 14:53:28 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/gdb/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>量子力学</title>
+      <link>https://gitsang.github.io/tags/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6/</link>
+      <pubDate>Sat, 05 Jan 2019 23:43:00 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>微信小程序</title>
+      <link>https://gitsang.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/</link>
+      <pubDate>Sun, 11 Feb 2018 20:17:57 +0800</pubDate>
+      
+      <guid>https://gitsang.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
