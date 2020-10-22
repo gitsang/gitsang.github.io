@@ -1,13 +1,12 @@
 ---
-title: "RocketMq 快速入门"
+title: "[RocketMQ - 4] RocketMQ 快速入门"
 date: 2020-05-14T14:53:28+08:00
 categories:
-- programing
-- RocketMq
+- 消息中间件
+- RocketMQ
 tags:
-- RocketMq
-keywords:
-- RocketMq
+- RocketMQ
+- Java
 thumbnailImage: images/mountain.jpg
 thumbnailImagePosition: right
 metaAlignment: center

@@ -1,13 +1,10 @@
 ---
-title: "gdb 快速入门"
-date: 2020-05-14T14:53:28+08:00
+title: "[C++] gdb 快速入门"
+date: 2019-10-09T14:53:28+08:00
 categories:
-- programing
-- cpp
+- C++
 tags:
-- cpp
-- gdb
-keywords:
+- C++
 - gdb
 thumbnailImage: images/sea.jpg
 thumbnailImagePosition: right

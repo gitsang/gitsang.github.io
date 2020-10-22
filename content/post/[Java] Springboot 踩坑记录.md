@@ -1,13 +1,10 @@
 ---
-title: "Springboot踩坑记录"
-date: 2020-05-14T14:53:28+08:00
+title: "[Java] Springboot 踩坑记录"
+date: 2020-04-29T14:53:28+08:00
 categories:
-- programing
-- java
+- Java
 tags:
-- java
-keywords:
-- Springboot踩坑记录
+- Java
 thumbnailImage: images/errigal.jpg
 thumbnailImagePosition: right
 metaAlignment: center

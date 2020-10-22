@@ -1,14 +1,9 @@
 ---
-title: "googletest 快速入门"
-date: 2020-05-14T14:53:28+08:00
+title: "[LIB] googletest 快速入门"
+date: 2019-12-15T14:53:28+08:00
 categories:
-- programing
-- library
-- googletest
+- Library
 tags:
-- googletest
-- cpp
-keywords:
 - googletest
 thumbnailImage: images/port.jpg
 thumbnailImagePosition: right

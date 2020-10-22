@@ -1,13 +1,11 @@
 ---
-title: "使用iptables进行端口映射"
-date: 2020-05-14T14:53:28+08:00
+title: "[Linux] 使用 iptables 进行端口映射"
+date: 2020-03-14T14:53:28+08:00
 categories:
-- programing
-- linux
+- Linux
 tags:
-- linux
-keywords:
-- 端口映射
+- Linux
+- 网络
 thumbnailImage: images/mapel.jpg
 thumbnailImagePosition: right
 metaAlignment: center

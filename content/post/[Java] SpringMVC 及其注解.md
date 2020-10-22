@@ -1,13 +1,11 @@
 ---
-title: "SpringMVC及其注解"
+title: "[Java] SpringMVC 及其注解"
 date: 2020-05-14T14:53:28+08:00
 categories:
-- programing
-- java
+- Java
 tags:
-- java
-keywords:
-- SpringMVC
+- Java
+- Spring
 thumbnailImage: images/errigal.jpg
 thumbnailImagePosition: right
 metaAlignment: center
@@ -16,9 +14,9 @@ coverMeta: in
 coverSize: partial
 ---
 <!--more-->
-## SpringMVC 分层及 Spring 注解
+# SpringMVC 分层及 Spring 注解
 
-### MVC
+## MVC
 
 MVC 指 Model - View - Controller
 
@@ -26,7 +24,7 @@ MVC 指 Model - View - Controller
 
 Model 层一般再分为 DAO 层和 Service 层
 
-#### View 层
+### View 层
 
 表示层：jsp、html 等编写，为界面的展示
 
@@ -34,7 +32,7 @@ View 层和 Controller 层耦合度较高，也可以看作一个整体进行开
 
 @Component
 
-#### Controller 层
+### Controller 层
 
 控制层：接收客户端的请求，然后调用 Service 层业务逻辑，获取到数据，再传递数据给表示层展示
 
@@ -87,7 +85,7 @@ public class UserController {
 }
 ```
 
-#### Service 层
+### Service 层
 
 业务层：调用 DAO 层，实现解耦，利于通用业务的独立性和复用性
 
@@ -109,7 +107,7 @@ public class UserController {
 public class UserService {}
 ```
 
-#### DAO 层
+### DAO 层
 
 持久层：或数据访问层，实现对数据库的访问
 
@@ -132,23 +130,14 @@ public class UserDaoImpl implements UserDao {
 }
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+---
 # 参考
 https://blog.csdn.net/zyq11223/article/details/78187389
+
 https://blog.csdn.net/zdwzzu2006/article/details/6053006
+
 https://blog.csdn.net/gg12365gg/article/details/51345601
+
 https://blog.csdn.net/qq_39299341/article/details/79809381
+
 https://blog.csdn.net/u010412719/article/details/69710480

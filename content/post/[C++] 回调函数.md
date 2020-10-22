@@ -1,13 +1,10 @@
 ---
-title: "回调函数"
-date: 2020-05-14T14:53:28+08:00
+title: "[C++] 回调函数"
+date: 2019-10-09T14:53:28+08:00
 categories:
-- programing
-- cpp
+- C++
 tags:
-- cpp
-keywords:
-- 回调函数
+- C++
 thumbnailImage: images/sea.jpg
 thumbnailImagePosition: right
 metaAlignment: center
@@ -97,8 +94,7 @@ int main() {
 
 
 ---
-
-参考：
+## 参考
 
 https://blog.csdn.net/bzhxuexi/article/details/11767979
 

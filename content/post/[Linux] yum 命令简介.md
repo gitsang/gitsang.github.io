@@ -1,12 +1,10 @@
 ---
-title: "yum 基础"
-date: 2020-05-14T14:53:28+08:00
+title: "[Linux] yum 命令简介"
+date: 2020-01-14T14:53:28+08:00
 categories:
-- programing
-- linux
+- Linux
 tags:
-- yum
-keywords:
+- Linux
 - yum
 thumbnailImage: images/mapel.jpg
 thumbnailImagePosition: right

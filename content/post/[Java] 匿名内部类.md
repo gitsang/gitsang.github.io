@@ -1,13 +1,10 @@
 ---
-title: "Java 匿名内部类"
-date: 2020-05-14T14:53:28+08:00
+title: "[Java] 匿名内部类"
+date: 2020-04-29T14:53:28+08:00
 categories:
-- programing
-- java
+- Java
 tags:
-- java
-keywords:
-- Java 匿名内部类
+- Java
 thumbnailImage: images/errigal.jpg
 thumbnailImagePosition: right
 metaAlignment: center

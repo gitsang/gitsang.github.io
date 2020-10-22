@@ -1,14 +1,11 @@
 ---
-title: "搭建ssh反向隧道"
-date: 2020-05-14T14:53:28+08:00
+title: "[Linux] 搭建 ssh 反向隧道"
+date: 2020-03-14T14:53:28+08:00
 categories:
-- programing
-- linux
+- Linux
 tags:
-- linux
-- ssh
-keywords:
-- 搭建ssh反向隧道
+- Linux
+- 网络
 thumbnailImage: images/mapel.jpg
 thumbnailImagePosition: right
 metaAlignment: center

@@ -1,14 +1,9 @@
 ---
-title: "curl 快速入门"
-date: 2020-05-14T14:53:28+08:00
+title: "[LIB] curl 快速入门"
+date: 2019-10-15T14:53:28+08:00
 categories:
-- programing
-- library
-- curl
+- Library
 tags:
-- curl
-- cpp
-keywords:
 - curl
 thumbnailImage: images/port.jpg
 thumbnailImagePosition: right
@@ -206,11 +201,14 @@ int main(int argc, char* argv[]) {
 } 
 ```
 
-------------------------------------------------------------------------------
 
-##### 参考文献：
+---
+## 参考
 
  1. [Linux CURL的安装和使用](https://blog.csdn.net/lifan5/article/details/7350154)
+
  2. [linux下编译安装libcurl(附使用示例)](https://blog.csdn.net/qianghaohao/article/details/51684862)
+
  3. [curl_easy_setopt-curl库的关键函数之一](https://www.cnblogs.com/lidabo/p/4583067.html)
+ 
  4. [C++ 用libcurl库进行http通讯网络编程](https://www.cnblogs.com/moodlxs/archive/2012/10/15/2724318.html)

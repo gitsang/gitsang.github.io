@@ -1,14 +1,11 @@
 ---
-title: "thrift 快速入门"
+title: "[Thrift] Thrift 快速入门"
 date: 2020-05-14T14:53:28+08:00
 categories:
-- programing
-- thrift
+- Thrift
 tags:
 - thrift
-- cpp
-keywords:
-- thrift
+- c++
 thumbnailImage: images/mountain.jpg
 thumbnailImagePosition: right
 metaAlignment: center

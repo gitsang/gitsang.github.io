@@ -1,5 +1,5 @@
 ---
-title: "Redis 常见报错及解决方法"
+title: "[Redis] Redis 常见报错及解决方法"
 date: 2020-05-14T14:53:28+08:00
 categories:
 - database

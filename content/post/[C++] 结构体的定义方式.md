@@ -1,13 +1,10 @@
 ---
-title: "结构体的定义方式"
-date: 2020-05-14T14:53:28+08:00
+title: "[C++] 结构体的定义方式"
+date: 2019-10-09T14:53:28+08:00
 categories:
-- programing
-- cpp
+- C++
 tags:
-- cpp
-keywords:
-- 结构体的定义方式
+- C++
 thumbnailImage: images/sea.jpg
 thumbnailImagePosition: right
 metaAlignment: center
@@ -124,8 +121,7 @@ typedef struct TreeNode
 在定义结构体时，省略struct后面的结构体名也是可以的，但是由于没有名字，操作（如定义结构体变量）只能在定义的同时进行
 
 ---
-
-参考：
+## 参考
 
 基本：https://blog.csdn.net/u013632190/article/details/47720703 
 
