@@ -1,0 +1,122 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=generator content="Hugo 0.76.5 with theme Tranquilpeak 0.4.8-BETA"><meta name=author content="Sang.Chen"><meta name=keywords content><meta name=description content><meta property="og:description" content><meta property="og:type" content="article"><meta property="og:title" content="[LIB] curl 快速入门"><meta name=twitter:title content="[LIB] curl 快速入门"><meta property="og:url" content="https://gitsang.github.io/2019/10/lib-curl-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"><meta property="twitter:url" content="https://gitsang.github.io/2019/10/lib-curl-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"><meta property="og:site_name" content="Sang's Blog"><meta property="og:description" content><meta name=twitter:description content><meta property="og:locale" content="en-us"><meta property="article:published_time" content="2019-10-15T14:53:28"><meta property="article:modified_time" content="2019-10-15T14:53:28"><meta property="article:section" content="Library"><meta property="article:tag" content="curl"><meta name=twitter:card content="summary"><meta property="og:image" content="https://gitsang.github.io/images/port.jpg"><meta property="twitter:image" content="https://gitsang.github.io/images/port.jpg"><meta property="og:image" content="https://gitsang.github.io/images/port.jpg"><meta property="twitter:image" content="https://gitsang.github.io/images/port.jpg"><meta property="og:image" content="https://gitsang.github.io/images/avatar.jpg"><meta property="twitter:image" content="https://gitsang.github.io/images/avatar.jpg"><title>[LIB] curl 快速入门</title><link rel=icon href=image/favicon.png><link rel=canonical href=https://gitsang.github.io/2019/10/lib-curl-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin=anonymous><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin=anonymous><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin=anonymous><link rel=stylesheet href=https://gitsang.github.io/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css></head><body><div id=blog><header id=header data-behavior=4><i id=btn-open-sidebar class="fa fa-lg fa-bars"></i><div class=header-title><a class=header-title-link href=https://gitsang.github.io/>Sang's Blog</a></div></header><nav id=sidebar data-behavior=4><div class=sidebar-container><div class=sidebar-profile><a href=https://gitsang.github.io/#about><img class=sidebar-profile-picture src=https://gitsang.github.io/images/avatar.jpg alt="Author's picture"></a><h4 class=sidebar-profile-name>Sang.Chen</h4><h5 class=sidebar-profile-bio>我们所经历的每个日常，都是连续发生的奇迹</h5></div><ul class=sidebar-buttons><li class=sidebar-button><a class=sidebar-button-link href=https://gitsang.github.io/><i class="sidebar-button-icon fa fa-lg fa-home"></i><span class=sidebar-button-desc>Home</span></a></li><li class=sidebar-button><a class=sidebar-button-link href=https://gitsang.github.io/categories><i class="sidebar-button-icon fa fa-lg fa-bookmark"></i><span class=sidebar-button-desc>Categories</span></a></li><li class=sidebar-button><a class=sidebar-button-link href=https://gitsang.github.io/tags><i class="sidebar-button-icon fa fa-lg fa-tags"></i><span class=sidebar-button-desc>Tags</span></a></li><li class=sidebar-button><a class=sidebar-button-link href=https://gitsang.github.io/archives><i class="sidebar-button-icon fa fa-lg fa-archive"></i><span class=sidebar-button-desc>Archives</span></a></li><li class=sidebar-button><a class=sidebar-button-link href=https://gitsang.github.io/#about><i class="sidebar-button-icon fa fa-lg fa-question"></i><span class=sidebar-button-desc>About</span></a></li></ul><ul class=sidebar-buttons><li class=sidebar-button><a class=sidebar-button-link href=https://github.com/gitsang target=_blank rel=noopener><i class="sidebar-button-icon fa fa-lg fa-github"></i><span class=sidebar-button-desc>GitHub</span></a></li><li class=sidebar-button><a class=sidebar-button-link href=https://stackoverflow.com/users/12141217/oversang target=_blank rel=noopener><i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i><span class=sidebar-button-desc>Stack Overflow</span></a></li></ul><ul class=sidebar-buttons><li class=sidebar-button><a class=sidebar-button-link href=https://gitsang.github.io/index.xml><i class="sidebar-button-icon fa fa-lg fa-rss"></i><span class=sidebar-button-desc>RSS</span></a></li></ul></div></nav><div class="post-header-cover
+text-center
+post-header-cover--partial" style=background-image:url(/images/port.jpg) data-behavior=4><div class="post-header main-content-wrap text-center"><h1 class=post-title itemprop=headline>[LIB] curl 快速入门</h1><div class="postShorten-meta post-meta"><time itemprop=datePublished datetime=2019-10-15T14:53:28+08:00>October 15, 2019</time>
+<span>in</span>
+<a class=category-link href=https://gitsang.github.io/categories/library>Library</a></div></div></div><div id=main data-behavior=4 class="hasCover
+hasCoverMetaIn"><article class=post itemscope itemtype=http://schema.org/BlogPosting><div class="post-content markdown" itemprop=articleBody><div class=main-content-wrap><h2 id=1-安装curl和libcurl>1. 安装curl和libcurl</h2><p>Linux部分机器自带curl，可以直接使用，但不会包含curl库，且有些版本过旧，所以仍然建议下载最新版本curl使用</p><h6 id=1获得安装包官网httpcurlhaxxse>（1）获得安装包（官网http://curl.haxx.se/）</h6><p>本文列出不一定是当前最新版，到官网查询最新版本链接自行更改即可</p><pre><code> # wget http://curl.haxx.se/download/curl-7.65.1.tar.gz 
+</code></pre><h6 id=2解压>（2）解压</h6><pre><code># tar -zxf curl-7.65.1.tar.gz
+</code></pre><h6 id=3进入解压后的目录>（3）进入解压后的目录</h6><pre><code># cd curl-7.65.1
+</code></pre><h6 id=4配置文件>（4）配置文件</h6><p>一般无需设置直接使用默认配置即可，<strong>建议不要修改安装路径</strong>，否则后续还需自行添加include路径，若需指定安装路径，使用&ndash;prefix参数</p><pre><code># ./configure --prefix=/usr/local/curl
+</code></pre><p>其余的配置的使用可通过<code>./configure --help</code>查看</p><p>建议安装之前先查看当前目录下的README、GIT-INFO、INSTALL文件，许多不可预测的问题都能在此找到答案</p><h6 id=5make>（5）make</h6><pre><code># make 
+# make install 
+</code></pre><h6 id=6检查版本>（6）检查版本</h6><pre><code># curl --version
+</code></pre><p>版本信息与安装版本相符则到此步骤已经安装成功</p><h6 id=将curl命令加入环境变量>（*）将curl命令加入环境变量</h6><p>（如果按照默认路径安装则无需执行此步骤）</p><p>仅对本会话起作用，或者在.bash_profile、.bashrc文件里配置环境变量</p><pre><code># export PATH=$PATH:/usr/local/curl/bin
+</code></pre><h6 id=添加curlh到include路径>（*）添加curl.h到include路径</h6><p>（如果按照默认路径安装则无需执行此步骤）</p><pre><code># cp -r /usr/local/curl/include/curl /usr/include
+</code></pre><h6 id=cc调用libcurl>（*）C/C++调用libcurl</h6><p>到/usr/local/lib/或指定的安装路径，即可查看到安装好的库文件</p><p>若要include库文件可如下编写</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;curl/curl.h&gt;</span><span style=color:#75715e>
+</span></code></pre></div><p>可根据<a href=https://blog.csdn.net/qianghaohao/article/details/51684862>参考文献2</a>中代码测试libcurl</p><p>需要注意在编译过程中一定要加入 -lcurl 参数，否则将出现链接错误，如<code>g++ main.cpp -o main -lcurl</code></p><h2 id=2-curl命令的简单实用>2. curl命令的简单实用</h2><p>以下命令为curl与localhost通讯进行上传和下载文件</p><pre><code># curl -v -X PUT http://localhost/doc/1.txt -T 2.txt
+# curl -v -X GET http://localhost/doc/1.txt -o 2.txt
+</code></pre><p>选项<code>-v</code>或<code>--verbose</code>为显示详细操作信息，建议刚开始使用时加上，能为调试提供很大帮助。</p><p>其余选项的使用可以使用<code>curl --help</code>或<code>man curl</code>查看帮助信息，每个选项都有详细的说明。（<a href=http://man.linuxde.net/curl>中文翻译</a>）</p><p>curl命令能为之后curl库的使用提供参考基础，建议在进行curl代码编写前先使用curl命令实现，有些时候的bug不是代码造成的，有可能本身curl就无法建立连接。</p><h2 id=3-curl库的调用>3. curl库的调用</h2><p>libcurl主要提供了两种发送http请求的方式，分别是Easy interface方式和multi interface方式，前者是采用阻塞的方式发送单条数据，后者采用组合的方式可以一次性发送多条数据</p><p>libcurl传输任务流程如下（其中最重要的是3和4步）：</p><ul><li>1 调用<code>curl_global_init()</code>初始化libcurl</li><li>2 调用<code>curl_easy_init()</code>得到easy interface型指针（句柄）</li><li><strong>3 调用<code>curl_easy_setopt()</code>设置传输选项</strong></li><li><strong>4 根据<code>curl_easy_setopt()</code>实现回调函数</strong></li><li>5 调用<code>curl_easy_perform()</code>传输数据</li><li>6 调用<code>curl_easy_cleanup()</code>清空句柄</li><li>7 调用<code>curl_global_cleanup()</code>释放内存</li></ul><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;curl/curl.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;iostream&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>using namespace std;
+
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>httpPutFile</span>() {
+    CURL<span style=color:#f92672>*</span> curl <span style=color:#f92672>=</span> NULL;
+    CURLcode result <span style=color:#f92672>=</span> CURLE_OK;
+    string url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://10.200.100.50:8080&#34;</span>;
+        
+    FILE<span style=color:#f92672>*</span> inputFile <span style=color:#f92672>=</span> fopen(<span style=color:#e6db74>&#34;./put.txt&#34;</span>, <span style=color:#e6db74>&#34;rb&#34;</span>);
+    string outputFilename <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;/1.txt&#34;</span>;
+    url <span style=color:#f92672>+=</span> outputFilename;
+    
+    <span style=color:#75715e>//HttpHead
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>struct</span> curl_slist<span style=color:#f92672>*</span> headers <span style=color:#f92672>=</span> NULL;
+    headers <span style=color:#f92672>=</span> curl_slist_append(headers, <span style=color:#e6db74>&#34;endPoint:http://10.200.100.50:8080&#34;</span>);
+    headers <span style=color:#f92672>=</span> curl_slist_append(headers, <span style=color:#e6db74>&#34;accessKeyId:id123&#34;</span>);
+    headers <span style=color:#f92672>=</span> curl_slist_append(headers, <span style=color:#e6db74>&#34;secretAccessKey:key123&#34;</span>);
+    headers <span style=color:#f92672>=</span> curl_slist_append(headers, <span style=color:#e6db74>&#34;Authorization:auth123&#34;</span>);
+    
+    <span style=color:#75715e>//Init
+</span><span style=color:#75715e></span>    curl_global_init(CURL_GLOBAL_ALL);
+    curl <span style=color:#f92672>=</span> curl_easy_init();
+
+    <span style=color:#75715e>//Option
+</span><span style=color:#75715e></span>    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_VERBOSE, <span style=color:#ae81ff>1</span>);
+    curl_easy_setopt(curl, CURLOPT_TIMEOUT, <span style=color:#ae81ff>2</span>);
+    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+    curl_easy_setopt(curl, CURLOPT_INFILE, inputFile);
+    <span style=color:#75715e>//curl_easy_setopt(curl, CURLOPT_INFILESIZE, 87);
+</span><span style=color:#75715e></span>    curl_easy_setopt(curl, CURLOPT_PUT, <span style=color:#ae81ff>1</span>);
+    <span style=color:#75715e>//curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, &#34;PUT&#34;);
+</span><span style=color:#75715e></span>        
+    <span style=color:#75715e>//Perform
+</span><span style=color:#75715e></span>    result <span style=color:#f92672>=</span> curl_easy_perform(curl);
+
+    <span style=color:#75715e>//Clean
+</span><span style=color:#75715e></span>    curl_slist_free_all(headers);
+    curl_easy_cleanup(curl);
+    curl_global_cleanup();
+
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+}
+
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>httpGetFile</span>() {
+
+    CURL<span style=color:#f92672>*</span> curl <span style=color:#f92672>=</span> NULL;
+    CURLcode result <span style=color:#f92672>=</span> CURLE_OK;
+    string url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://10.200.100.50:8080&#34;</span>;
+        
+    FILE<span style=color:#f92672>*</span> outputFile <span style=color:#f92672>=</span> fopen(<span style=color:#e6db74>&#34;./get.txt&#34;</span>, <span style=color:#e6db74>&#34;wb&#34;</span>);
+    string inputFilename <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;/1.txt&#34;</span>;
+    url <span style=color:#f92672>+=</span> inputFilename;
+    
+    <span style=color:#75715e>//HttpHead
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>struct</span> curl_slist<span style=color:#f92672>*</span> headers <span style=color:#f92672>=</span> NULL;
+    headers <span style=color:#f92672>=</span> curl_slist_append(headers, <span style=color:#e6db74>&#34;endPoint:http://10.200.100.50:8080&#34;</span>);
+    headers <span style=color:#f92672>=</span> curl_slist_append(headers, <span style=color:#e6db74>&#34;accessKeyId:id123&#34;</span>);
+    headers <span style=color:#f92672>=</span> curl_slist_append(headers, <span style=color:#e6db74>&#34;secretAccessKey:key123&#34;</span>);
+    headers <span style=color:#f92672>=</span> curl_slist_append(headers, <span style=color:#e6db74>&#34;Authorization:auth123&#34;</span>);
+    
+    <span style=color:#75715e>//Init
+</span><span style=color:#75715e></span>    curl_global_init(CURL_GLOBAL_ALL);
+    curl <span style=color:#f92672>=</span> curl_easy_init();
+
+    <span style=color:#75715e>//Option
+</span><span style=color:#75715e></span>    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_VERBOSE, <span style=color:#ae81ff>1</span>);
+    curl_easy_setopt(curl, CURLOPT_TIMEOUT, <span style=color:#ae81ff>2</span>);
+    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, (<span style=color:#66d9ef>void</span><span style=color:#f92672>*</span>)outputFile);
+
+    <span style=color:#75715e>//Perform
+</span><span style=color:#75715e></span>    result <span style=color:#f92672>=</span> curl_easy_perform(curl);
+
+    <span style=color:#75715e>//Clean
+</span><span style=color:#75715e></span>    curl_slist_free_all(headers);
+    curl_easy_cleanup(curl);
+    curl_global_cleanup();
+
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+}
+
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span><span style=color:#f92672>*</span> argv[]) {
+
+    string method <span style=color:#f92672>=</span> argv[<span style=color:#ae81ff>1</span>];
+
+    <span style=color:#66d9ef>if</span>(method <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;PUT&#34;</span> <span style=color:#f92672>||</span> method <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;put&#34;</span>) {
+        httpPutFile(); 
+    }<span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span>(method <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;GET&#34;</span> <span style=color:#f92672>||</span> method <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;get&#34;</span>) {
+        httpGetFile(); 
+    }<span style=color:#66d9ef>else</span> {
+        cout <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;Method error, please input </span><span style=color:#ae81ff>\&#34;</span><span style=color:#e6db74>PUT</span><span style=color:#ae81ff>\&#34;</span><span style=color:#e6db74> or </span><span style=color:#ae81ff>\&#34;</span><span style=color:#e6db74>GET</span><span style=color:#ae81ff>\&#34;</span><span style=color:#e6db74>.&#34;</span> <span style=color:#f92672>&lt;&lt;</span> endl;
+    }
+    cout <span style=color:#f92672>&lt;&lt;</span> endl;
+
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+} 
+</code></pre></div><hr><h2 id=参考>参考</h2><ol><li><p><a href=https://blog.csdn.net/lifan5/article/details/7350154>Linux CURL的安装和使用</a></p></li><li><p><a href=https://blog.csdn.net/qianghaohao/article/details/51684862>linux下编译安装libcurl(附使用示例)</a></p></li><li><p><a href=https://www.cnblogs.com/lidabo/p/4583067.html>curl_easy_setopt-curl库的关键函数之一</a></p></li><li><p><a href=https://www.cnblogs.com/moodlxs/archive/2012/10/15/2724318.html>C++ 用libcurl库进行http通讯网络编程</a></p></li></ol></div></div><div id=post-footer class="post-footer main-content-wrap"><div class=post-footer-tags><span class="text-color-light text-small">TAGGED IN</span><br><a class="tag tag--primary tag--small" href=https://gitsang.github.io/tags/curl/>curl</a></div><div class=post-actions-wrap><nav><ul class="post-actions post-action-nav"><li class=post-action><a class="post-action-btn btn btn--default tooltip--top" href=https://gitsang.github.io/2019/12/lib-googletest-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/ data-tooltip="[LIB] googletest 快速入门"><i class="fa fa-angle-left"></i><span class="hide-xs hide-sm text-small icon-ml">NEXT</span></a></li><li class=post-action><a class="post-action-btn btn btn--default tooltip--top" href=https://gitsang.github.io/2019/10/c-gdb-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/ data-tooltip="[C++] gdb 快速入门"><span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+<i class="fa fa-angle-right"></i></a></li></ul></nav><ul class="post-actions post-action-share"><li class="post-action hide-lg hide-md hide-sm"><a class="post-action-btn btn btn--default btn-open-shareoptions" href=#btn-open-shareoptions><i class="fa fa-share-alt"></i></a></li><li class="post-action hide-xs"><a class="post-action-btn btn btn--default" target=new href="https://twitter.com/intent/tweet?text=https://gitsang.github.io/2019/10/lib-curl-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"><i class="fa fa-twitter"></i></a></li><li class=post-action><a class="post-action-btn btn btn--default" href=#disqus_thread><i class="fa fa-comment-o"></i></a></li><li class=post-action><a class="post-action-btn btn btn--default" href=#><i class="fa fa-list"></i></a></li></ul></div><div id=disqus_thread><noscript>Please enable JavaScript to view the <a href=//disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript></div></div></article><footer id=footer class=main-content-wrap><span class=copyrights>&copy; 2020 Sang.Chen. All Rights Reserved</span></footer></div><div id=bottom-bar class=post-bottom-bar data-behavior=4><div class=post-actions-wrap><nav><ul class="post-actions post-action-nav"><li class=post-action><a class="post-action-btn btn btn--default tooltip--top" href=https://gitsang.github.io/2019/12/lib-googletest-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/ data-tooltip="[LIB] googletest 快速入门"><i class="fa fa-angle-left"></i><span class="hide-xs hide-sm text-small icon-ml">NEXT</span></a></li><li class=post-action><a class="post-action-btn btn btn--default tooltip--top" href=https://gitsang.github.io/2019/10/c-gdb-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/ data-tooltip="[C++] gdb 快速入门"><span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+<i class="fa fa-angle-right"></i></a></li></ul></nav><ul class="post-actions post-action-share"><li class="post-action hide-lg hide-md hide-sm"><a class="post-action-btn btn btn--default btn-open-shareoptions" href=#btn-open-shareoptions><i class="fa fa-share-alt"></i></a></li><li class="post-action hide-xs"><a class="post-action-btn btn btn--default" target=new href="https://twitter.com/intent/tweet?text=https://gitsang.github.io/2019/10/lib-curl-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"><i class="fa fa-twitter"></i></a></li><li class=post-action><a class="post-action-btn btn btn--default" href=#disqus_thread><i class="fa fa-comment-o"></i></a></li><li class=post-action><a class="post-action-btn btn btn--default" href=#><i class="fa fa-list"></i></a></li></ul></div></div><div id=share-options-bar class=share-options-bar data-behavior=4><i id=btn-close-shareoptions class="fa fa-close"></i><ul class=share-options><li class=share-option><a class=share-option-btn target=new href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fgitsang.github.io%2F2019%2F10%2Flib-curl-%25E5%25BF%25AB%25E9%2580%259F%25E5%2585%25A5%25E9%2597%25A8%2F"><i class="fa fa-twitter"></i><span>Share on Twitter</span></a></li></ul></div><div id=share-options-mask class=share-options-mask></div></div><div id=about><div id=about-card><div id=about-btn-close><i class="fa fa-remove"></i></div><img id=about-card-picture src=https://gitsang.github.io/images/avatar.jpg alt="Author's picture"><h4 id=about-card-name>Sang.Chen</h4><div id=about-card-bio>我们所经历的每个日常，都是连续发生的奇迹</div><div id=about-card-job><i class="fa fa-briefcase"></i><br>C/C++/Go/CentOS</div><div id=about-card-location><i class="fa fa-map-marker"></i><br>Xiamen</div></div></div><div id=cover style=background-image:url(https://gitsang.github.io/images/gaussian.jpg)></div><script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin=anonymous></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin=anonymous></script><script src=https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin=anonymous></script><script src=https://gitsang.github.io/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js></script><script lang=javascript>window.onload=updateMinWidth;window.onresize=updateMinWidth;document.getElementById("sidebar").addEventListener("transitionend",updateMinWidth);function updateMinWidth(){var sidebar=document.getElementById("sidebar");var main=document.getElementById("main");main.style.minWidth="";var w1=getComputedStyle(main).getPropertyValue("min-width");var w2=getComputedStyle(sidebar).getPropertyValue("width");var w3=getComputedStyle(sidebar).getPropertyValue("left");main.style.minWidth=`calc(${w1} - ${w2} - ${w3})`;}</script><script>$(document).ready(function(){hljs.configure({classPrefix:'',useBR:false});$('pre.code-highlight > code, pre > code').each(function(i,block){if(!$(this).hasClass('codeblock')){$(this).addClass('codeblock');}
+hljs.highlightBlock(block);});});</script><script>var disqus_config=function(){this.page.url='https:\/\/gitsang.github.io\/2019\/10\/lib-curl-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8\/';this.page.identifier='\/2019\/10\/lib-curl-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8\/'};(function(){if(window.location.hostname=="localhost"){return;}
+var d=document,s=d.createElement('script');var disqus_shortname='hugo-tranquilpeak-theme';s.src='//'+disqus_shortname+'.disqus.com/embed.js';s.setAttribute('data-timestamp',+new Date());(d.head||d.body).appendChild(s);})();</script></body></html>
