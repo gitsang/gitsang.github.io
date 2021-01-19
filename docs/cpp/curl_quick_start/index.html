@@ -1,0 +1,144 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><link rel=preload as=font href=/fonts/vendor/jost/jost-v4-latin-regular.woff2 type=font/woff2 crossorigin><link rel=preload as=font href=/fonts/vendor/jost/jost-v4-latin-700.woff2 type=font/woff2 crossorigin><link rel=stylesheet href=/main.bff3e9584b4445db27670340d343d80d5706c1a148662cd0e816c3401c18b8e968c85d5afdf1cce2b9cbc6f5c12ab935bc5ff2fba485f5db106414aed74ab55d.css integrity="sha512-v/PpWEtERdsnZwNA00PYDVcGwaFIZizQ6BbDQBwYuOloyF1a/fHM4rnLxvXBKrk1vF/y+6SF9dsQZBSu10q1XQ==" crossorigin=anonymous><noscript><style>img.lazyload{display:none}</style></noscript><meta name=robots content="index, follow"><meta name=googlebot content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"><meta name=bingbot content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"><title>libcurl 快速入门 - Sang</title><meta name=description content="This is Sang's personal site powered by doks."><link rel=canonical href=/docs/cpp/curl_quick_start/><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/doks.png"><meta name=twitter:title content="libcurl 快速入门"><meta name=twitter:description content="1. 安装curl和libcurl Linux部分机器自带curl，可以直接使用，但不会包含curl库，且有些版本过旧，所以仍然建议下载最新版本curl使用
+（1）获得安装包（官网http://curl.haxx.se/） 本文列出不一定是当前最新版，到官网查询最新版本链接自行更改即可
+ # wget http://curl.haxx.se/download/curl-7.65.1.tar.gz （2）解压 # tar -zxf curl-7.65.1.tar.gz （3）进入解压后的目录 # cd curl-7.65.1 （4）配置文件 一般无需设置直接使用默认配置即可，建议不要修改安装路径，否则后续还需自行添加include路径，若需指定安装路径，使用&ndash;prefix参数
+# ./configure --prefix=/usr/local/curl 其余的配置的使用可通过./configure --help查看
+建议安装之前先查看当前目录下的README、GIT-INFO、INSTALL文件，许多不可预测的问题都能在此找到答案
+（5）make # make # make install （6）检查版本 # curl --version 版本信息与安装版本相符则到此步骤已经安装成功
+（*）将curl命令加入环境变量 （如果按照默认路径安装则无需执行此步骤）
+仅对本会话起作用，或者在.bash_profile、.bashrc文件里配置环境变量
+# export PATH=$PATH:/usr/local/curl/bin （*）添加curl.h到include路径 （如果按照默认路径安装则无需执行此步骤）
+# cp -r /usr/local/curl/include/curl /usr/include （*）C/C++调用libcurl 到/usr/local/lib/或指定的安装路径，即可查看到安装好的库文件
+若要include库文件可如下编写
+#include <curl/curl.h>可根据参考文献2中代码测试libcurl
+需要注意在编译过程中一定要加入 -lcurl 参数，否则将出现链接错误，如g++ main.cpp -o main -lcurl
+2. curl命令的简单实用 以下命令为curl与localhost通讯进行上传和下载文件
+# curl -v -X PUT http://localhost/doc/1."><meta name=twitter:site content="@henkverlinde"><meta name=twitter:creator content="@henkverlinde"><meta property="og:title" content="libcurl 快速入门"><meta property="og:description" content="1. 安装curl和libcurl Linux部分机器自带curl，可以直接使用，但不会包含curl库，且有些版本过旧，所以仍然建议下载最新版本curl使用
+（1）获得安装包（官网http://curl.haxx.se/） 本文列出不一定是当前最新版，到官网查询最新版本链接自行更改即可
+ # wget http://curl.haxx.se/download/curl-7.65.1.tar.gz （2）解压 # tar -zxf curl-7.65.1.tar.gz （3）进入解压后的目录 # cd curl-7.65.1 （4）配置文件 一般无需设置直接使用默认配置即可，建议不要修改安装路径，否则后续还需自行添加include路径，若需指定安装路径，使用&ndash;prefix参数
+# ./configure --prefix=/usr/local/curl 其余的配置的使用可通过./configure --help查看
+建议安装之前先查看当前目录下的README、GIT-INFO、INSTALL文件，许多不可预测的问题都能在此找到答案
+（5）make # make # make install （6）检查版本 # curl --version 版本信息与安装版本相符则到此步骤已经安装成功
+（*）将curl命令加入环境变量 （如果按照默认路径安装则无需执行此步骤）
+仅对本会话起作用，或者在.bash_profile、.bashrc文件里配置环境变量
+# export PATH=$PATH:/usr/local/curl/bin （*）添加curl.h到include路径 （如果按照默认路径安装则无需执行此步骤）
+# cp -r /usr/local/curl/include/curl /usr/include （*）C/C++调用libcurl 到/usr/local/lib/或指定的安装路径，即可查看到安装好的库文件
+若要include库文件可如下编写
+#include <curl/curl.h>可根据参考文献2中代码测试libcurl
+需要注意在编译过程中一定要加入 -lcurl 参数，否则将出现链接错误，如g++ main.cpp -o main -lcurl
+2. curl命令的简单实用 以下命令为curl与localhost通讯进行上传和下载文件
+# curl -v -X PUT http://localhost/doc/1."><meta property="og:type" content="article"><meta property="og:url" content="/docs/cpp/curl_quick_start/"><meta property="og:image" content="/doks.png"><meta property="article:published_time" content="2019-10-15T14:53:28+08:00"><meta property="article:modified_time" content="2019-10-15T14:53:28+08:00"><meta property="og:site_name" content="Sang"><meta property="article:publisher" content="https://www.facebook.com/verlinde.henk"><meta property="article:author" content="https://www.facebook.com/verlinde.henk"><meta property="og:locale" content="en_US"><script type=application/ld+json>{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"\/"},{"@type":"ListItem","position":2,"name":"Docscppcurl Quick Start","item":"\/docscppcurl_quick_start\/"}]}</script><meta name=theme-color content="#fff"><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest></head><body class="docs single"><div class="header-bar fixed-top"></div><header class="navbar fixed-top navbar-expand-md navbar-light"><div class=container><input class="menu-btn order-0" type=checkbox id=menu-btn>
+<label class="menu-icon d-md-none" for=menu-btn><span class=navicon></span></label><a class="navbar-brand order-1 order-md-0 mr-auto" href=/>Sang</a>
+<button id=mode class="btn btn-link order-2 order-md-4" type=button aria-label="Toggle mode">
+<span class=toggle-dark><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span><span class=toggle-light><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button><ul class="navbar-nav social-nav order-3 order-md-5"><li class=nav-item><a class=nav-link href=https://github.com/gitsang/gitsang.github.io><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77a5.44 5.44.0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg><span class="ml-2 sr-only">GitHub</span></a></li></ul><div class="collapse navbar-collapse order-4 order-md-1"><ul class="navbar-nav main-nav mr-auto order-5 order-md-2"><li class="nav-item active"><a class=nav-link href=/docs/cpp/>Docs</a></li><li class=nav-item><a class=nav-link href=/blog/>Blog</a></li></ul><div class="break order-6 d-md-none"></div><form class="navbar-form flex-grow-1 order-7 order-md-3"><input id=userinput class="form-control is-search" type=search placeholder="Search docs..." aria-label="Search docs..." autocomplete=off><div id=suggestions class="shadow bg-white rounded"></div></form></div></div></header><div class="wrap container" role=document><div class=content><div class="row flex-xl-nowrap"><div class="col-lg-5 col-xl-4 docs-sidebar"><nav class=docs-links aria-label="Main navigation"><h3>cpp</h3><ul class=list-unstyled><li><a class=docs-link href=/docs/cpp/googletest_quick_start/>googletest 快速入门</a></li><li><a class="docs-link active" href=/docs/cpp/curl_quick_start/>libcurl 快速入门</a></li><li><a class=docs-link href=/docs/cpp/thrift_quick_start/>Thrift 快速入门</a></li><li><a class=docs-link href=/docs/cpp/virtual_function/>Virtual 虚</a></li><li><a class=docs-link href=/docs/cpp/callback/>回调函数</a></li><li><a class=docs-link href=/docs/cpp/struct/>[C++] 结构体的定义方式</a></li><li><a class=docs-link href=/docs/cpp/gdb_quick_start/>gdb 快速入门</a></li><li><a class=docs-link href=/docs/cpp/pointer_value_quote/>指针、值和引用</a></li></ul><h3>chat</h3><ul class=list-unstyled><li><a class=docs-link href=/docs/chat/%E4%BB%8E%E9%9D%92%E6%98%A5%E9%87%8E%E9%83%8E%E5%88%B0%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6_%E7%AC%AC%E4%B8%80%E6%9C%9F_%E4%B8%A4%E5%A4%A7%E7%A5%9E%E5%85%BD%E5%92%8C%E6%B5%B7%E6%A3%AE%E5%A0%A1%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E5%8E%9F%E7%90%86/>从青春野郎到量子力学 - 第一期 - 两大神兽和海森堡不确定性原理</a></li></ul><h3>git</h3><ul class=list-unstyled><li><a class=docs-link href=/docs/git/git_quick_help/>Git 使用速查</a></li></ul><h3>golang</h3><ul class=list-unstyled><li><a class=docs-link href=/docs/golang/defer_and_return_in_golang/>Golang中defer和return执行顺序的陷阱</a></li><li><a class=docs-link href=/docs/golang/closure/>闭包简述</a></li></ul></nav></div><nav class="docs-toc d-none d-xl-block col-xl-3" aria-label="Secondary navigation"><div class=page-links><h3>On this page</h3><nav id=TableOfContents><ul><li><a href=#1-安装curl和libcurl>1. 安装curl和libcurl</a><ul><li></li></ul></li><li><a href=#2-curl命令的简单实用>2. curl命令的简单实用</a></li><li><a href=#3-curl库的调用>3. curl库的调用</a></li><li><a href=#参考>参考</a></li></ul></nav></div></nav><main class="docs-content col-lg-11 col-xl-9"><h1>libcurl 快速入门</h1><p class=lead></p><h2 id=1-安装curl和libcurl>1. 安装curl和libcurl<a href=#1-安装curl和libcurl class=anchor aria-hidden=true>#</a></h2><p>Linux部分机器自带curl，可以直接使用，但不会包含curl库，且有些版本过旧，所以仍然建议下载最新版本curl使用</p><h6 id=1获得安装包官网httpcurlhaxxse>（1）获得安装包（官网http://curl.haxx.se/）<a href=#1获得安装包官网httpcurlhaxxse class=anchor aria-hidden=true>#</a></h6><p>本文列出不一定是当前最新版，到官网查询最新版本链接自行更改即可</p><pre><code> # wget http://curl.haxx.se/download/curl-7.65.1.tar.gz 
+</code></pre><h6 id=2解压>（2）解压<a href=#2解压 class=anchor aria-hidden=true>#</a></h6><pre><code># tar -zxf curl-7.65.1.tar.gz
+</code></pre><h6 id=3进入解压后的目录>（3）进入解压后的目录<a href=#3进入解压后的目录 class=anchor aria-hidden=true>#</a></h6><pre><code># cd curl-7.65.1
+</code></pre><h6 id=4配置文件>（4）配置文件<a href=#4配置文件 class=anchor aria-hidden=true>#</a></h6><p>一般无需设置直接使用默认配置即可，<strong>建议不要修改安装路径</strong>，否则后续还需自行添加include路径，若需指定安装路径，使用&ndash;prefix参数</p><pre><code># ./configure --prefix=/usr/local/curl
+</code></pre><p>其余的配置的使用可通过<code>./configure --help</code>查看</p><p>建议安装之前先查看当前目录下的README、GIT-INFO、INSTALL文件，许多不可预测的问题都能在此找到答案</p><h6 id=5make>（5）make<a href=#5make class=anchor aria-hidden=true>#</a></h6><pre><code># make 
+# make install 
+</code></pre><h6 id=6检查版本>（6）检查版本<a href=#6检查版本 class=anchor aria-hidden=true>#</a></h6><pre><code># curl --version
+</code></pre><p>版本信息与安装版本相符则到此步骤已经安装成功</p><h6 id=将curl命令加入环境变量>（*）将curl命令加入环境变量<a href=#将curl命令加入环境变量 class=anchor aria-hidden=true>#</a></h6><p>（如果按照默认路径安装则无需执行此步骤）</p><p>仅对本会话起作用，或者在.bash_profile、.bashrc文件里配置环境变量</p><pre><code># export PATH=$PATH:/usr/local/curl/bin
+</code></pre><h6 id=添加curlh到include路径>（*）添加curl.h到include路径<a href=#添加curlh到include路径 class=anchor aria-hidden=true>#</a></h6><p>（如果按照默认路径安装则无需执行此步骤）</p><pre><code># cp -r /usr/local/curl/include/curl /usr/include
+</code></pre><h6 id=cc调用libcurl>（*）C/C++调用libcurl<a href=#cc调用libcurl class=anchor aria-hidden=true>#</a></h6><p>到/usr/local/lib/或指定的安装路径，即可查看到安装好的库文件</p><p>若要include库文件可如下编写</p><div class=highlight><pre class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;curl/curl.h&gt;</span><span class=cp>
+</span></code></pre></div><p>可根据<a href=https://blog.csdn.net/qianghaohao/article/details/51684862>参考文献2</a>中代码测试libcurl</p><p>需要注意在编译过程中一定要加入 -lcurl 参数，否则将出现链接错误，如<code>g++ main.cpp -o main -lcurl</code></p><h2 id=2-curl命令的简单实用>2. curl命令的简单实用<a href=#2-curl命令的简单实用 class=anchor aria-hidden=true>#</a></h2><p>以下命令为curl与localhost通讯进行上传和下载文件</p><pre><code># curl -v -X PUT http://localhost/doc/1.txt -T 2.txt
+# curl -v -X GET http://localhost/doc/1.txt -o 2.txt
+</code></pre><p>选项<code>-v</code>或<code>--verbose</code>为显示详细操作信息，建议刚开始使用时加上，能为调试提供很大帮助。</p><p>其余选项的使用可以使用<code>curl --help</code>或<code>man curl</code>查看帮助信息，每个选项都有详细的说明。（<a href=http://man.linuxde.net/curl>中文翻译</a>）</p><p>curl命令能为之后curl库的使用提供参考基础，建议在进行curl代码编写前先使用curl命令实现，有些时候的bug不是代码造成的，有可能本身curl就无法建立连接。</p><h2 id=3-curl库的调用>3. curl库的调用<a href=#3-curl库的调用 class=anchor aria-hidden=true>#</a></h2><p>libcurl主要提供了两种发送http请求的方式，分别是Easy interface方式和multi interface方式，前者是采用阻塞的方式发送单条数据，后者采用组合的方式可以一次性发送多条数据</p><p>libcurl传输任务流程如下（其中最重要的是3和4步）：</p><ul><li>1 调用<code>curl_global_init()</code>初始化libcurl</li><li>2 调用<code>curl_easy_init()</code>得到easy interface型指针（句柄）</li><li><strong>3 调用<code>curl_easy_setopt()</code>设置传输选项</strong></li><li><strong>4 根据<code>curl_easy_setopt()</code>实现回调函数</strong></li><li>5 调用<code>curl_easy_perform()</code>传输数据</li><li>6 调用<code>curl_easy_cleanup()</code>清空句柄</li><li>7 调用<code>curl_global_cleanup()</code>释放内存</li></ul><div class=highlight><pre class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;curl/curl.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;string&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;iostream&gt;</span><span class=cp>
+</span><span class=cp></span><span class=n>using</span> <span class=n>namespace</span> <span class=n>std</span><span class=p>;</span>
+
+<span class=kt>int</span> <span class=nf>httpPutFile</span><span class=p>()</span> <span class=p>{</span>
+    <span class=n>CURL</span><span class=o>*</span> <span class=n>curl</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+    <span class=n>CURLcode</span> <span class=n>result</span> <span class=o>=</span> <span class=n>CURLE_OK</span><span class=p>;</span>
+    <span class=n>string</span> <span class=n>url</span> <span class=o>=</span> <span class=s>&#34;http://10.200.100.50:8080&#34;</span><span class=p>;</span>
+        
+    <span class=n>FILE</span><span class=o>*</span> <span class=n>inputFile</span> <span class=o>=</span> <span class=n>fopen</span><span class=p>(</span><span class=s>&#34;./put.txt&#34;</span><span class=p>,</span> <span class=s>&#34;rb&#34;</span><span class=p>);</span>
+    <span class=n>string</span> <span class=n>outputFilename</span> <span class=o>=</span> <span class=s>&#34;/1.txt&#34;</span><span class=p>;</span>
+    <span class=n>url</span> <span class=o>+=</span> <span class=n>outputFilename</span><span class=p>;</span>
+    
+    <span class=c1>//HttpHead
+</span><span class=c1></span>    <span class=k>struct</span> <span class=n>curl_slist</span><span class=o>*</span> <span class=n>headers</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+    <span class=n>headers</span> <span class=o>=</span> <span class=n>curl_slist_append</span><span class=p>(</span><span class=n>headers</span><span class=p>,</span> <span class=s>&#34;endPoint:http://10.200.100.50:8080&#34;</span><span class=p>);</span>
+    <span class=n>headers</span> <span class=o>=</span> <span class=n>curl_slist_append</span><span class=p>(</span><span class=n>headers</span><span class=p>,</span> <span class=s>&#34;accessKeyId:id123&#34;</span><span class=p>);</span>
+    <span class=n>headers</span> <span class=o>=</span> <span class=n>curl_slist_append</span><span class=p>(</span><span class=n>headers</span><span class=p>,</span> <span class=s>&#34;secretAccessKey:key123&#34;</span><span class=p>);</span>
+    <span class=n>headers</span> <span class=o>=</span> <span class=n>curl_slist_append</span><span class=p>(</span><span class=n>headers</span><span class=p>,</span> <span class=s>&#34;Authorization:auth123&#34;</span><span class=p>);</span>
+    
+    <span class=c1>//Init
+</span><span class=c1></span>    <span class=n>curl_global_init</span><span class=p>(</span><span class=n>CURL_GLOBAL_ALL</span><span class=p>);</span>
+    <span class=n>curl</span> <span class=o>=</span> <span class=n>curl_easy_init</span><span class=p>();</span>
+
+    <span class=c1>//Option
+</span><span class=c1></span>    <span class=n>curl_easy_setopt</span><span class=p>(</span><span class=n>curl</span><span class=p>,</span> <span class=n>CURLOPT_URL</span><span class=p>,</span> <span class=n>url</span><span class=p>.</span><span class=n>c_str</span><span class=p>());</span>
+    <span class=n>curl_easy_setopt</span><span class=p>(</span><span class=n>curl</span><span class=p>,</span> <span class=n>CURLOPT_VERBOSE</span><span class=p>,</span> <span class=mi>1</span><span class=p>);</span>
+    <span class=n>curl_easy_setopt</span><span class=p>(</span><span class=n>curl</span><span class=p>,</span> <span class=n>CURLOPT_TIMEOUT</span><span class=p>,</span> <span class=mi>2</span><span class=p>);</span>
+    <span class=n>curl_easy_setopt</span><span class=p>(</span><span class=n>curl</span><span class=p>,</span> <span class=n>CURLOPT_HTTPHEADER</span><span class=p>,</span> <span class=n>headers</span><span class=p>);</span>
+    <span class=n>curl_easy_setopt</span><span class=p>(</span><span class=n>curl</span><span class=p>,</span> <span class=n>CURLOPT_INFILE</span><span class=p>,</span> <span class=n>inputFile</span><span class=p>);</span>
+    <span class=c1>//curl_easy_setopt(curl, CURLOPT_INFILESIZE, 87);
+</span><span class=c1></span>    <span class=n>curl_easy_setopt</span><span class=p>(</span><span class=n>curl</span><span class=p>,</span> <span class=n>CURLOPT_PUT</span><span class=p>,</span> <span class=mi>1</span><span class=p>);</span>
+    <span class=c1>//curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, &#34;PUT&#34;);
+</span><span class=c1></span>        
+    <span class=c1>//Perform
+</span><span class=c1></span>    <span class=n>result</span> <span class=o>=</span> <span class=n>curl_easy_perform</span><span class=p>(</span><span class=n>curl</span><span class=p>);</span>
+
+    <span class=c1>//Clean
+</span><span class=c1></span>    <span class=n>curl_slist_free_all</span><span class=p>(</span><span class=n>headers</span><span class=p>);</span>
+    <span class=n>curl_easy_cleanup</span><span class=p>(</span><span class=n>curl</span><span class=p>);</span>
+    <span class=n>curl_global_cleanup</span><span class=p>();</span>
+
+    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span>
+
+<span class=kt>int</span> <span class=nf>httpGetFile</span><span class=p>()</span> <span class=p>{</span>
+
+    <span class=n>CURL</span><span class=o>*</span> <span class=n>curl</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+    <span class=n>CURLcode</span> <span class=n>result</span> <span class=o>=</span> <span class=n>CURLE_OK</span><span class=p>;</span>
+    <span class=n>string</span> <span class=n>url</span> <span class=o>=</span> <span class=s>&#34;http://10.200.100.50:8080&#34;</span><span class=p>;</span>
+        
+    <span class=n>FILE</span><span class=o>*</span> <span class=n>outputFile</span> <span class=o>=</span> <span class=n>fopen</span><span class=p>(</span><span class=s>&#34;./get.txt&#34;</span><span class=p>,</span> <span class=s>&#34;wb&#34;</span><span class=p>);</span>
+    <span class=n>string</span> <span class=n>inputFilename</span> <span class=o>=</span> <span class=s>&#34;/1.txt&#34;</span><span class=p>;</span>
+    <span class=n>url</span> <span class=o>+=</span> <span class=n>inputFilename</span><span class=p>;</span>
+    
+    <span class=c1>//HttpHead
+</span><span class=c1></span>    <span class=k>struct</span> <span class=n>curl_slist</span><span class=o>*</span> <span class=n>headers</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+    <span class=n>headers</span> <span class=o>=</span> <span class=n>curl_slist_append</span><span class=p>(</span><span class=n>headers</span><span class=p>,</span> <span class=s>&#34;endPoint:http://10.200.100.50:8080&#34;</span><span class=p>);</span>
+    <span class=n>headers</span> <span class=o>=</span> <span class=n>curl_slist_append</span><span class=p>(</span><span class=n>headers</span><span class=p>,</span> <span class=s>&#34;accessKeyId:id123&#34;</span><span class=p>);</span>
+    <span class=n>headers</span> <span class=o>=</span> <span class=n>curl_slist_append</span><span class=p>(</span><span class=n>headers</span><span class=p>,</span> <span class=s>&#34;secretAccessKey:key123&#34;</span><span class=p>);</span>
+    <span class=n>headers</span> <span class=o>=</span> <span class=n>curl_slist_append</span><span class=p>(</span><span class=n>headers</span><span class=p>,</span> <span class=s>&#34;Authorization:auth123&#34;</span><span class=p>);</span>
+    
+    <span class=c1>//Init
+</span><span class=c1></span>    <span class=n>curl_global_init</span><span class=p>(</span><span class=n>CURL_GLOBAL_ALL</span><span class=p>);</span>
+    <span class=n>curl</span> <span class=o>=</span> <span class=n>curl_easy_init</span><span class=p>();</span>
+
+    <span class=c1>//Option
+</span><span class=c1></span>    <span class=n>curl_easy_setopt</span><span class=p>(</span><span class=n>curl</span><span class=p>,</span> <span class=n>CURLOPT_URL</span><span class=p>,</span> <span class=n>url</span><span class=p>.</span><span class=n>c_str</span><span class=p>());</span>
+    <span class=n>curl_easy_setopt</span><span class=p>(</span><span class=n>curl</span><span class=p>,</span> <span class=n>CURLOPT_VERBOSE</span><span class=p>,</span> <span class=mi>1</span><span class=p>);</span>
+    <span class=n>curl_easy_setopt</span><span class=p>(</span><span class=n>curl</span><span class=p>,</span> <span class=n>CURLOPT_TIMEOUT</span><span class=p>,</span> <span class=mi>2</span><span class=p>);</span>
+    <span class=n>curl_easy_setopt</span><span class=p>(</span><span class=n>curl</span><span class=p>,</span> <span class=n>CURLOPT_HTTPHEADER</span><span class=p>,</span> <span class=n>headers</span><span class=p>);</span>
+    <span class=n>curl_easy_setopt</span><span class=p>(</span><span class=n>curl</span><span class=p>,</span> <span class=n>CURLOPT_WRITEDATA</span><span class=p>,</span> <span class=p>(</span><span class=kt>void</span><span class=o>*</span><span class=p>)</span><span class=n>outputFile</span><span class=p>);</span>
+
+    <span class=c1>//Perform
+</span><span class=c1></span>    <span class=n>result</span> <span class=o>=</span> <span class=n>curl_easy_perform</span><span class=p>(</span><span class=n>curl</span><span class=p>);</span>
+
+    <span class=c1>//Clean
+</span><span class=c1></span>    <span class=n>curl_slist_free_all</span><span class=p>(</span><span class=n>headers</span><span class=p>);</span>
+    <span class=n>curl_easy_cleanup</span><span class=p>(</span><span class=n>curl</span><span class=p>);</span>
+    <span class=n>curl_global_cleanup</span><span class=p>();</span>
+
+    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span>
+
+<span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=kt>int</span> <span class=n>argc</span><span class=p>,</span> <span class=kt>char</span><span class=o>*</span> <span class=n>argv</span><span class=p>[])</span> <span class=p>{</span>
+
+    <span class=n>string</span> <span class=n>method</span> <span class=o>=</span> <span class=n>argv</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span>
+
+    <span class=k>if</span><span class=p>(</span><span class=n>method</span> <span class=o>==</span> <span class=s>&#34;PUT&#34;</span> <span class=o>||</span> <span class=n>method</span> <span class=o>==</span> <span class=s>&#34;put&#34;</span><span class=p>)</span> <span class=p>{</span>
+        <span class=n>httpPutFile</span><span class=p>();</span> 
+    <span class=p>}</span><span class=k>else</span> <span class=k>if</span><span class=p>(</span><span class=n>method</span> <span class=o>==</span> <span class=s>&#34;GET&#34;</span> <span class=o>||</span> <span class=n>method</span> <span class=o>==</span> <span class=s>&#34;get&#34;</span><span class=p>)</span> <span class=p>{</span>
+        <span class=n>httpGetFile</span><span class=p>();</span> 
+    <span class=p>}</span><span class=k>else</span> <span class=p>{</span>
+        <span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;Method error, please input </span><span class=se>\&#34;</span><span class=s>PUT</span><span class=se>\&#34;</span><span class=s> or </span><span class=se>\&#34;</span><span class=s>GET</span><span class=se>\&#34;</span><span class=s>.&#34;</span> <span class=o>&lt;&lt;</span> <span class=n>endl</span><span class=p>;</span>
+    <span class=p>}</span>
+    <span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=n>endl</span><span class=p>;</span>
+
+    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span> 
+</code></pre></div><hr><h2 id=参考>参考<a href=#参考 class=anchor aria-hidden=true>#</a></h2><ol><li><p><a href=https://blog.csdn.net/lifan5/article/details/7350154>Linux CURL的安装和使用</a></p></li><li><p><a href=https://blog.csdn.net/qianghaohao/article/details/51684862>linux下编译安装libcurl(附使用示例)</a></p></li><li><p><a href=https://www.cnblogs.com/lidabo/p/4583067.html>curl_easy_setopt-curl库的关键函数之一</a></p></li><li><p><a href=https://www.cnblogs.com/moodlxs/archive/2012/10/15/2724318.html>C++ 用libcurl库进行http通讯网络编程</a></p></li></ol><p class=edit-page><a href=https://github.com/gitsang/gitsang.github.io//blob/master/content/docs/cpp/curl_quick_start.md><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828.0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>Edit this page on GitHub</a></p><div class="docs-navigation d-flex justify-content-between"><a href=/docs/cpp/googletest_quick_start/><div class="card my-1"><div class="card-body py-2">&larr; googletest 快速入门</div></div></a><a class=ml-auto href=/docs/cpp/callback/><div class="card my-1"><div class="card-body py-2">回调函数 &rarr;</div></div></a></div></main></div></div></div><footer class="footer text-muted"><div class=container><div class=row><div class="col-lg-8 order-last order-lg-first"><ul class=list-inline><li class=list-inline-item>Powered by <a href=https://www.netlify.com/>Netlify</a>, <a href=https://gohugo.io/>Hugo</a>, and <a href=https://getdoks.org/>Doks</a></li></ul></div><div class="col-lg-8 order-first order-lg-last text-lg-right"><ul class=list-inline></ul></div></div></div></footer><script src=/main.f6b484f556ad1f3bcf6061082139a2f21fa759f13930c39a25fe4a9f78f35e64122c2d86dffd56e67b292dabbda4095d8077194f196e0e348441c106a9f3d40e.js integrity="sha512-9rSE9VatHzvPYGEIITmi8h+nWfE5MMOaJf5Kn3jzXmQSLC2G3/1W5nspLau9pAldgHcZTxluDjSEQcEGqfPUDg==" crossorigin=anonymous defer></script><script src=/index.min.05ae22ada02f600fc7aede3a95c77f7f825135e68cf8b1fd59e2e73a23cb745350925e624659c293a2cacb290cfddc12e195f6a40faf965d88988b267352a09b.js integrity="sha512-Ba4iraAvYA/Hrt46lcd/f4JRNeaM+LH9WeLnOiPLdFNQkl5iRlnCk6LKyykM/dwS4ZX2pA+vll2ImIsmc1Kgmw==" crossorigin=anonymous defer></script></body></html>
