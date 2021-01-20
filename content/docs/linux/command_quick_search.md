@@ -1,20 +1,17 @@
 ---
-title: "[Linux] 常用命令速查"
+title: "常用命令速查"
+description: ""
+lead: ""
 date: 2020-05-14T14:53:28+08:00
-categories:
-- Linux
-tags:
-- Linux
-thumbnailImage: images/mapel.jpg
-thumbnailImagePosition: right
-metaAlignment: center
-coverImage: images/mapel.jpg
-coverMeta: in
-coverSize: partial
+lastmod: 2020-05-14T14:53:28+08:00
+draft: false
+images: []
+menu: 
+  docs:
+    parent: "linux"
+weight: 100
+toc: true
 ---
-<!--more-->
-
-# [Linux] 常用命令速查
 
 ## 1. Linux常用命令
 

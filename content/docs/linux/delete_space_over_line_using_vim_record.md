@@ -1,24 +1,17 @@
 ---
-title: "[Vim] 使用 Vim 录制宏去除行尾空格"
+title: "使用 Vim 录制宏去除行尾空格"
+description: ""
+lead: ""
 date: 2020-05-07T20:45:49+08:00
-categories:
-- vim
-tags:
-- vim
-keywords:
-- vim
-thumbnailImage: images/gaussian.jpg
-thumbnailImagePosition: right
-coverImage: images/gaussian.jpg
-coverMeta: in
-coverSize: partial
-metaAlignment: center
-# Summary 
+lastmod: 2020-05-07T20:45:49+08:00
+draft: false
+images: []
+menu: 
+  docs:
+    parent: "linux"
+weight: 100
+toc: true
 ---
-
-<!--more-->
-
-# [Vim] 使用 Vim 录制宏去除行尾空格
 
 ```
 qd$a<space><space><esc>g_ldwjq

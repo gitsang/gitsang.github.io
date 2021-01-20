@@ -1,26 +1,17 @@
 ---
 title: "[微信小程序 - 3] 组件-视图容器（ScrollView和Swiper）"
+description: ""
+lead: "注意：此文章发布于2018年2月，年代久远且不再更新，可能有大量过时或错误信息，仅作备份参考"
 date: 2018-02-11T20:14:57+08:00
-categories:
-- 微信小程序
-tags:
-- 微信小程序
-keywords:
-- 微信小程序
-thumbnailImage: images/gaussian.jpg
-thumbnailImagePosition: right
-coverImage: images/gaussian.jpg
-coverMeta: in
-coverSize: partial
-metaAlignment: center
-# Summary 
+lastmod: 2018-02-11T20:14:57+08:00
+draft: false
+images: []
+menu: 
+  docs:
+    parent: "wechat"
+weight: 100
+toc: true
 ---
-
-注意：此文章发布于2018年2月，年代久远且不再更新，可能有大量过时或错误信息，仅作备份参考
-
-<!--more-->
-
-# [微信小程序 - 3] 组件-视图容器（ScrollView和Swiper）
 
 ## 一、scroll-view
 

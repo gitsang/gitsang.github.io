@@ -1,21 +1,17 @@
 ---
-title: "[Redis] Redis 常见报错及解决方法"
+title: "Redis 常见报错及解决方法"
+description: ""
+lead: ""
 date: 2020-05-14T14:53:28+08:00
-categories:
-- database
-- redis
-tags:
-- redis
-keywords:
-- redis
-thumbnailImage: images/city.jpg
-thumbnailImagePosition: right
-metaAlignment: center
-coverImage: images/city.jpg
-coverMeta: in
-coverSize: partial
+lastmod: 2020-05-14T14:53:28+08:00
+draft: false
+images: []
+menu: 
+  docs:
+    parent: "redis"
+weight: 100
+toc: true
 ---
-<!--more-->
 
 ## 1. somaxconn 设置过小 
 

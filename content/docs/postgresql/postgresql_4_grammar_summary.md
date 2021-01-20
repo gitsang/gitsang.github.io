@@ -1,28 +1,22 @@
 ---
-title: "[PostgreSQL - x] PostgreSQL 语法零散总结"
+title: "PostgreSQL 语法零散总结"
+description: ""
+lead: ""
 date: 2020-05-14T14:53:28+08:00
-categories:
-- database
-- postgresql
-tags:
-- postgresql
-keywords:
-- postgresql
-thumbnailImage: images/city.jpg
-thumbnailImagePosition: right
-metaAlignment: center
-coverImage: images/city.jpg
-coverMeta: in
-coverSize: partial
+lastmod: 2020-05-14T14:53:28+08:00
+draft: false
+images: []
+menu: 
+  docs:
+    parent: "postgresql"
+weight: 100
+toc: true
 ---
-<!--more-->
-
-# [PostgreSQL - x] PostgreSQL 语法零散总结
 
 ### Comment 为 pg 数据库的表和列添加注释
 
 1. 添加表注释
-   
+
 ```sql
 COMMENT ON TABLE "public".t1 IS '表注释内容';   
 ```

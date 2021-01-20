@@ -1,26 +1,17 @@
 ---
-title: "[RocketMQ - 2] RocketMQ 核心概念及术语"
+title: "2 RocketMQ 核心概念及术语"
+description: ""
+lead: ""
 date: 2020-05-26T09:33:46+08:00
-categories:
-- 消息中间件
-- RocketMQ
-tags:
-- RocketMQ
-- C++
-keywords:
-- RocketMQ
-thumbnailImage: images/gaussian.jpg
-thumbnailImagePosition: right
-coverImage: images/gaussian.jpg
-coverMeta: in
-coverSize: partial
-metaAlignment: center
-# Summary 
+lastmod: 2020-05-26T09:33:46+08:00
+draft: false
+images: []
+menu: 
+  docs:
+    parent: "rocketmq"
+weight: 100
+toc: true
 ---
-
-<!--more-->
-
-## 1. RocketMQ 简介
 
 ### 1.1 RocketMQ 是什么
 

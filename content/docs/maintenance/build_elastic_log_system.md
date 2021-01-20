@@ -1,21 +1,16 @@
 ---
-title: "[Minecraft] 搭建ELK日志系统"
+title: "搭建ELK日志系统"
+description: ""
+lead: ""
 date: 2020-05-16T22:29:30+08:00
-categories:
-- Minecraft
-tags:
-- 运维
-- Minecraft
-- elk
-keywords:
-- Minecraft
-thumbnailImage: images/gaussian.jpg
-thumbnailImagePosition: right
-coverImage: images/gaussian.jpg
-coverMeta: in
-coverSize: partial
-metaAlignment: center
-# Summary 
+lastmod: 2020-05-16T22:29:30+08:00
+draft: false
+images: []
+menu: 
+  docs:
+    parent: "maintenance"
+weight: 100
+toc: true
 ---
 
 <!--more-->

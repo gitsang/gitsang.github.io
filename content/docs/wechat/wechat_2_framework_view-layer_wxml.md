@@ -1,26 +1,17 @@
 ---
 title: "[微信小程序 - 2] 框架 视图层 WXML（数据绑定、渲染、引用）"
+description: ""
+lead: "注意：此文章发布于2018年2月，年代久远且不再更新，可能有大量过时或错误信息，仅作备份参考"
 date: 2018-02-11T20:02:03+08:00
-categories:
-- 微信小程序
-tags:
-- 微信小程序
-keywords:
-- 微信小程序
-thumbnailImage: images/gaussian.jpg
-thumbnailImagePosition: right
-coverImage: images/gaussian.jpg
-coverMeta: in
-coverSize: partial
-metaAlignment: center
-# Summary 
+lastmod: 2018-02-11T20:02:03+08:00
+draft: false
+images: []
+menu: 
+  docs:
+    parent: "wechat"
+weight: 100
+toc: true
 ---
-
-注意：此文章发布于2018年2月，年代久远且不再更新，可能有大量过时或错误信息，仅作备份参考
-
-<!--more-->
-
-# [微信小程序 - 2] 框架 视图层 WXML（数据绑定、渲染、引用）
 
 ## 一、组件与数据绑定
 

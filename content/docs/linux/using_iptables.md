@@ -1,21 +1,17 @@
 ---
-title: "[Linux] 使用 iptables 进行端口映射"
+title: "使用 iptables 进行端口映射"
+description: ""
+lead: ""
 date: 2020-03-14T14:53:28+08:00
-categories:
-- Linux
-tags:
-- Linux
-- 网络
-thumbnailImage: images/mapel.jpg
-thumbnailImagePosition: right
-metaAlignment: center
-coverImage: images/mapel.jpg
-coverMeta: in
-coverSize: partial
+lastmod: 2020-03-14T14:53:28+08:00
+draft: false
+images: []
+menu: 
+  docs:
+    parent: "linux"
+weight: 100
+toc: true
 ---
-<!--more-->
-
-# 使用iptables进行端口映射 :
 
 ## 第一步 : 打开端口映射功能 :
 

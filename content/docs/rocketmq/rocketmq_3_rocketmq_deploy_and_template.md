@@ -1,26 +1,17 @@
 ---
-title: "[RocketMQ - 3] RocketMQ 部署及编程示例"
+title: "3 RocketMQ 部署及编程示例"
+description: ""
+lead: ""
 date: 2020-05-27T10:58:12+08:00
-categories:
-- 消息中间件
-- RocketMQ
-tags:
-- RocketMQ
-- C++
-keywords:
-- RocketMQ
-# thumbnailImage: images/gaussian.jpg
-# thumbnailImagePosition: right
-coverImage: images/gaussian.jpg
-coverMeta: in
-coverSize: partial
-metaAlignment: center
-# Summary 
+lastmod: 2020-05-27T10:58:12+08:00
+draft: false
+images: []
+menu: 
+  docs:
+    parent: "rocketmq"
+weight: 100
+toc: true
 ---
-
-<!--more-->
-
-# [RocketMQ Cpp - 3] RocketMQ 部署及编程示例
 
 ## 1. 前言
 

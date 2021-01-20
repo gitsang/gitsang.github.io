@@ -1,26 +1,17 @@
 ---
 title: "[微信小程序 - 1] 基本构成及配置"
+description: ""
+lead: "注意：此文章发布于2018年2月，年代久远且不再更新，可能有大量过时或错误信息，仅作备份参考"
 date: 2018-02-11T19:53:57+08:00
-categories:
-- 微信小程序
-tags:
-- 微信小程序
-keywords:
-- 微信小程序
-thumbnailImage: images/gaussian.jpg
-thumbnailImagePosition: right
-coverImage: images/gaussian.jpg
-coverMeta: in
-coverSize: partial
-metaAlignment: center
-# Summary 
+lastmod: 2018-02-11T19:53:57+08:00
+draft: false
+images: []
+menu: 
+  docs:
+    parent: "wechat"
+weight: 100
+toc: true
 ---
-
-注意：此文章发布于2018年2月，年代久远且不再更新，可能有大量过时或错误信息，仅作备份参考
-
-<!--more-->
-
-# [微信小程序 - 1] 基本构成及配置
 
 小程序的前期准备工作可在[开发者文档](https://mp.weixin.qq.com/debug/wxadoc/dev/index.html)查询，此处掠过
 

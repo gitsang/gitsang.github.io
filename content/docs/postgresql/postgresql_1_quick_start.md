@@ -1,23 +1,17 @@
 ---
-title: "[PostgreSQL - 1] PostgreSQL 快速入门"
+title: "1 PostgreSQL 快速入门"
+description: ""
+lead: ""
 date: 2020-05-14T14:53:28+08:00
-categories:
-- database
-- postgresql
-tags:
-- postgresql
-keywords:
-- postgresql
-thumbnailImage: images/city.jpg
-thumbnailImagePosition: right
-metaAlignment: center
-coverImage: images/city.jpg
-coverMeta: in
-coverSize: partial
+lastmod: 2020-05-14T14:53:28+08:00
+draft: false
+images: []
+menu: 
+  docs:
+    parent: "postgresql"
+weight: 100
+toc: true
 ---
-<!--more-->
-
-# [PostgreSQL - 1] PostgreSQL 快速入门
 
 ## PostgreSQL 下载安装
 

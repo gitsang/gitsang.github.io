@@ -1,18 +1,17 @@
 ---
-title: "[Java] Lambda 表达式"
+title: "Lambda 表达式"
+description: ""
+lead: ""
 date: 2020-04-29T14:53:28+08:00
-categories:
-- Java
-tags:
-- Java
-thumbnailImage: images/errigal.jpg
-thumbnailImagePosition: right
-metaAlignment: center
-coverImage: images/errigal.jpg
-coverMeta: in
-coverSize: partial
+lastmod: 2020-04-29T14:53:28+08:00
+draft: false
+images: []
+menu: 
+  docs:
+    parent: "java"
+weight: 100
+toc: true
 ---
-<!--more-->
 
 ```java
     // 使用匿名内部类

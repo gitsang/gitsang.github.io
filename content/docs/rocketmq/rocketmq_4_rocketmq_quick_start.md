@@ -1,22 +1,17 @@
 ---
-title: "[RocketMQ - 4] RocketMQ 快速入门"
+title: "4 RocketMQ 快速入门"
+description: ""
+lead: ""
 date: 2020-05-14T14:53:28+08:00
-categories:
-- 消息中间件
-- RocketMQ
-tags:
-- RocketMQ
-- Java
-thumbnailImage: images/mountain.jpg
-thumbnailImagePosition: right
-metaAlignment: center
-coverImage: images/mountain.jpg
-coverMeta: in
-coverSize: partial
+lastmod: 2020-05-14T14:53:28+08:00
+draft: false
+images: []
+menu: 
+  docs:
+    parent: "rocketmq"
+weight: 100
+toc: true
 ---
-<!--more-->
-
-# RocketMq QuickStart
 
 RocketMQ 的安装和快速入门可以参考官方文档：
 http://rocketmq.apache.org/docs/quick-start/

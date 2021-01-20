@@ -1,26 +1,17 @@
 ---
-title: "[RocketMQ - 1] 消息队列简介"
+title: "1 消息队列简介"
+description: ""
+lead: ""
 date: 2020-05-22T15:44:34+08:00
-categories:
-- 消息中间件
-- RocketMQ
-tags:
-- RocketMQ
-- C++
-keywords:
-- RocketMQ
-thumbnailImage: images/gaussian.jpg
-thumbnailImagePosition: right
-coverImage: images/gaussian.jpg
-coverMeta: in
-coverSize: partial
-metaAlignment: center
-# Summary 
+lastmod: 2020-05-22T15:44:34+08:00
+draft: false
+images: []
+menu: 
+  docs:
+    parent: "rocketmq"
+weight: 100
+toc: true
 ---
-
-<!--more-->
-
-# [RocketMQ-Cpp - 1] 消息队列简介
 
 ## 1. MQ 的优缺点及对比
 

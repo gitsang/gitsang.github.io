@@ -1,19 +1,17 @@
 ---
-title: "[Linux] 使用代理"
+title: "使用代理"
+description: ""
+lead: ""
 date: 2020-03-14T14:53:28+08:00
-categories:
-- Linux
-tags:
-- Linux
-- 网络
-thumbnailImage: images/mapel.jpg
-thumbnailImagePosition: right
-metaAlignment: center
-coverImage: images/mapel.jpg
-coverMeta: in
-coverSize: partial
+lastmod: 2020-03-14T14:53:28+08:00
+draft: false
+images: []
+menu: 
+  docs:
+    parent: "linux"
+weight: 100
+toc: true
 ---
-<!--more-->
 
 ```
 export http_proxy=http://127.0.0.1:1080

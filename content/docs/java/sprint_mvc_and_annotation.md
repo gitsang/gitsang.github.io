@@ -1,20 +1,17 @@
 ---
-title: "[Java] SpringMVC 及其注解"
+title: "SpringMVC 及其注解"
+description: ""
+lead: ""
 date: 2020-05-14T14:53:28+08:00
-categories:
-- Java
-tags:
-- Java
-- Spring
-thumbnailImage: images/errigal.jpg
-thumbnailImagePosition: right
-metaAlignment: center
-coverImage: images/errigal.jpg
-coverMeta: in
-coverSize: partial
+lastmod: 2020-05-14T14:53:28+08:00
+draft: false
+images: []
+menu: 
+  docs:
+    parent: "java"
+weight: 100
+toc: true
 ---
-<!--more-->
-# SpringMVC 分层及 Spring 注解
 
 ## MVC
 

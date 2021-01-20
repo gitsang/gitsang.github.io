@@ -1,35 +1,17 @@
 ---
-title: "[RocketMQ - 5] 关于 Rocketmq 事务消息和两阶段提交的理解"
+title: "5 关于 Rocketmq 事务消息和两阶段提交的理解"
+description: ""
+lead: "本文主要是对事务、事务消息、两阶段提交中概念的理解和解读，因此不会过多地解释具体地运行逻辑。如果想要了解，可以参考前人的文章"
 date: 2020-09-17T15:54:19+08:00
-categories:
-- 消息中间件
-- RocketMQ
-tags:
-- RocketMQ
-- Transaction
-- 事务消息
-- 两阶段提交
-keywords:
-- RocketMQ
-- Transaction
-- 事务消息
-- 两阶段提交
-thumbnailImage: images/gaussian.jpg
-thumbnailImagePosition: right
-coverImage: images/gaussian.jpg
-coverMeta: in
-coverSize: partial
-metaAlignment: center
-# Summary 
+lastmod: 2020-09-17T15:54:19+08:00
+draft: false
+images: []
+menu: 
+  docs:
+    parent: "rocketmq"
+weight: 100
+toc: true
 ---
-
-本文主要是对事务、事务消息、两阶段提交中概念的理解和解读
-
-<!--more-->
-
-# 关于 Rocketmq 事务消息和两阶段提交的理解
-
-本文主要是对事务、事务消息、两阶段提交中概念的理解和解读，因此不会过多地解释具体地运行逻辑。如果想要了解，可以参考前人的文章
 
 ## 1. 事务及两阶段提交
 

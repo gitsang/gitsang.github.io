@@ -1,19 +1,17 @@
 ---
-title: "[Linux] yum 命令简介"
+title: "yum 命令简介"
+description: ""
+lead: ""
 date: 2020-01-14T14:53:28+08:00
-categories:
-- Linux
-tags:
-- Linux
-- yum
-thumbnailImage: images/mapel.jpg
-thumbnailImagePosition: right
-metaAlignment: center
-coverImage: images/mapel.jpg
-coverMeta: in
-coverSize: partial
+lastmod: 2020-01-14T14:53:28+08:00
+draft: false
+images: []
+menu: 
+  docs:
+    parent: "linux"
+weight: 100
+toc: true
 ---
-<!--more-->
 
 Linux系统下yum命令查看安装了哪些软件包： 
 

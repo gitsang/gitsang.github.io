@@ -1,18 +1,17 @@
 ---
-title: "[Java] Springboot 踩坑记录"
+title: "Springboot 踩坑记录"
+description: ""
+lead: ""
 date: 2020-04-29T14:53:28+08:00
-categories:
-- Java
-tags:
-- Java
-thumbnailImage: images/errigal.jpg
-thumbnailImagePosition: right
-metaAlignment: center
-coverImage: images/errigal.jpg
-coverMeta: in
-coverSize: partial
+lastmod: 2020-04-29T14:53:28+08:00
+draft: false
+images: []
+menu: 
+  docs:
+    parent: "java"
+weight: 100
+toc: true
 ---
-<!--more-->
 
 ### Configuration Annotation Proessor not found in classpath
 
