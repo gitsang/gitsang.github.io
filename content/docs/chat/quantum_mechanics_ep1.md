@@ -31,13 +31,13 @@ toc: true
 
 我们先回顾一下实验内容
 
-![薛定谔的猫](https://i0.hdslb.com/bfs/article/87edcd6f3cad5d70bb556f0a78364a273d302b64.png@1320w_748h.webp)
+![薛定谔的猫](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-235111-quantum-01.png)
 
 在一个盒子里有一只猫，以及少量放射性物质。之后，有50%的概率放射性物质将会衰变并释放出毒气杀死这只猫，同时有50%的概率放射性物质不会衰变而猫将活下来。
 
 若根据经典物理学，猫必然是死或生的一种状态。而在量子的世界里，若盒子一直关闭，整个系统就会一直保持不确定性，即猫处在既生又死的叠加状态。猫到底是生是死必须打开盒子后才能知道，也就是说，只有当其被观测时候，物质（猫）的状态才被确定。
 
-![猫的叠加态](https://i0.hdslb.com/bfs/article/d347a3404e008c0684194365eb4b289ae9b42174.png@1320w_748h.webp)
+![猫的叠加态](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-235111-quantum-02.png?raw=true)
 
 注意这里说的是“被确定“而不是”能被确定“，就是说，在观测的瞬间，叠加态就结束了（波函数坍缩），猫的生死也在这一瞬间被决定。
 
@@ -51,11 +51,11 @@ toc: true
 
 对于干涉现象，一般的解释是：电子双缝干涉实验中，任何通过双缝的电子对屏幕图像的贡献是不分通过狭缝的时间先后的（任意两个电子之间都是有某种关联的），每一个粒子通过狭缝的行为都会对其他所有粒子的行为产生影响，因此每个粒子互相干涉而产生了干涉图样。
 
-![双缝干涉图样](https://i0.hdslb.com/bfs/article/4671236725e9e405efa36823c016ae38fbd39aa3.png@1092w_264h.webp)
+![双缝干涉图样](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-235111-quantum-03.png?raw=true)
 
 为了解释一般双缝干涉实验中粒子的相互影响，我们先引进一个概念：量子纠缠（由于这个概念比较复杂，这里仅做科普性解释，就不开新的标题了）。
 
-![量子纠缠](https://i0.hdslb.com/bfs/article/e8087b5d835bf2673e3d8d856f1106b44e975f5c.jpg@1320w_742h.webp)
+![量子纠缠](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-235111-quantum-04.png?raw=true)
 
 在量子力学里，当几个粒子在彼此相互作用后，由于各个粒子所拥有的特性已综合成为整体性质，无法单独描述各个粒子的性质，只能描述整体系统的性质，则称这现象为量子纠缠。而这种纠缠是具有不可分性质的，即是说一旦纠缠，这几个粒子就必须作为一个系统，而不再可能对其中的子系统进行研究。这就解释了为什么每个粒子，即使是一个一个地通过双缝，他们仍然能形成干涉图样。
 
@@ -81,11 +81,11 @@ toc: true
 
 拉普拉斯妖（Démon de Laplace）是由法国数学家皮埃尔-西蒙·拉普拉斯于1814年提出的一种科学假设。此“恶魔”知道宇宙中每个原子确切的位置和动量，能够使用牛顿定律来展现宇宙事件的整个过程，过去以及未来。
 
-![拉普拉斯妖](https://i0.hdslb.com/bfs/article/54554184562f8e84986ee4145cbffc38c230baa3.jpg@1320w_740h.webp)
+![拉普拉斯妖](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-235111-quantum-05.png?raw=true)
 
 这个假说其实就是说，所谓的预言，其实就是现在细节的堆砌，由此说来，其实只要细心的观察，每个人都能够预见未来，就像是天气预报一样，只是推测而已。
 
-![空之境界-未来福音 中的 “未来视”](https://i0.hdslb.com/bfs/article/871eaf70485e00a5e1747686f409060b6a2ef21c.jpg@1320w_738h.webp)
+![空之境界-未来福音 中的 “未来视”](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-235111-quantum-06.png?raw=true)
 
 不过拉普拉斯以后，近代的量子力学诠释使得拉普拉斯妖的理论基础受到质疑。
 
@@ -101,7 +101,7 @@ toc: true
 
 这也让我想到了刘慈欣在《三体》中写到的经由”球状闪电“变成量子态的人，其中的漏洞到底有多少我们不去讨论，但是人类确实已经越来越接近实现生命体的薛定谔的猫。
 
-![三体](https://i0.hdslb.com/bfs/article/3889d273aaa1ca90ddfcc7e6abc7cf61bb11bad3.jpg@1320w_742h.webp)
+![三体](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-235111-quantum-07.png?raw=true)
 
 ## “当我们不观测时，月亮是不存在的”
 
