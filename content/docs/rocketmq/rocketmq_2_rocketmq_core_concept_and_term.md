@@ -1,5 +1,5 @@
 ---
-title: "2 RocketMQ 核心概念及术语"
+title: "[2] RocketMQ 核心概念及术语"
 description: ""
 lead: ""
 date: 2020-05-26T09:33:46+08:00
@@ -12,6 +12,8 @@ menu:
 weight: 100
 toc: true
 ---
+
+### 1. RocketMQ 概述
 
 ### 1.1 RocketMQ 是什么
 

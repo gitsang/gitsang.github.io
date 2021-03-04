@@ -1,5 +1,5 @@
 ---
-title: "4 RocketMQ 快速入门"
+title: "[4] RocketMQ 快速入门"
 description: ""
 lead: ""
 date: 2020-05-14T14:53:28+08:00

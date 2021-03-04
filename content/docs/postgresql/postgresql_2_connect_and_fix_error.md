@@ -1,5 +1,5 @@
 ---
-title: "2 建立 PostgreSQL 连接及常见错误解决方法"
+title: "[2] 建立 PostgreSQL 连接及常见错误解决方法"
 description: ""
 lead: ""
 date: 2020-05-14T14:53:28+08:00
@@ -13,6 +13,8 @@ weight: 100
 toc: true
 ---
 
+## 连接 pg
+
 通过以下命令可访问远程机器上的 pg
 
 ```
@@ -23,7 +25,7 @@ toc: true
 
 ### 连接被拒 1
 
-大多数情况下 pg 会禁止远程接入，通过以上命令，或其他方式接入 pg 可能被拒绝访问，出现如下错误
+大多数情况下 pg 会禁止远程接入，通过以上命令，或其他方式接入 pg 可能被拒绝访问，出现如下错误[^1][^2][^5]
 
 ```
 psql: error: could not connect to server: FATAL:  Ident authentication failed for user "postgres"
@@ -96,7 +98,7 @@ Try "pg_ctl --help" for more information.
 
 从报错信息可以看出是没有配置环境变量 PGDATA
 
-编辑 postgres(或其他数据库管理员) 用户的用户配置文件
+编辑 postgres(或其他数据库管理员) 用户的用户配置文件[^4]
 
 ```
 [postgres@host ~] $ vim ~/.bash_profile
@@ -124,7 +126,7 @@ export PGDATA=/var/lib/pgsql/data
 
 原因是 pg 的 bin 目录不在 PATH 环境变量下
 
-可以修改配置文件，添加 bin 路径到 PATH 下
+可以修改配置文件，添加 bin 路径到 PATH 下[^3]
 
 ```
 PATH=$PATH:$HOME/bin:/usr/pgsql-12/bin/
@@ -135,12 +137,13 @@ PATH=$PATH:$HOME/bin:/usr/pgsql-12/bin/
 ------------------------------------------------------------------------------------------
 
 ## 参考
-https://blog.csdn.net/kongxx/article/details/5964638
 
-https://blog.csdn.net/u012948976/article/details/51763565?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task
+[^1]: [PostgreSQL一些简单问题以及解决办法 - CSDN](https://blog.csdn.net/kongxx/article/details/5964638)
 
-https://my.oschina.net/zhangjiawen/blog/180637
+[^2]: [PostgreSQL问题解决--连接失败 - CSDN](https://blog.csdn.net/u012948976/article/details/51763565?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task)
 
-https://blog.csdn.net/pg_hgdb/article/details/78712694
+[^3]: [初识Postgresql和Sqoop - oschina](https://my.oschina.net/zhangjiawen/blog/180637)
 
-[stackoverflow 相关问题 （可能有重要信息）](https://stackoverflow.com/questions/2942485/psql-fatal-ident-authentication-failed-for-user-postgres)
+[^4]: [使用pg_ctl启动数据库时报错 - CSDN](https://blog.csdn.net/pg_hgdb/article/details/78712694)
+
+[^5]: [psql: FATAL: Ident authentication failed for user “postgres” - stackoverflow](https://stackoverflow.com/questions/2942485/psql-fatal-ident-authentication-failed-for-user-postgres)

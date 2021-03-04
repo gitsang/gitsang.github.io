@@ -1,5 +1,5 @@
 ---
-title: "Golang中defer和return执行顺序的陷阱"
+title: "[2] Golang中defer和return执行顺序的陷阱"
 description: ""
 lead: "Golang 中 defer 几乎被当作 try catch final 使用，但事实上 defer 对返回值的修改和 final 仍然有些一些微妙的不同"
 date: 2020-08-28T16:08:25+08:00
@@ -9,7 +9,7 @@ images: []
 menu: 
   docs:
     parent: "golang"
-weight: 10
+weight: 100
 toc: true
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "闭包简述"
+title: "[1] 什么是闭包"
 description: ""
 lead: ""
 date: 2020-07-23T15:00:35+08:00

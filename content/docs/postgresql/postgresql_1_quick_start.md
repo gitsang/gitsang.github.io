@@ -1,5 +1,5 @@
 ---
-title: "1 PostgreSQL 快速入门"
+title: "[1] PostgreSQL 快速入门"
 description: ""
 lead: ""
 date: 2020-05-14T14:53:28+08:00
@@ -15,7 +15,7 @@ toc: true
 
 ## PostgreSQL 下载安装
 
-在官网页面能够找到不同系统和不同软件版本的安装方式 https://www.postgresql.org/download/
+在官网页面[^1]能够找到不同系统和不同软件版本的安装方式 https://www.postgresql.org/download
 
 本文以 CentOS 7 为例，安装 PostgreSQL-12.2 版本，其余版本的安装根据官网操作即可
 
@@ -96,5 +96,5 @@ netstat -a | grep PGSQL
 ------------------------------------------------------------------------------------------
 
 ## 参考
-https://www.postgresql.org/download/
-https://blog.csdn.net/ghostliming/article/details/52472920
+
+[^1]: [PostgreSQL: Download](https://www.postgresql.org/download/)

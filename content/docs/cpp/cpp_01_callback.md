@@ -1,5 +1,5 @@
 ---
-title: "回调函数"
+title: "[1] 什么是回调函数"
 description: ""
 lead: ""
 date: 2019-10-09T14:53:28+08:00
@@ -12,8 +12,6 @@ menu:
 weight: 1
 toc: true
 ---
-
-# 回调函数
 
 ## 回调函数简介
 

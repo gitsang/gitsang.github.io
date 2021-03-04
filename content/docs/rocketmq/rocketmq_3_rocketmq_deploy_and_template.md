@@ -1,5 +1,5 @@
 ---
-title: "3 RocketMQ 部署及编程示例"
+title: "[3] RocketMQ 部署及编程示例"
 description: ""
 lead: ""
 date: 2020-05-27T10:58:12+08:00

@@ -1,5 +1,5 @@
 ---
-title: "gdb 快速入门"
+title: "[3] GDB 快速入门"
 description: ""
 lead: ""
 date: 2019-10-09T14:53:28+08:00

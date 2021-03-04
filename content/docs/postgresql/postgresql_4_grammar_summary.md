@@ -1,5 +1,5 @@
 ---
-title: "PostgreSQL 语法零散总结"
+title: "[4] PostgreSQL 语法零散总结"
 description: ""
 lead: ""
 date: 2020-05-14T14:53:28+08:00

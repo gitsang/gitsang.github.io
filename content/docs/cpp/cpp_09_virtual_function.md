@@ -1,5 +1,5 @@
 ---
-title: "Virtual 虚"
+title: "[9] C++ 面向对象中的虚(Virtual)"
 description: ""
 lead: "在 C++ 面向对象中，虚(virtual) 是个重要的概念，他充分体现了面向对象实现中的继承和多态这两大特性"
 date: 2020-05-28T15:22:06+08:00
