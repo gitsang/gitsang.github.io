@@ -44,7 +44,7 @@ $ ssh LocalUser@10.200.100.10
 [LocalUser@LocalNet] $ ssh -p 22 -qngfNTR 10022:localhost:22 OuterUser@50.100.50.100
 ```
 
-或（以下参数似乎比较稳定）
+或（以下参数似乎比较稳定）[^1]
 
 ```
 [root@LocalNet] $ ssh -fN -R :55555:localhost:22 50.100.50.100
@@ -76,6 +76,15 @@ $ ssh LocalUser@10.200.100.10
 [OuterUser@OuterNet] $ ssh -p 10022 LocalUser@127.0.0.1
 ```
 
+### 监听 0.0.0.0
+
+如果需要监听 0.0.0.0 需要在服务端，即公网机器上开启 GatewayPorts
+
+在 /etc/ssh/sshd_config 中把 `GatewayPorts` 设为 yes
+
+## 参考
+
+[^1]: [ssh端口转发：ssh隧道](https://www.zsythink.net/archives/2450)
 
 
 
