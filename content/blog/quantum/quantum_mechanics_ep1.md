@@ -7,7 +7,7 @@ lastmod: 2019-01-05T23:43:00+08:00
 draft: false
 images: []
 menu: 
-  docs:
+  blog:
     parent: "quantum"
 weight: 1
 toc: true
