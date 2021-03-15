@@ -45,3 +45,10 @@ alertText = "Like Doks? <a class=\"alert-link\" href=\"https://github.com/h-enk/
 # Edit Page
 docsRepo = "https://github.com/gitsang/gitsang.github.io/"
 editPage = true
+
+# utter
+[utteranc]
+    enable = true
+    repo = "gitsang/gitsang.github.io"
+    issueTerm = "title"
+    theme = "github-light"
