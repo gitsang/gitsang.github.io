@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>rocketmq on</title><link>/docs/rocketmq/</link><description>Recent content in rocketmq on</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Tue, 06 Oct 2020 08:48:45 +0000</lastBuildDate><atom:link href="/docs/rocketmq/index.xml" rel="self" type="application/rss+xml"/><item><title>[5] 关于 Rocketmq 事务消息和两阶段提交的理解</title><link>/docs/rocketmq/rocketmq_5_discuss_about_transaction_message/</link><pubDate>Thu, 17 Sep 2020 15:54:19 +0800</pubDate><guid>/docs/rocketmq/rocketmq_5_discuss_about_transaction_message/</guid><description>1. 事务及两阶段提交 1.1 事务的 HelloWorld 级理解 许多文档或文章中都会使用那个张三给李四转钱的例子来解释事务及其存在的必要。(即A账户-100，B账户+100这两件事，应该同时成功或失败，不能一半成功一半失败)
+而要解决这个问题就引入了两阶段提交，第一阶段向 A 和 B 发送 prepare，让 A 和 B 准备好扣钱和加钱，即冻结这部分钱，然后当 A 和 B 都检查完毕没有问题并返回准备完成后，执行第二阶段，发送 commit 让 A 和 B 执行操作。
+这看起来通俗易懂，但似乎很容易地就发现了，这么做似乎还是会出现一个成功一个失败的问题啊。没错，确实如此，比如 commit 万一其中一个没收到，所以还有很多工作要做。
+但你需要知道的是，实际上，到此为止两阶段提交已经&amp;quot;结束&amp;quot;了。接下来的问题其实已经不是两阶段提交需要解决的了。也就是 “两阶段提交能处理业务异常的失败，处理不了系统异常的失败”
+因此，接下来我们也不会探讨如何解决这些问题，但我们还是需要知道有哪些问题需要解决以及由谁解决。也就是我们需要什么样的系统才能满足两阶段提交。
+1.2 两阶段提交的系统稳定性探索 很显然到目前为止，两阶段提交已经为我们解决了很多的问题，比如 A 账户余额不足，B 账户不存在等，这些业务逻辑上的错误我们已经能够避免了。但系统的网络并不总是通畅的，系统也不是永远能稳定运行的。比如网络波动，比如宕机都会影响到执行的结果。遗憾的是，两阶段提交并不能解决这些问题。
+“好在”我们需要的“仅仅”是保证最终一致，那么如果发送 commit 失败，我就能够通过不断重试最终让 commit 成功，或者是所有机器都宕机了，那这些机器就要保证在重启后能够互相协商，并且准备阶段需要把状态落盘进行持久化等等，甚至你还要考虑要是连硬盘都坏了呢。
+这可以考虑到很深很深，但意外总会发生，我们只能尽可能减小他发生错误的概率，不过这些都不是两阶段提交的内容了。而我们在实现事务消息的时候也只需要根据实际情况做出相对合理的应对就行了，比如对于普通的业务我只需要保证只要硬盘不出问题我的系统就是稳定的，就足够了。
+(这里还暂时不引入协调者这个概念，因为协调者和客户端的行为十分相似，即使不引入，也能够支撑讨论，引入后反而增加理解难度)
+1.3 关于超时的讨论 很显然，我们无法保证系统的完全稳定，即使我们已经做好了充足的应对，但仍然需要考虑到如果系统真的出现了故障时，应该做些什么，或者不能做些什么。
+我们需要知道，整个两阶段提交中，实际上只有两个地方会产生阻塞，第一是 client 向 A/B 发送 prepare 后需要等待 A/B 的相应，第二个地方是 A/B 向客户端相应 prepare 后需要等待客户端的 commit。
+Q1: Client 等待 A/B 返回 prepare 结果时，如果长时间得不到某一个的相应，是否能够发起 rollback ？ 可以，这实际上是非常保守的做法，以牺牲耗时和数据为代价，保证了系统的一致，也许 A/B 都已经做好了准备，但 Client 已经做好了最坏的打算，于是终止了一切。</description></item><item><title>[3] RocketMQ 部署及编程示例</title><link>/docs/rocketmq/rocketmq_3_rocketmq_deploy_and_template/</link><pubDate>Wed, 27 May 2020 10:58:12 +0800</pubDate><guid>/docs/rocketmq/rocketmq_3_rocketmq_deploy_and_template/</guid><description>1. 前言 虽然 RocketMQ 提供了 C++ 语言的客户端，但仍需在 Java 环境下进行部署。
+本文开发环境：
+CentOS Linux release 7.5.1804 (Core) OpenJDK version 1.8.0_252 Apache Maven 3.0.5 (Red Hat 3.0.5-17) RocketMQ 4.7.0 Maven 和 JDK 的安装都很简单，只需要到官网下载对应 tar 包解压后添加到环境变量即可，因此不再赘述。本文 JDK 使用的是 OpenJDK。同时需要说明的是 OpenJDK 是免费开源的项目，而如果你使用 OracleJDK 则需要注意版权问题（当然个人开发可以免费试用）
+2. RocketMQ 的安装及配置 如果你在安装过程中遇到问题，请参考RocketMQ官方文档
+2.1 RocketMQ 的安装 # 到以下网址获取 zip 包下载链接: # http://rocketmq.apache.org/dowloading/releases/ wget https://archive.apache.org/dist/rocketmq/4.7.0/rocketmq-all-4.7.0-source-release.zip unzip rocketmq-all-4.7.0-source-release.zip cd rocketmq-all-4.7.0/ mvn -Prelease-all -DskipTests clean install -U 执行成功后 RocketMQ 会被安装在当前目录的 distribution/target/rocketmq-4.</description></item><item><title>[2] RocketMQ 核心概念及术语</title><link>/docs/rocketmq/rocketmq_2_rocketmq_core_concept_and_term/</link><pubDate>Tue, 26 May 2020 09:33:46 +0800</pubDate><guid>/docs/rocketmq/rocketmq_2_rocketmq_core_concept_and_term/</guid><description>1. RocketMQ 概述 1.1 RocketMQ 是什么 RocketMQ 是阿里巴巴开源的分布式消息中间件，并于 2016 年捐赠给了 Apache 基金会。并且经历了双十一万亿级数据的洗礼，性能和可靠性都又足够的保障。
+1.2 为什么使用 RocketMQ 使用 Java 开发，还提供了不同语言 (C++/Go) 的 SDK，可以比较方便地从源码解决问题
+RocketMQ 原生支持分布式
+RocketMQ 能够保证严格地消息顺序
+堆积了亿级的消息后，依然保持写入低延迟
+2. RocketMQ 核心概念简述 2.1 角色 生产者（Producer） 发送消息的客户端角色，通常是产生数据的业务
+生产者组（Producer Group） 发送同类消息的 producer 组合标识，这些 producer 通常发送逻辑一致。
+对于普通消息，仅用作标识，无特别用处。主要用处是再发送事务消息时，如果某个 producer 崩溃，到达超时时间后，broker 能根据 group 查找组内的其他 producer 以确定这条消息是 commit 还是 rollback。
+消费者（Consumer） 消费消息的客户端角色。通常是后台处理异步消费的系统。
+消费者从 brokers 中拉取消息，并且将消息传递给业务系统。从用户应用的角度看，提供了两种类型的消费者：pullconsumer 和 pushconsumer
+消费者组（Consumer Group） 消费同类消息的 consumer 组合标识，这些 consumer 通常消费逻辑一致。在消息消费方面达到负载均衡和容错。</description></item><item><title>[1] 消息队列简介</title><link>/docs/rocketmq/rocketmq_1_introduce_message_queue/</link><pubDate>Fri, 22 May 2020 15:44:34 +0800</pubDate><guid>/docs/rocketmq/rocketmq_1_introduce_message_queue/</guid><description>1. MQ 的优缺点及对比 1.1 什么是 MQ 消息队列（Message Queue）是一种进程间通信或同一进程的不同线程间的通信方式，简单来说就是用来存储通信消息的队列。
+1.2 为什么使用 MQ 解耦、异步、削峰
+1.2.1 解耦 传统模式的系统中，假设 A 系统需要将生产的数据发送给 B、C，那么只需要直接调用 B、C 提供的接口。但如果之后有新的系统 D 也需要这份数据，那 A 就必须修改代码调用 D 的接口，以后每添加一个需要 A 数据的系统，或是某个系统不需要接入 A 了，A 都需要修改代码，且当下游系统宕机还会对 A 也产生影响。
+因此需要 MQ 中间件实现系统的解耦。A 只需要将数据发送到 MQ 里，其他系统如果需要可以对数据进行订阅，不需要了就取消订阅。这样 A 只需要编写消息生产的代码，A 也不再需要考虑其他系统的异常情况。
+1.2.2 异步 假设 A 系统向 B 发送一条消息需要 5ms，但 B 解析完成这条消息需要 200ms，传统模式中，A 调用 B 完成一条消息发送到返回，需要 205ms。在这个过程 A 系统浪费掉了 200ms 的时间。
+使用消息队列后，A 系统只需要一股脑地将数据丢进消息队列，然后返回即可。这样只需要消耗向 MQ 传输数据的时间，让 B 慢慢地异步处理这些消息就行。这样能让 A 系统迅速完成工作，同时也不会长时间地占用连接。
+1.2.3 削峰 假设 A 系统稳定情况下，每秒能够处理几百个请求，正常地使用都是 OK 的。但是如果突然出现每秒几千的请求，可能系统就直接被打死了，按照传统的模式解决这种问题的方法只能是增加机器分担请求。</description></item><item><title>[4] RocketMQ 快速入门</title><link>/docs/rocketmq/rocketmq_4_rocketmq_quick_start/</link><pubDate>Thu, 14 May 2020 14:53:28 +0800</pubDate><guid>/docs/rocketmq/rocketmq_4_rocketmq_quick_start/</guid><description>RocketMQ 的安装和快速入门可以参考官方文档： http://rocketmq.apache.org/docs/quick-start/
+主要步骤为
+unzip -&amp;gt; mvn build -&amp;gt; Start Name Server -&amp;gt; Start Broker -&amp;gt; Send &amp;amp; Receive Message -&amp;gt; Shutdown Servers
+1. build 根据官方文档解压并 build
+&amp;gt; unzip rocketmq-all-4.6.1-source-release.zip &amp;gt; cd rocketmq-all-4.6.1/ &amp;gt; mvn -Prelease-all -DskipTests clean install -U &amp;gt; cd distribution/target/apache-rocketmq 如果安装其他版本的 RocketMQ 失败建议尝试使用官方最新版的进行安装部署
+比如按照其他教程安装 rocketmq-all-4.2.0-bin-release 版本时出现 Build 错误，如果不是必须使用该版本可以使用官方最新版重新安装
+[INFO] Error stacktraces are turned on. [INFO] Scanning for projects... [INFO] ------------------------------------------------------------------------ [INFO] BUILD FAILURE [INFO] ------------------------------------------------------------------------ [INFO] Total time: 0.</description></item></channel></rss>

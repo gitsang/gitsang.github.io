@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>maintenance on</title><link>/docs/maintenance/</link><description>Recent content in maintenance on</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Tue, 06 Oct 2020 08:48:45 +0000</lastBuildDate><atom:link href="/docs/maintenance/index.xml" rel="self" type="application/rss+xml"/><item><title>如何使用代理</title><link>/docs/maintenance/using_proxy/</link><pubDate>Thu, 21 Jan 2021 12:43:30 +0800</pubDate><guid>/docs/maintenance/using_proxy/</guid><description>1. 背景 1.1 我们什么时候需要使用代理 假设你在家里或公司拥有一个服务器，或一个服务器集群，但这些服务器都是仅在内网开放的，此时你想要在家或公司之外访问内部的网络，有两种方法，一种是将内网的服务开放到公网，第二种就是使用代理。
+这里说的代理是泛指，大致包括代理服务器，跳板机，远程连接等。他们最基本的原理就是，使用一个能同时连接公网和内网的机器作为中介，这台机器可以是物理机或者虚拟机，可以是服务器集群内的某一台机器，或者是服务器的某个端口。这个中介同时连接公网和内网，将公网的请求转发到内网，将内网的响应转发到公网。
+通俗的解释就是，你想要拿到某人家中的某物，但你自己进不去房子，于是你贿赂他们家的小孩让他帮你拿出来，这个小孩就是中介（或者叫代理）。
+2. 使用 v2ray 2.1 Windows 系统 2.1.2 V2rayN Windows 下有许多 v2ray 的 ui 界面，比较出名的是 v2rayN，下面仅以此软件作为说明，其他软件大同小异。
+2.1.2.1 下载 v2rayN 如果是第一次使用 v2ray，你需要从 github 上下载一个 v2rayN-core，如果下载较慢也可以从此处下载
+如果报毒需要先关闭相关杀毒软件，或白名单放行。
+2.1.2.2 配置 v2rayN 下载并解压软件后，进入文件夹内，右键 v2rayN.exe 以管理员身份运行。
+点击 服务器 -&amp;gt; 添加服务器 以添加服务器配置，或在页面上直接 ctrl+v 从剪贴板导入
+右击任务栏右下角 V2RayN 图标 -&amp;gt; 服务器 -&amp;gt; 选择刚才添加的线路 点击 设置 -&amp;gt; 参数设置 在 基础设置 中配置监听端口，一般不需要修改 在 v2rayN设置 中勾选 允许来自局域网的连接。这个选项会将 v2ray 的 http/socks 端口暴露，请一定只在局域网内勾选此选项，选项勾选后，与该机器连接在同一个网段上（连接同一个wifi的）的其他机器就可以使用这台机器的代理了 全部配置完成后，点击 重启服务，看到日志输出类似 V2Ray x.</description></item><item><title>搭建ELK日志系统</title><link>/docs/maintenance/build_elastic_log_system/</link><pubDate>Sat, 16 May 2020 22:29:30 +0800</pubDate><guid>/docs/maintenance/build_elastic_log_system/</guid><description/></item></channel></rss>
