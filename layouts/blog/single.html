@@ -8,6 +8,7 @@
       </div>
       <p class="lead">{{ .Params.lead | safeHTML }}</p>
       {{ .Content }}
+      <br>{{ partial "comments/comments.html" . }}
     </article>
   </div>
 </div>
