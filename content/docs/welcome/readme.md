@@ -1,0 +1,55 @@
+---
+title: "Readme"
+description: ""
+lead: ""
+date: 2021-01-20T14:40:00+08:00
+lastmod: 2021-03-24T15:43:00+08:00
+draft: false
+images: []
+menu:
+  docs:
+    parent: "welcome"
+weight: 100
+toc: true
+---
+
+## 说明
+
+站点还在搭建当中，在这里你可能会看到
+
+- 格式混乱的 markdown
+- 双重标题
+- 404 页面
+- 图裂
+
+我其实并不懂什么 HTML/CSS，这个是 hugo(doks) 一键生成的，所以页面可能有 BUG。
+
+图床还没搭起来，目前是本地服务器转发出来的，可能会不稳定
+
+总之虽然没什么人看，但是请务必忍住想要打作者的冲动。
+
+## 关于页面布局和文章存放位置
+
+- Docs 页面主要是技术文档，学习笔记之类的
+
+- Blog 主要是一些随笔，散文什么的
+
+- Home 页面个人技术栈，不是很全，有时候也不知道要放些什么
+
+## 其他博文
+
+有时候为了能快速整理，博客会先在其他平台发布，但这里应该会是最全的：
+
+- [https://www.cnblogs.com/sangria/](https://www.cnblogs.com/sangria/)
+
+- [https://blog.csdn.net/u013499216](https://blog.csdn.net/u013499216)
+
+### Modified History
+
+- 2021-03-24T15:43:20+08:00
+  - 更新 Readme
+  - 更新首页技术栈
+
+- 2021-03-18T03:51:24+01:00
+    - 评论系统已经开放，如果你只是觉得好玩，可以在此页面下随意评论，但不要在其他页面下发表无意义评论（需要登录 github）
+
