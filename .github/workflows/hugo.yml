@@ -2,7 +2,7 @@ name: hugo
 
 on:
   push:
-    branches: [master]
+    branches: [master, content]
   pull_request:
     branches: [master]
 
