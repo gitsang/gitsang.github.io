@@ -154,15 +154,15 @@ nohup ./filebeat -e -c filebeat.yml -d "publish" > filebeat.log 2>&1 &
 
 ```
 # 设置 swap 文件
-dd if=/dev/zero of=/tmp/swap bs=1MB count=6144
+dd if=/dev/zero of=/.swap bs=1048576 count=4096
 # 创建(格式化) swap 
-mkswap /tmp/swap
+mkswap /.swap
 # 启动 swap
-swapon /tmp/swap
+swapon /.swap
 # 查看 swap 使用情况
 # free -h
 # 设置开机自启
-echo "/tmp/swap swap swap defaults 0 0" >> /etc/fstab
+echo "/.swap swap swap defaults 0 0" >> /etc/fstab
 ```
 
 ### 4.2 docker run 参数调优
