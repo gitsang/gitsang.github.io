@@ -1,5 +1,5 @@
 ---
-title: "[9] C++ 面向对象中的虚(Virtual)"
+title: "C++ 面向对象中的虚(Virtual)"
 description: ""
 lead: "在 C++ 面向对象中，虚(virtual) 是个重要的概念，他充分体现了面向对象实现中的继承和多态这两大特性"
 date: 2020-05-28T15:22:06+08:00
@@ -9,17 +9,16 @@ images: []
 menu: 
   docs:
     parent: "cpp"
-weight: 1
+weight: 100
 toc: true
 ---
-
-# [C++] 虚函数，纯虚函数，虚继承，虚析构函数
+<!--more-->
 
 ## 1. 虚函数
 
 ### 1.1 简述
 
-所谓虚函数是指：在类中希望被重写(override)的虚构的函数。也就是说 C++ 可以在派生类(derived class)中通过重写基类(based class)的虚函数来实现对基类虚函数的覆盖(override)
+所谓虚函数是指：在类中希望被重写(override)的虚构的函数。也就是说 C++ 可以在派生类(derived class)中通过重写基类(based class)的虚函数来实现对基类虚函数的覆盖(override)[^1] [^2] [^3] [^4] [^5] [^6] [^7] [^8]
 
 ### 1.2 常见用法
 
@@ -139,9 +138,8 @@ g++ -S -fverbose-asm -g t_virtual.cpp -o t_virtual.s
 as -alhnd t_virtual.s > t_virtual.as
 ```
 
-## 2. 纯虚函数
 
-## 参考[^1][^2][^3][^4][^5][^6][^7][^8]
+## 参考
 
 [^1]: [C++构造/析构函数中的多态(二)](http://codemacro.com/2014/09/06/necessary-dtor/)
 

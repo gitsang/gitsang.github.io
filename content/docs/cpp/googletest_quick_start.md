@@ -1,5 +1,5 @@
 ---
-title: "[4] Googletest 快速入门"
+title: "Googletest Quick Start"
 description: ""
 lead: ""
 date: 2019-12-15T14:53:28+08:00
@@ -9,11 +9,10 @@ images: []
 menu: 
   docs:
     parent: "cpp"
-weight: 1
+weight: 100
 toc: true
 ---
-
-# Using googletest
+<!--more-->
 
 ## 1. Install
 
@@ -22,14 +21,14 @@ toc: true
 Using git clone.
 
 ```sh
-$ git clone https://github.com/google/googletest.git
+git clone https://github.com/google/googletest.git
 ```
 
-Using wget to achieve tar package, you can find newest tar address at `README.md`.
+Using wget to achieve tar package, you can find newest tar address at `README.md`.[^2] [^3]
 
 ```sh
-$ wget https://github.com/google/googletest/archive/release-1.10.0.tar.gz
-$ tar -zxvf release-1.10.0.tar.gz
+wget https://github.com/google/googletest/archive/release-1.10.0.tar.gz
+tar -zxvf release-1.10.0.tar.gz
 ```
 
 ### 1.2 Make & Install
@@ -131,10 +130,9 @@ $ ./a.out
 
 `-lgtest` is used for linking `libgtest.a`
 
-If using `-lgtest_main`, you can coding without main() function
+If using `-lgtest_main`, you can coding without main() function[^4]
 
-----------------------------------------------------------------------------------------------------
-
+---
 ## Q & A
 
 ### Q1: Undefined reference when linking with googletest
@@ -149,7 +147,7 @@ If the version installed from the debian package is newer, your Makefile can pic
 
 The solution is to look for `/usr/local/include/gtest` and `/usr/include/gtest` to see if they both exist. If they do then delete the older directory.
 
-If `/usr/include/gtest` is the older directory, you may want to remove it by uninstalling the `libgtest-dev` package.
+If `/usr/include/gtest` is the older directory, you may want to remove it by uninstalling the `libgtest-dev` package.[^1]
 
 ### Q2: Could not find CMAKE_ROOT
 
@@ -184,12 +182,13 @@ add `-std=c++11` when compile
 $ g++ *.cpp -lgtest -lpthread -std=c++11
 ```
 
+
 ## Reference
 
-https://stackoverflow.com/questions/39207940/undefined-reference-when-linking-with-googletest
+[^1]: [Undefined reference when linking with googletest - Stack Overflow](https://stackoverflow.com/questions/39207940/undefined-reference-when-linking-with-googletest)
 
-https://qiita.com/shohirose/items/30e39949d8bf990b0462
+[^2]: [Google Testの使い方 - Qiita](https://qiita.com/shohirose/items/30e39949d8bf990b0462)
 
-http://senlinzhan.github.io/2017/10/08/gtest/
+[^3]: [使用 Google Test 测试框架 - Senlin's Blog](http://senlinzhan.github.io/2017/10/08/gtest/)
 
-http://www.manongjc.com/article/68895.html
+[^4]: [第一个gtest程序 - 码农教程](http://www.manongjc.com/article/68895.html)

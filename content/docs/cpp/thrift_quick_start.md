@@ -1,5 +1,5 @@
 ---
-title: "[5] Thrift 快速入门"
+title: "Thrift 快速入门"
 description: ""
 lead: ""
 date: 2020-05-14T14:53:28+08:00
@@ -9,15 +9,14 @@ images: []
 menu: 
   docs:
     parent: "cpp"
-weight: 1
+weight: 100
 toc: true
 ---
+<!--more-->
 
-## thrift 源码包安装
+## 1. thrift 基本使用
 
-## thrift 基本使用
-
-### 1. 创建 thrift 文件
+### 1.1 创建 thrift 文件
 
 ```thrift
 # worker.thrift
@@ -28,7 +27,7 @@ service WorkerManager {
 }
 ```
 
-### 2. 生成 cpp 代码
+### 1.2 生成 cpp 代码
 
 ```
 thrift -r --gen cpp worker.thrift
@@ -47,7 +46,7 @@ thrift -r --gen cpp worker.thrift
 
 WorkerManager_server.skeleton.cpp 就是 C++ 服务端的 main 函数入口文件
 
-### 3. 编写 Client
+### 1.3 编写 Client[^1]
 
 ```cpp
 /* Client.cpp */
@@ -85,7 +84,7 @@ int main() {
 }
 ```
 
-### 4. 编译
+### 1.4 编译
 
 ```sh
 # make.sh
@@ -97,7 +96,7 @@ g++ -g -Wall -I./ -I/usr/local/include/thrift WorkerManager.cpp worker_types.cpp
 g++ -g -Wall -I./ -I/usr/local/include/thrift WorkerManager.cpp worker_types.cpp worker_constants.cpp Client.cpp -L/usr/local/lib/*.so -lthrift -std=c++11 -o client
 ```
 
-### 5. 运行
+### 1.5 运行
 
 ```sh
 ./server
@@ -107,7 +106,9 @@ g++ -g -Wall -I./ -I/usr/local/include/thrift WorkerManager.cpp worker_types.cpp
 ./client
 ```
 
-## 错误汇总
+## 2. 错误汇总
+
+### 2.1 stdcxx 和 boost 冲突
 
 ```
 /tmp/ccX2bX8q.o: In function `main':
@@ -115,13 +116,13 @@ g++ -g -Wall -I./ -I/usr/local/include/thrift WorkerManager.cpp worker_types.cpp
 collect2: error: ld returned 1 exit status
 ```
 
-由于链接的 thrift 为 stdcxx 编译版，而代码中又使用了 boost （使用了 boost 编译版的 thrift 进行代码生成），因此报错。
+由于链接的 thrift 为 stdcxx 编译版，而代码中又使用了 boost （使用了 boost 编译版的 thrift 进行代码生成），因此报错。[^2]
 
 编译时添加 `-std=c++11` 即可，或将代码中使用 boost 的代码改为 stdcxx 亦可，或使用 stdcxx 编译版的 thrift 重新生成代码。
 
 
 ## 参考
 
-https://blog.csdn.net/csfreebird/article/details/50319035
+[^1]: [用C++编写thrift第一个例子 - csfreebird](https://blog.csdn.net/csfreebird/article/details/50319035)
 
-https://ask.csdn.net/questions/691659#answer_1269976
+[^2]: [Ubuntu thrift 服务编译 未找到TSimpleServer的引用 - Templar101](https://ask.csdn.net/questions/691659#answer_1269976)
