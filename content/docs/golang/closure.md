@@ -1,5 +1,5 @@
 ---
-title: "[1] 什么是闭包"
+title: "什么是闭包"
 description: ""
 lead: ""
 date: 2020-07-23T15:00:35+08:00
@@ -12,12 +12,9 @@ menu:
 weight: 100
 toc: true
 ---
-
-所谓的闭包，其实就是**存储了函数及其关联环境的一个实体**，使其在脱离上下文时照常运行。
-
 <!--more-->
 
-## 1 什么是闭包
+## 1. 什么是闭包
 
 所谓的闭包，其实就是**存储了函数及其关联环境的一个实体**，使其在脱离上下文时照常运行。
 
@@ -29,11 +26,11 @@ toc: true
 
 我认为许多人在理解闭包时，仅仅理解到了闭包能够扩展变量的作用域这一层面，而忽略了闭包的封闭性（或者说是隔离性），
 
-## 2 如何获得闭包
+## 2. 如何获得闭包
 
 通俗地说，获得闭包的方式就是**将函数作为值返回**
 
-## 3 闭包和对象 / 函数的区别
+## 3. 闭包和对象 / 函数的区别
 
 首先应该明确的是：闭包既非对象，也不是函数或作用域
 
@@ -47,6 +44,7 @@ toc: true
 
 并且实际上对象系统能够基于闭包实现。[^3]
 
+
 ## 参考
 
 [^1]: [Closures - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)
@@ -54,6 +52,3 @@ toc: true
 [^2]: [闭包和对象的关系 - Todd Wei - 博客园](https://www.cnblogs.com/weidagang2046/archive/2010/11/01/1865899.html)
 
 [^3]: [Re: FP, OO and relations. Does anyone trump the others?. 29 December 1999 [2008-12-23]](http://okmij.org/ftp/Scheme/oop-in-fp.txt)
-
-
-
