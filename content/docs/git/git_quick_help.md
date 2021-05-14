@@ -12,10 +12,9 @@ menu:
 weight: 1
 toc: true
 ---
+<!--more-->
 
-# [Linux] git 使用速查
-
-## git 用户密码的保存和删除
+## 1. git 用户密码的保存和删除
 
 ```
 # 保存密码
@@ -29,9 +28,9 @@ git config --system --unset credential.helper
 git remote set-url remotename https://username:password@github.com/gitname/repo_name.git
 ```
 
-## git reset
+## 2. git reset
 
-### 撤销 commit (soft)
+### 2.1 撤销 commit (soft)
 
 ```
 # 撤销上一条 commit
@@ -46,19 +45,19 @@ git reset --soft <commit-version>
 
 soft reset 仅仅撤销提交不回滚代码
 
-### 撤销 commit 和 add (mixed)
+### 2.2 撤销 commit 和 add (mixed)
 
 ```
 git reset --mixed HEAD^
 ```
 
-### 修改 commit 内容 (amend)
+### 2.3 修改 commit 内容 (amend)[^3]
 
 ```
 git commit --amend
 ```
 
-### 回滚代码 (hard)
+### 2.4 回滚代码 (hard)
 
 ```
 git reset --hard <commit-version>
@@ -74,7 +73,7 @@ git push -f origin master
 
 强制 push 会导致当前 commit 之后的所有提交永久性丢失
 
-### 查看 commit-version
+## 3. 查看 commit-version
 
 ```
 # 查看远端的 commit log
@@ -87,7 +86,7 @@ git reflog
 如果你的队友 `push -f` 了代码，而你又不幸 `pull` 了代码，可以通过 reflog 找回你之前的本地提交
 
 
-## 代码入栈
+## 4. 代码入栈[^1]
 
 pop 之后可能需要解决冲突
 
@@ -104,7 +103,7 @@ git push
 git stash pop
 ```
 
-## 代码入栈并拉取新分支
+## 5. 代码入栈并拉取新分支[^2]
 
 ```
 # 当前代码入栈，并恢复到线上的 commit
@@ -132,7 +131,7 @@ git push
 git stash pop
 ```
 
-## 自动转换换行符
+## 6. 自动转换换行符
 
 ```
 # 提交时转换为LF，检出时转换为CRLF
@@ -145,26 +144,33 @@ git config --global core.autocrlf input
 git config --global core.autocrlf false
 ```
 
-## 使用字符串而不是 ascii 码输出
+## 7. 使用字符串而不是 ascii 码输出
 
 ```
 git config --global core.quotepath false
 ```
 
-## 修改远程仓库地址
+## 8. 修改远程仓库地址
 
 ```
 git remote set-url origin https://giturl.git
 ```
 
----
-## 参考：
+## 9. 合并提交[^4]
 
-[git使用情景1：正在写代码，突然线上出现了bug](https://blog.csdn.net/w958796636/article/details/53609589)
+```
+git rebase -i HEAD~3
+# set merge commit to squash
+```
 
-[git使用情景2：commit之后，想撤销commit](https://blog.csdn.net/w958796636/article/details/53611133)
 
-[git 删除远程分支上的某次提交](https://blog.csdn.net/QQxiaoqiang1573/article/details/68074847)
+## 参考
 
-[git合并历史提交](https://www.cnblogs.com/woshimrf/p/git-rebase.html)
+[^1]: [git使用情景1：正在写代码，突然线上出现了bug](https://blog.csdn.net/w958796636/article/details/53609589)
+
+[^2]: [git使用情景2：commit之后，想撤销commit](https://blog.csdn.net/w958796636/article/details/53611133)
+
+[^3]: [git 删除远程分支上的某次提交](https://blog.csdn.net/QQxiaoqiang1573/article/details/68074847)
+
+[^4]: [git合并历史提交](https://www.cnblogs.com/woshimrf/p/git-rebase.html)
 
