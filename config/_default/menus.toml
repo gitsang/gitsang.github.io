@@ -15,9 +15,14 @@
   weight = 20
 
 [[main]]
+  name = "Guides"
+  url = "/guides/"
+  weight = 30
+
+[[main]]
   name = "Contact"
   url = "/contact/"
-  weight = 30
+  weight = 40
 
 [[social]]
   name = "Twitter"

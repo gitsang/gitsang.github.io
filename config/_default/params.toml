@@ -1,9 +1,9 @@
 # Meta Data for SEO
 
 ## Homepage
-title = "Sangria"
+title = "Sangria Chant"
 titleSeparator = "-"
-titleAddition = "Personal Site"
+titleAddition = "Personal Sites"
 description = "Site powered by doks and hugo"
 
 ## Open Graph + Twitter Cards
@@ -40,7 +40,7 @@ footer = "Powered by <a href=\"https://www.netlify.com/\">Netlify</a>, <a href=\
 
 # Alert
 alert = false
-alertText = "Like Doks? <a class=\"alert-link\" href=\"https://github.com/h-enk/doks/stargazers\">Star on GitHub</a>. Thanks!</a>"
+alertText = "Sangria Chant is Entented from “sang” and “chen”. Sangria is one of the most popular drinks in Spanish cuisine. It spell (and pronounce) like “Sangreal”, meaning “royal blood”. And Chant means repeated tune, especially uesd for religious prayer."
 
 # Edit Page
 docsRepo = "https://github.com/gitsang/gitsang.github.io/"

@@ -8,4 +8,4 @@ draft: false
 images: []
 ---
 
-Sangria Chant is Entented from "sang" and "chen". Sangria is one of the most popular drinks in Spanish cuisine. It spell (and pronounce) like "Sangreal", both "Sangreal" and "Chant" have sacred meaning.
+Sangria Chant is Entented from "sang" and "chen". Sangria is one of the most popular drinks in Spanish cuisine. It spell (and pronounce) like "Sangreal", meaning "royal blood". And Chant means repeated tune, especially uesd for religious prayer.
