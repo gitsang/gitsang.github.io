@@ -95,15 +95,17 @@
   {{ end -}}
 {{ end -}}
 
-<script type="application/ld+json">
-{
-  "@context": "http://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [{{ range $.Scratch.Get "breadcrumb" }}{{ if ne .position 1 }},{{ end }}{
-        "@type": "ListItem",
-        "position": {{ .position }},
-        "name": "{{ .name | humanize | title }}",
-        "item": "{{ .url }}"
-    }{{ end }}]
-}
-</script>
+<!--
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{{ range $.Scratch.Get "breadcrumb" }}{{ if ne .position 1 }},{{ end }}{
+            "@type": "ListItem",
+            "position": {{ .position }},
+            "name": "{{ .name | humanize | title }}",
+            "item": "{{ .url }}"
+        }{{ end }}]
+    }
+    </script>
+-->
