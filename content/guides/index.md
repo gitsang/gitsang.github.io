@@ -53,7 +53,9 @@ Other service, not open to visitor, please ignore it.
 - filerun
   - [http://filerun.home.sang.ink/](http://filerun.home.sang.ink/)
 - aria ng
-  - [http://aria2.home.sang.ink/](http://aria2.home.sang.ink/)
+  - [http://ariang.home.sang.ink/](http://ariang.home.sang.ink/)
+- netdata
+  - [http://netdata.home.sang.ink/](http://netdata.home.sang.ink/)
 - timestamp
   - [http://www.home.sang.ink/timestamp/](http://www.home.sang.ink/timestamp/)
 
