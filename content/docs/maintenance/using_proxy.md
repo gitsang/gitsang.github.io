@@ -29,47 +29,47 @@ toc: true
 
 #### 2.1.2 V2rayN
 
-Windows 下有许多 v2ray 的 ui 界面，比较出名的是 v2rayN，下面仅以此软件作为说明，其他软件大同小异。
+<!--> Windows 下有许多 v2ray 的 ui 界面，比较出名的是 v2rayN，下面仅以此软件作为说明，其他软件大同小异。 <--!>
 
 ##### 2.1.2.1 下载 v2rayN
 
-如果是第一次使用 v2ray，你需要从 github 上下载一个 [v2rayN-core](https://github.com/2dust/v2rayN/releases/download/3.29/v2rayN-Core.zip)，如果下载较慢也可以从[此处](http://h5ai.home.frp-sh.sang.pp.ua:8080/package/v2ray/v2rayN-Core.zip)下载
+<!--> 如果是第一次使用 v2ray，你需要从 github 上下载一个 [v2rayN-core](https://github.com/2dust/v2rayN/releases/download/3.29/v2rayN-Core.zip)，如果下载较慢也可以从[此处](http://h5ai.home.frp-sh.sang.pp.ua:8080/package/v2ray/v2rayN-Core.zip)下载 <--!>
 
-如果报毒需要先关闭相关杀毒软件，或白名单放行。
+<!--> 如果报毒需要先关闭相关杀毒软件，或白名单放行。 <--!>
 
 ##### 2.1.2.2 配置 v2rayN
 
-1. 下载并解压软件后，进入文件夹内，右键 `v2rayN.exe` 以管理员身份运行。
+<!--> 1. 下载并解压软件后，进入文件夹内，右键 `v2rayN.exe` 以管理员身份运行。 <--!>
 
-2. 点击 `服务器` -> `添加服务器` 以添加服务器配置，或在页面上直接 `ctrl+v` 从剪贴板导入
+<!--> 2. 点击 `服务器` -> `添加服务器` 以添加服务器配置，或在页面上直接 `ctrl+v` 从剪贴板导入 <--!>
 
-![v2rayN-01](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-221938-v2rayN-01.png)
+<!--> ![v2rayN-01](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-221938-v2rayN-01.png) <--!>
 
-3. 右击任务栏右下角 V2RayN 图标 -> `服务器` -> 选择刚才添加的线路
+<!--> 3. 右击任务栏右下角 V2RayN 图标 -> `服务器` -> 选择刚才添加的线路 <--!>
 
-![v2rayN-02](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-222523-v2rayN-02.png)
+<!--> ![v2rayN-02](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-222523-v2rayN-02.png) <--!>
 
-4. 点击 `设置` -> `参数设置`
+<!--> 4. 点击 `设置` -> `参数设置` <--!>
 
-![v2rayN-03](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-222631-v2rayN-03.png)
+<!--> ![v2rayN-03](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-222631-v2rayN-03.png) <--!>
 
-5. 在 `基础设置` 中配置监听端口，一般不需要修改
+<!--> 5. 在 `基础设置` 中配置监听端口，一般不需要修改 <--!>
 
-![v2rayN-04](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-222725-v2rayN-04.png)
+<!--> ![v2rayN-04](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-222725-v2rayN-04.png) <--!>
 
-6. 在 `v2rayN设置` 中勾选 `允许来自局域网的连接`。这个选项会将 v2ray 的 http/socks 端口暴露，**请一定只在局域网内勾选此选项**，选项勾选后，与该机器连接在同一个网段上（连接同一个wifi的）的其他机器就可以使用这台机器的代理了
+<!--> 6. 在 `v2rayN设置` 中勾选 `允许来自局域网的连接`。这个选项会将 v2ray 的 http/socks 端口暴露，**请一定只在局域网内勾选此选项**，选项勾选后，与该机器连接在同一个网段上（连接同一个wifi的）的其他机器就可以使用这台机器的代理了 <--!>
 
-![v2rayN-05](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-222809-v2rayN-05.png)
+<!--> ![v2rayN-05](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-222809-v2rayN-05.png) <--!>
 
-7. 全部配置完成后，点击 `重启服务`，看到日志输出类似 `V2Ray x.x.x started` 就说明启动成功了，这时候可以在页面的下方看到 socks5 和 http 的两个地址，这两个地址就是本地代理的地址，你可以直接将其配置在浏览器上。
+<!--> 7. 全部配置完成后，点击 `重启服务`，看到日志输出类似 `V2Ray x.x.x started` 就说明启动成功了，这时候可以在页面的下方看到 socks5 和 http 的两个地址，这两个地址就是本地代理的地址，你可以直接将其配置在浏览器上。 <--!>
 
-![v2rayN-07](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-223911-v2rayN-07.png)
+<!--> ![v2rayN-07](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-223911-v2rayN-07.png) <--!>
 
 ##### 2.1.2.3 windows 10 配置全局代理
 
-如果你是 windows 10 用户，你可以在设置中搜索 `代理`，然后配置代理服务器为刚才 v2rayN 上的 http 地址即可完成本机的代理。
+<!--> 如果你是 windows 10 用户，你可以在设置中搜索 `代理`，然后配置代理服务器为刚才 v2rayN 上的 http 地址即可完成本机的代理。 <--!>
 
-![v2rayN-08](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-223912-v2rayN-08.png)
+<!--> ![v2rayN-08](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-223912-v2rayN-08.png) <--!>
 
 ##### 2.1.2.4 浏览器代理
 
@@ -101,8 +101,8 @@ chromium 内核的浏览器可以使用 [SwitchyOmega](https://chrome.google.com
 
 ##### 2.1.2.5 局域网代理
 
-使用局域网代理需要开启 `允许来自局域网的连接`，设置后，将需要使用代理的机器与 v2ray 运行的机器连入相同的网段（连入同一个 wifi）然后在连接选项中添加代理服务器。
+<!--> 使用局域网代理需要开启 `允许来自局域网的连接`，设置后，将需要使用代理的机器与 v2ray 运行的机器连入相同的网段（连入同一个 wifi）然后在连接选项中添加代理服务器。 <--!>
 
-以手机为例
+<!--> 以手机为例 <--!>
 
-![](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-223913-v2rayN-09.png)
+<!--> ![](http://h5ai.home.frp-sh.sang.pp.ua:8080/project/gallery/page/20210121-223913-v2rayN-09.png) <--!>
