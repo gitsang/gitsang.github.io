@@ -1,7 +1,9 @@
+
 ---
-title: "Git 使用速查"
+
+title: "Git Command Quick Search"
 description: ""
-lead: ""
+lead: "Git 使用速查"
 data: 2020-01-14T14:53:28+08:00
 lastmod: 2020-05-27T17:33:00+08:00
 draft: false
@@ -11,8 +13,8 @@ menu:
     parent: "git"
 weight: 1
 toc: true
+
 ---
-<!--more-->
 
 ## 1. git 用户密码的保存和删除
 

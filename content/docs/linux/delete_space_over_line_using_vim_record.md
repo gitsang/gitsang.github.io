@@ -1,7 +1,9 @@
+
 ---
-title: "使用 Vim 录制宏去除行尾空格"
+
+title: "Delete Space Overline Using Vim Record"
 description: ""
-lead: ""
+lead: "使用 Vim 录制宏去除行尾空格"
 date: 2020-05-07T20:45:49+08:00
 lastmod: 2020-05-07T20:45:49+08:00
 draft: false
@@ -11,6 +13,7 @@ menu:
     parent: "linux"
 weight: 100
 toc: true
+
 ---
 
 ```

@@ -1,16 +1,19 @@
+
 ---
-title: "常用命令速查"
+
+title: "Linux Command Quick Search"
 description: ""
-lead: ""
+lead: "Linux 常用命令速查"
 date: 2020-05-14T14:53:28+08:00
 lastmod: 2020-05-14T14:53:28+08:00
 draft: false
 images: []
-menu: 
+menu:
   docs:
     parent: "linux"
 weight: 100
 toc: true
+
 ---
 
 ## 1. Linux常用命令
@@ -50,12 +53,12 @@ command [-option] [parameter]
 | `tree [-opt] [dirName]` | 显示目录树状图结构 | `-d` | 只显示目录                               |
 | `cd name`               | 切换目录           |      |                                          |
 
-**cd 命令参数** 
+**cd 命令参数**
 
-- `cd` 切换到当前用户的主目录(/home/user) 
+- `cd` 切换到当前用户的主目录(/home/user)
 - `cd ~` 切换到当前用户的主目录(/home/user)
-- `cd .` 当前目录 
-- `cd ..` 上级目录 
+- `cd .` 当前目录
+- `cd ..` 上级目录
 - `cd -` 在最近两次工作目录来回切换
 
 #### 1.2.2 拷贝、移动、删除命令
@@ -84,9 +87,9 @@ command [-option] [parameter]
 #### 1.2.4 文件名通配符
 
 - `*` 任意个数个字符
-- `?` 任意一个字符 
-- `[]` 可匹配字符组中的一个 
-- `[abc]` 匹配a、b、c中的任意一个 
+- `?` 任意一个字符
+- `[]` 可匹配字符组中的一个
+- `[abc]` 匹配a、b、c中的任意一个
 - `[a-f]` 匹配 a 到 f 范围内的任意一个
 
 ### 1.3 查阅帮助

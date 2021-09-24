@@ -1,16 +1,19 @@
+
 ---
-title: "搭建 ssh 反向隧道"
+
+title: "Build SSH Tunnel"
 description: ""
-lead: ""
+lead: "搭建 SSH 反向隧道"
 date: 2020-03-14T14:53:28+08:00
 lastmod: 2020-03-14T14:53:28+08:00
 draft: false
 images: []
-menu: 
+menu:
   docs:
     parent: "linux"
 weight: 100
 toc: true
+
 ---
 
 ## 使用场景
