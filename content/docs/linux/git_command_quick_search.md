@@ -8,9 +8,9 @@ data: 2020-01-14T14:53:28+08:00
 lastmod: 2020-05-27T17:33:00+08:00
 draft: false
 images: []
-menu: 
+menu:
   docs:
-    parent: "git"
+    parent: "linux"
 weight: 1
 toc: true
 
@@ -116,7 +116,7 @@ git branch master-dev-fix
 # 切换分支
 git checkout master-dev-fix
 # 也可以新建并切换分支
-#git checkout -b master-dev-fix 
+#git checkout -b master-dev-fix
 
 # 修改代码并提交
 git add --all
