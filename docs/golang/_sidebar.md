@@ -1,0 +1,6 @@
+- [返回上一级 [docs]](/docs)
+- [golang](/docs/golang/)
+  - [_index](/docs/golang/_index.md)
+  - [closure](/docs/golang/closure.md)
+  - [defer_and_return_in_golang](/docs/golang/defer_and_return_in_golang.md)
+  - [deserialization_of_interface_struct](/docs/golang/deserialization_of_interface_struct.md)

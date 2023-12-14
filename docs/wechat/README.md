@@ -1,0 +1,7 @@
+- [返回上一级 [docs]](/docs)
+- [wechat](/docs/wechat/)
+  - [_index](/docs/wechat/_index.md)
+  - [wechat_1_basic_composition_and_configuration](/docs/wechat/wechat_1_basic_composition_and_configuration.md)
+  - [wechat_2_framework_view-layer_wxml](/docs/wechat/wechat_2_framework_view-layer_wxml.md)
+  - [wechat_3_component_scrollview_and_swiper](/docs/wechat/wechat_3_component_scrollview_and_swiper.md)
+  - [wechat_4_component_icon_text_progress](/docs/wechat/wechat_4_component_icon_text_progress.md)
