@@ -1,3 +1,0 @@
-- [Linux](en-us/linux/)
-  - [How to Remove Systemd Service](en-us/linux/how-to-remove-systemd-service.md)
-- [Docsify](zh-cn/docsify/)
