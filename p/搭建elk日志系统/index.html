@@ -1,0 +1,174 @@
+<!doctype html><html lang=zh-cn dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content><title>搭建ELK日志系统</title>
+<link rel=canonical href=https://gitsang.github.io/p/%E6%90%AD%E5%BB%BAelk%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F/><link rel=stylesheet href=/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css><meta property='og:title' content="搭建ELK日志系统"><meta property='og:description' content><meta property='og:url' content='https://gitsang.github.io/p/%E6%90%AD%E5%BB%BAelk%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F/'><meta property='og:site_name' content="Sang's Blog"><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:published_time' content='2020-05-16T22:29:30+08:00'><meta property='article:modified_time' content='2020-05-16T22:29:30+08:00'><meta name=twitter:title content="搭建ELK日志系统"><meta name=twitter:description content><link rel="shortcut icon" href=/favicon.png></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切换菜单>
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu5238911188305489105.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>Sang's Blog</a></h1><h2 class=site-description>Every ordinary day we experience is continuous miracles.</h2></div></header><ol class=menu-social><li><a href=https://github.com/gitsang target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://twitter.com target=_blank title=Twitter rel=me><svg class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/links/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>暗色模式</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目录</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#1-elk-简介>1. elk 简介</a></li><li><a href=#2-搭建过程简述>2. 搭建过程简述</a></li><li><a href=#3-开始搭建>3. 开始搭建</a><ol><li><a href=#31-环境搭建>3.1 环境搭建</a></li><li><a href=#32-拉取-elk-镜像并运行>3.2 拉取 elk 镜像并运行</a></li><li><a href=#33-安装-filebeats>3.3 安装 filebeats</a></li></ol></li><li><a href=#4-对于性能不足的服务器进行的优化>4. 对于性能不足的服务器进行的优化</a><ol><li><a href=#41-分配-swap>4.1 分配 swap</a></li><li><a href=#42-docker-run-参数调优>4.2 docker run 参数调优</a></li><li><a href=#43-其他调优方式>4.3 其他调优方式</a></li></ol></li><li><a href=#5-单独拉取每个系统镜像>5. 单独拉取每个系统镜像</a></li><li><a href=#参考>参考</a></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><div class=article-title-wrapper><h2 class=article-title><a href=/p/%E6%90%AD%E5%BB%BAelk%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F/>搭建ELK日志系统</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>2020-05-16</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>阅读时长: 4 分钟</time></div></footer></div></header><section class=article-content><h1 id=搭建elk日志系统><a href=#%e6%90%ad%e5%bb%baelk%e6%97%a5%e5%bf%97%e7%b3%bb%e7%bb%9f class=header-anchor></a>搭建ELK日志系统</h1><h2 id=1-elk-简介><a href=#1-elk-%e7%ae%80%e4%bb%8b class=header-anchor></a>1. elk 简介</h2><p><a class=link href=https://www.elastic.co/cn/what-is/elk-stack target=_blank rel=noopener>官网</a>介绍:</p><p>“ELK”是三个开源项目的首字母缩写，这三个项目分别是：Elasticsearch、Logstash 和 Kibana。</p><p>Elasticsearch 是一个搜索和分析引擎。Logstash 是服务器端数据处理管道，能够同时从多个来源采集数据，转换数据，然后将数据发送到诸如 Elasticsearch 等“存储库”中。Kibana 则可以让用户在 Elasticsearch 中使用图形和图表对数据进行可视化。</p><p>Elastic Stack 是 ELK Stack 的更新换代产品。</p><h2 id=2-搭建过程简述><a href=#2-%e6%90%ad%e5%bb%ba%e8%bf%87%e7%a8%8b%e7%ae%80%e8%bf%b0 class=header-anchor></a>2. 搭建过程简述</h2><p>本次搭建我们采用 docker 安装 sebp/elk 的方式，一键部署 elk 系统，这比每个系统单独部署会省去许多不必要的麻烦。</p><p>这样的搭建方式我们仅仅需要安装运行 elk 和 filebeats 就可以完成了</p><p>搭建完成后通过 ip:5601 就可以访问到日志展示的页面了</p><h2 id=3-开始搭建><a href=#3-%e5%bc%80%e5%a7%8b%e6%90%ad%e5%bb%ba class=header-anchor></a>3. 开始搭建</h2><h3 id=31-环境搭建><a href=#31-%e7%8e%af%e5%a2%83%e6%90%ad%e5%bb%ba class=header-anchor></a>3.1 环境搭建</h3><p>首先需要为你的系统安装 docker 环境，对于没接触过 docker 的同学，你可以将其简单理解为虚拟机（当然 docker 和虚拟机有本质的区别，有兴趣的可以自行搜索），docker 的安装很简单，对于 Linux / MacOS 几乎都只需要一条命令就可以安装完成了，而 Windows 则比较特殊，exe 安装包使用下一步安装法也很容易安装完成，但实际上 windows 平台某些版本是无法安装成功的，比如家庭版 windows，不过对于服务器，应该很少有人用 windows 搭建的吧。</p><p>当然官方也提供了十分简介友好的快速入门教程 <a class=link href=https://www.docker.com/get-started target=_blank rel=noopener>https://www.docker.com/get-started</a> 包括了安装、使用和一些进阶操作，即使是英语苦手，也能轻松地入门，十分推荐大家去看一眼。</p><p>这里就仅以 CentOS 7.8 为例进行安装</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl># 更新包管理工具
+</span></span><span class=line><span class=cl>yum update
+</span></span><span class=line><span class=cl># 安装 docker
+</span></span><span class=line><span class=cl>yum install docker
+</span></span><span class=line><span class=cl># 启动 docker
+</span></span><span class=line><span class=cl>service docker start
+</span></span></code></pre></td></tr></table></div></div><p>到这步为止，docker 就算安装完成了</p><h3 id=32-拉取-elk-镜像并运行><a href=#32-%e6%8b%89%e5%8f%96-elk-%e9%95%9c%e5%83%8f%e5%b9%b6%e8%bf%90%e8%a1%8c class=header-anchor></a>3.2 拉取 elk 镜像并运行</h3><p>docker 拥有非常完善地 hub，你可以在 <a class=link href=https://hub.docker.com/ target=_blank rel=noopener>https://hub.docker.com/</a> 找到各类的镜像。</p><p>我们在其中搜索 <code>sebp/elk</code> 就可以找到我们想要的镜像了，同样，如果你想要对每个服务单独安装，你也可以搜索 <code>elasticsearch</code> <code>kibana</code> <code>logstash</code> 查看。</p><p><img src=https://raw.githubusercontent.com/gitsang/gallery/master/page/202005281456-elk_dockerhub.png loading=lazy alt=202005281456-elk_dockerhub.png></p><p>在 Overview 标签中，我们复制 Docker Pull Command <code>docker pull sebp/elk</code> 到系统中运行，即可完成镜像的拉取（国内的服务器可能会有些慢），如果你想要安装其他版本的 elk，也可以点击 Tags 标签获取其他版本的拉取方式。</p><p>等待拉取结束后，运行</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>docker run --name elk -it -d \
+</span></span><span class=line><span class=cl>        -p 5601:5601 -p 5044:5044 -p 9200:9200 -p 9300:9300 \
+</span></span><span class=line><span class=cl>        sebp/elk
+</span></span></code></pre></td></tr></table></div></div><p>其中：</p><ul><li>&ndash;name 用于指定 docker 名称</li><li>-d 表示在后台运行 (detach)</li><li>-it 用于保持 STDIN 开启和开启终端登录 (是为了使能够进入容器进行操作且退出时容器不会自动关闭)</li><li>-p 表示端口的映射关系，如 <code>-p 5601:5601</code> 就表示将 docker 的 5601 端口映射到主机的 5601 端口</li></ul><p>第一次运行可以不加 <code>-d</code> 参数，这样做能够方便你看到出现了哪些错误。</p><p>等待一段时间后通过浏览器输入 <code>ip:5601</code> 如果能够登录到 kibana 界面，那么 elk 就算是搭建成功了（对于性能不太好的机器 kibana 的加载可能会比较慢，耐心等待即可）</p><p><strong>如果你出现 vm.max_map_count 不足的错误，可以参考<a class=link href=https://www.jianshu.com/p/04f4d7b4a1d3 target=_blank rel=noopener>这篇文章</a>增加配置</strong></p><h3 id=33-安装-filebeats><a href=#33-%e5%ae%89%e8%a3%85-filebeats class=header-anchor></a>3.3 安装 filebeats</h3><p>filebeats 作为 Elastic Stack 的新成员，主要负责日志的收集工作。</p><p>你可以在 <a class=link href=https://www.elastic.co/cn/beats/filebeat target=_blank rel=noopener>https://www.elastic.co/cn/beats/filebeat</a> 找到 filebeats 对应各系统的安装包进行安装。</p><p>同样以 CentOS 为例，下载并解压 filebeat</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=n>wget</span> <span class=n>https</span><span class=p>:</span><span class=o>//</span><span class=n>artifacts</span><span class=o>.</span><span class=n>elastic</span><span class=o>.</span><span class=n>co</span><span class=o>/</span><span class=n>downloads</span><span class=o>/</span><span class=n>beats</span><span class=o>/</span><span class=n>filebeat</span><span class=o>/</span><span class=n>filebeat</span><span class=o>-</span><span class=mf>7.7</span><span class=o>.</span><span class=mi>0</span><span class=o>-</span><span class=n>linux</span><span class=o>-</span><span class=n>x86_64</span><span class=o>.</span><span class=n>tar</span><span class=o>.</span><span class=n>gz</span>
+</span></span><span class=line><span class=cl><span class=n>tar</span> <span class=n>zxvf</span> <span class=n>https</span><span class=p>:</span><span class=o>//</span><span class=n>artifacts</span><span class=o>.</span><span class=n>elastic</span><span class=o>.</span><span class=n>co</span><span class=o>/</span><span class=n>downloads</span><span class=o>/</span><span class=n>beats</span><span class=o>/</span><span class=n>filebeat</span><span class=o>/</span><span class=n>filebeat</span><span class=o>-</span><span class=mf>7.7</span><span class=o>.</span><span class=mi>0</span><span class=o>-</span><span class=n>linux</span><span class=o>-</span><span class=n>x86_64</span><span class=o>.</span><span class=n>tar</span><span class=o>.</span><span class=n>gz</span>
+</span></span></code></pre></td></tr></table></div></div><p>然后修改以下 filebeat 的配置，让 filebeat 知道我们需要采集的是哪个日志文件，用 vim (或其他文本编辑器) 打开配置文件</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>cd filebeat-7.7.0-linux-x86_64
+</span></span><span class=line><span class=cl>vim filebeat.yml
+</span></span></code></pre></td></tr></table></div></div><p>修改 <code>filebeat.inputs:</code> <code>output.**:</code> 下的几个参数</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>filebeat.inputs:
+</span></span><span class=line><span class=cl>- type: log
+</span></span><span class=line><span class=cl>    enable: true # 这个一定要设置为 true 否则不会应用下面的参数
+</span></span><span class=line><span class=cl>    paths:
+</span></span><span class=line><span class=cl>        - /path/to/your/logfile # 这里填写你的 log 文件路径
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># elasticsearch 和 logstash 只能二者选其一，不使用的需要将其注释掉
+</span></span><span class=line><span class=cl># 这里先以直接发送到 elasticsearch 为例
+</span></span><span class=line><span class=cl># 因为如果使用 logstash 还需要进行额外的设置
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>output.elasticsearch:
+</span></span><span class=line><span class=cl>    hosts: [&#34;localhost:9200&#34;]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>#output.logstash:
+</span></span><span class=line><span class=cl>    #hosts: [&#34;localhost:5044&#34;]
+</span></span></code></pre></td></tr></table></div></div><p>设置完成后保存退出，然后运行</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>./filebeat -e -c filebeat.yml -d &#34;publish&#34;
+</span></span></code></pre></td></tr></table></div></div><p>然后到 <code>ip:5601/app/infra#/logs</code> 下如果能够查看到你的日志文件就说明成功了</p><p><img src=https://raw.githubusercontent.com/gitsang/gallery/master/page/202005281456-kibana_logpage.png loading=lazy alt=202005281456-kibana_logpage.png></p><p>就可以终止 filebeats 然后在后台运行</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>nohup ./filebeat -e -c filebeat.yml -d &#34;publish&#34; &gt; filebeat.log 2&gt;&amp;1 &amp;
+</span></span></code></pre></td></tr></table></div></div><h2 id=4-对于性能不足的服务器进行的优化><a href=#4-%e5%af%b9%e4%ba%8e%e6%80%a7%e8%83%bd%e4%b8%8d%e8%b6%b3%e7%9a%84%e6%9c%8d%e5%8a%a1%e5%99%a8%e8%bf%9b%e8%a1%8c%e7%9a%84%e4%bc%98%e5%8c%96 class=header-anchor></a>4. 对于性能不足的服务器进行的优化</h2><p>如果使用上述方式，会消耗大约 2G 的内存，对于一些小型服务器，可能不足以支撑（比如我的 1C2G）</p><p>这时候就需要对 elk docker 进行一些限制了</p><h3 id=41-分配-swap><a href=#41-%e5%88%86%e9%85%8d-swap class=header-anchor></a>4.1 分配 swap</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl># 设置 swap 文件
+</span></span><span class=line><span class=cl>dd if=/dev/zero of=/.swap bs=1048576 count=4096
+</span></span><span class=line><span class=cl># 创建(格式化) swap 
+</span></span><span class=line><span class=cl>mkswap /.swap
+</span></span><span class=line><span class=cl># 启动 swap
+</span></span><span class=line><span class=cl>swapon /.swap
+</span></span><span class=line><span class=cl># 查看 swap 使用情况
+</span></span><span class=line><span class=cl># free -h
+</span></span><span class=line><span class=cl># 设置开机自启
+</span></span><span class=line><span class=cl>echo &#34;/.swap swap swap defaults 0 0&#34; &gt;&gt; /etc/fstab
+</span></span></code></pre></td></tr></table></div></div><h3 id=42-docker-run-参数调优><a href=#42-docker-run-%e5%8f%82%e6%95%b0%e8%b0%83%e4%bc%98 class=header-anchor></a>4.2 docker run 参数调优</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>docker run --name elk -it -d \
+</span></span><span class=line><span class=cl>        -p 5601:5601 -p 5044:5044 -p 9200:9200 -p 9300:9300 \
+</span></span><span class=line><span class=cl>        -e ELASTICSEARCH_START=1 \
+</span></span><span class=line><span class=cl>        -e KIBANA_START=1 \
+</span></span><span class=line><span class=cl>        -e LOGSTASH_START=0 \
+</span></span><span class=line><span class=cl>        -e ES_HEAP_SIZE=&#34;256m&#34; \
+</span></span><span class=line><span class=cl>        -m 512M --memory-swap=2048M \
+</span></span><span class=line><span class=cl>        sebp/elk
+</span></span></code></pre></td></tr></table></div></div><p>由于 filebeats 将数据直接发送到了 elasticsearch 所以 logstash 就不需要运行了，可以通过这只环境变量 <code>LOGSTASH_START=0</code> 禁止其运行， <code>ES_HEAP_SIZE="256m"</code> 限制 elasticsearch 堆栈使用大小，<code>-m 512M --memory-swap=2048M</code> 从 docker 层面限制 elk 容器能够使用的最大物理内存和 swap</p><p>对于其他的参数及环境变量的配置可以通过 <a class=link href=https://elk-docker.readthedocs.io/ target=_blank rel=noopener>https://elk-docker.readthedocs.io/</a> 了解，文档中对各个参数的用途都有详细的说明</p><h3 id=43-其他调优方式><a href=#43-%e5%85%b6%e4%bb%96%e8%b0%83%e4%bc%98%e6%96%b9%e5%bc%8f class=header-anchor></a>4.3 其他调优方式</h3><p>如果你有多台服务器，你也可以将 elk 部署到其他的性能较好的服务器上，然后通过 filebeats 指定对应的 ip 向其发送信息。这样也能最大程度地减少服务器负担。特别是对于多个服务器都需要采集数据的情况下，在每一台机器都部署一个 elk 完全没有必要。</p><h2 id=5-单独拉取每个系统镜像><a href=#5-%e5%8d%95%e7%8b%ac%e6%8b%89%e5%8f%96%e6%af%8f%e4%b8%aa%e7%b3%bb%e7%bb%9f%e9%95%9c%e5%83%8f class=header-anchor></a>5. 单独拉取每个系统镜像</h2><p>仅作参考，如果你需要单独部署每个服务（或者你就是不想使用 sebp/elk），你可以参考以下方法</p><p>其实就是单独拉取镜像然后部署，修改配置</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>docker pull elasticsearch:7.7.0
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>docker run -d --name elasticsearch \
+</span></span><span class=line><span class=cl>        --restart=always \
+</span></span><span class=line><span class=cl>        -p 9200:9200 -p 9300:9300 \
+</span></span><span class=line><span class=cl>        -e ES_JAVA_OPTS=&#34;-Xms128m -Xmx128m&#34; \
+</span></span><span class=line><span class=cl>        -e &#34;discovery.type=single-node&#34; \
+</span></span><span class=line><span class=cl>        -m 128M --memory-swap=256M \
+</span></span><span class=line><span class=cl>        docker.io/elasticsearch:7.7.0
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>docker pull kibana:7.7.0
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>docker run -d --name kibana \
+</span></span><span class=line><span class=cl>        --restart=always \
+</span></span><span class=line><span class=cl>        -p 5601:5601 \
+</span></span><span class=line><span class=cl>        -m 256M --memory-swap=512M \
+</span></span><span class=line><span class=cl>        docker.io/kibana:7.7.0
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>docker exec -it kibana bash
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>vi config/kibana.yml
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># 修改 elasticsearch.hosts
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>exit
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>docker restart kibana
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=参考><a href=#%e5%8f%82%e8%80%83 class=header-anchor></a>参考</h2><p>swap:
+<a class=link href=https://www.jianshu.com/p/36a81d5ec54e target=_blank rel=noopener>https://www.jianshu.com/p/36a81d5ec54e</a>
+<a class=link href=https://blog.csdn.net/yabingshi_tech/article/details/77323617 target=_blank rel=noopener>https://blog.csdn.net/yabingshi_tech/article/details/77323617</a></p><p>docker 限制内存
+<a class=link href=https://www.hangge.com/blog/cache/detail_2413.html target=_blank rel=noopener>https://www.hangge.com/blog/cache/detail_2413.html</a></p><p>elk curl
+<a class=link href=http://www.ruanyifeng.com/blog/2017/08/elasticsearch.html target=_blank rel=noopener>http://www.ruanyifeng.com/blog/2017/08/elasticsearch.html</a></p><p>mcbbs
+<a class=link href=https://www.mcbbs.net/thread-863367-1-1.html target=_blank rel=noopener>https://www.mcbbs.net/thread-863367-1-1.html</a></p><p>vm.max_map_count 不足
+<a class=link href=https://www.jianshu.com/p/04f4d7b4a1d3 target=_blank rel=noopener>https://www.jianshu.com/p/04f4d7b4a1d3</a></p><p>elk-docker 安装
+<a class=link href=https://wsgzao.github.io/post/elk/ target=_blank rel=noopener>https://wsgzao.github.io/post/elk/</a></p></section><footer class=article-footer><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css integrity=sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js integrity=sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8 crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js integrity=sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05 crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}],ignoredClasses:["gist"]})})</script></article><script src=https://utteranc.es/client.js repo=gitsang/gitsang.github.io issue-term=pathname label=utterances crossorigin=anonymous async></script><style>.utterances{max-width:unset}</style><script>let utterancesLoaded=!1;function setUtterancesTheme(e){let t=document.querySelector(".utterances iframe");t&&t.contentWindow.postMessage({type:"set-theme",theme:`github-${e}`},"https://utteranc.es")}addEventListener("message",e=>{if(e.origin!=="https://utteranc.es")return;utterancesLoaded=!0,setUtterancesTheme(document.documentElement.dataset.scheme)}),window.addEventListener("onColorSchemeChange",e=>{if(!utterancesLoaded)return;setUtterancesTheme(e.detail)})</script><footer class=site-footer><section class=copyright>&copy;
+2018 -
+2024 Sang's Blog</section><section class=powerby>使用 <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> 构建<br>主题 <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.27.0>Stack</a></b> 由 <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a> 设计</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
