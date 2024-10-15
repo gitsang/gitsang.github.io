@@ -1,3 +1,20 @@
+---
+title: '使用 fail2ban 保护 frp 服务'
+slug: firewall-rule-for-docker-port-mapping
+description: |-
+  使用 frp 穿透后所有访问都会变成 127.0.0.1 进入，
+  需要通过 filter 规则在上游 fail2ban 执行。
+date: 2022-01-20T19:22:00+08:00
+lastmod: 2022-01-20T19:22:00+08:00
+weight: 1
+categories:
+  - linux
+tags:
+  - linux
+  - frp
+  - fail2ban
+---
+
 ## 背景
 
 我们一般会使用 fail2ban 来保护暴露到公网的提供密码登录的 ssh 连接等。

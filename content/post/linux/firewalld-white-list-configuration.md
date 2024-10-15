@@ -1,3 +1,18 @@
+---
+title: 'Firewalld 白名单配置方法'
+slug: firewalld-white-list-configuration
+description: |-
+  Firewalld 白名单配置方法
+date: 2024-05-07T11:09:00+08:00
+lastmod: 2024-05-07T11:09:00+08:00
+weight: 1
+categories:
+  - docker
+tags:
+  - docker
+  - firewalld
+---
+
 ## 白名单配置方法
 
 以仅信任来自 `10.60.22.0/24`, `10.60.23.0/24` ip 端的连接为例

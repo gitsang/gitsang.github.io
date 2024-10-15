@@ -1,7 +1,9 @@
 ---
 title: 'How to mount Windows network disk in WSL'
-description: ''
 slug: how-to-mount-windows-network-disk-in-wsl
+description: |-
+  Mount samba directly in wsl like linux is difficult.
+  But is easily mount net disk in windows file manager.
 date: 2021-03-19T11:03:00+08:00
 lastmod: 2021-03-19T11:03:00+08:00
 weight: 1

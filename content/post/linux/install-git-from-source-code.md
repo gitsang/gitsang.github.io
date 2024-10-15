@@ -1,3 +1,18 @@
+---
+title: 'Install Git from Source Code'
+slug: install-git-from-source-code
+description: |-
+  Step by step to install git from source code.
+date: 2023-05-08T11:31:00+08:00
+lastmod: 2023-05-08T11:31:00+08:00
+weight: 1
+categories:
+  - linux
+tags:
+  - linux
+  - git
+---
+
 # Install Git from Source Code
 
 ## Prerequisite
@@ -34,4 +49,4 @@ sudo make install install-doc install-html install-info
 
 ## Reference
 
-- https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+- [Getting-Started-Installing-Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)

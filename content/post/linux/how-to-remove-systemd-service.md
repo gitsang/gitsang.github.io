@@ -1,3 +1,18 @@
+---
+title: 'How To Remove Systemd Service'
+slug: how-to-remove-systemd-service
+description: |-
+  The correct way to remove systemd service.
+date: 2021-03-18T09:21:00+08:00
+lastmod: 2021-03-18T09:21:00+08:00
+weight: 1
+categories:
+  - linux
+tags:
+  - linux
+  - systemd
+---
+
 ## Method
 
 ```
@@ -20,7 +35,7 @@ Systemd uses unit (file to define services) to remove a service the unit have to
 /etc/init.d/ (Converted old service system)
 ```
 
-You can easily find location in `loaded` property using `systemctl status [service]` 
+You can easily find location in `loaded` property using `systemctl status [service]`
 
 ```
 $ systemctl status bluetooth.service
@@ -55,7 +70,7 @@ WantedBy=multi-user.target
 From the systemd man page:
 
 > reset-failed [PATTERN...]
-> 
+>
 > Reset the "failed" state of the specified units, or if no unit name is passed, reset the state of all units. When a unit fails in some way (i.e. process exiting with non-zero error code, terminating abnormally or timing out), it will automatically enter the "failed" state and its exit code and status is recorded for introspection by the administrator until the service is restarted or reset with this command.
 
 ## Reference

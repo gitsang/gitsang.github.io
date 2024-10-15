@@ -1,3 +1,22 @@
+---
+draft: true
+title: '使用 Alternatives 将 nvim 配置为默认的 vi'
+slug: set-nvim-as-the-default-vi-by-using-alternatives
+description: |-
+  另一种更优雅的变更命令指向的方式
+date: 2024-10-15T14:13:22+08:00
+lastmod: 2024-10-15T14:13:22+08:00
+weight: 1
+categories:
+  - linux
+tags:
+  - alternatives
+  - vi
+  - vim
+  - nvim
+  - neovim
+---
+
 我最早曾经直接将 vim 命名为 vi 或 nvim 命名为 vi 来替换 vi 命令打开的程序。
 
 ```

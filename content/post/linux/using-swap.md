@@ -1,19 +1,16 @@
-
 ---
-
-title: "Using Swap"
-description: ""
-lead: ""
-date: 2021-09-24T14:21:20+08:00
-lastmod: 2021-09-24T14:21:23+08:00
-draft: false
-images: []
-menu:
-  docs:
-    parent: "linux"
-weight: 100
-toc: true
-
+title: 'Using Swap'
+slug: using-swap
+description: |-
+  Step by step to enable swap.
+date: 2021-04-13T11:38:00+08:00
+lastmod: 2021-04-13T11:38:00+08:00
+weight: 1
+categories:
+  - linux
+tags:
+  - linux
+  - swap
 ---
 
 ```

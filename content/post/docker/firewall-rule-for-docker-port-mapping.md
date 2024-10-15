@@ -1,8 +1,10 @@
 ---
 title: 'Docker 端口映射防火墙规则配置'
-description: |-
-  当 docker 使用端口映射时， docker daemon 会创建 DOCKER 链绕过 firewalld 建立 iptables 规则，可能使 firewall 规则失效
 slug: firewall-rule-for-docker-port-mapping
+description: |-
+  当 docker 使用端口映射时， docker daemon 会创建 DOCKER 链绕过 firewalld
+  建立 iptables 规则，可能使 firewall 规则失效。
+  可以通过修改 DOCKER-USER 链来管理 docker 的防火墙规则。
 date: 2024-05-07T11:09:00+08:00
 lastmod: 2024-05-07T11:09:00+08:00
 weight: 1
