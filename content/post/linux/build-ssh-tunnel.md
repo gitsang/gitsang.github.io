@@ -1,19 +1,17 @@
-
 ---
-
-title: "Build SSH Tunnel"
-description: ""
-lead: "搭建 SSH 反向隧道"
+title: 'Build SSH Tunnel'
+slug: build-ssh-tunnel
+description: |-
+  搭建 SSH 反向隧道
 date: 2020-03-14T14:53:28+08:00
 lastmod: 2020-03-14T14:53:28+08:00
-draft: false
-images: []
-menu:
-  docs:
-    parent: "linux"
-weight: 100
-toc: true
-
+weight: 1
+categories:
+  - linux
+tags:
+  - linux
+  - ssh
+  - tunnel
 ---
 
 ## 使用场景
@@ -87,8 +85,4 @@ $ ssh LocalUser@10.200.100.10
 
 ## 参考
 
-[^1]: [ssh端口转发：ssh隧道](https://www.zsythink.net/archives/2450)
-
-
-
-
+[^1]: [ssh 端口转发：ssh 隧道](https://www.zsythink.net/archives/2450)
