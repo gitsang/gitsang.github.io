@@ -12,6 +12,8 @@ tags:
   - ipv6
 ---
 
+## sysctl 配置
+
 在某些情况下，IPv6 并不会自动配置，需要手动开启 sysctl 选项
 
 编辑 `/etc/sysctl.conf` 文件，并在末尾添加以下内容，输入 `sysctl -p` 立即生效配置
@@ -43,3 +45,13 @@ net.ipv6.conf.default.accept_ra = 1
 net.ipv6.conf.all.autoconf = 1
 net.ipv6.conf.default.autoconf = 1
 ```
+
+## 网络接口配置
+
+编辑 `/etc/network/interfaces`
+
+```
+iface vmbr0 inet6 auto
+```
+
+当 inet6 配置为 `auto` 时将使用 SLAAC 自动配置
