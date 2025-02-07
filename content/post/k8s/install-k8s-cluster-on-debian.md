@@ -74,10 +74,10 @@ containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
 ```diff
   [plugins."io.containerd.grpc.v1.cri"]
 -   sandbox_image = "registry.k8s.io/pause:3.6"
-+   sandbox_image = "registry.k8s.io/pause:3.9"
++   sandbox_image = "registry.k8s.io/pause:3.10"
 ```
 
-> In China use `registry.aliyuncs.com/google_containers/pause:3.9` instead.
+> In China use `registry.aliyuncs.com/google_containers/pause:3.10` instead.
 
 4. Restart containerd
 
@@ -179,6 +179,8 @@ Install control panel
 ```sh
 sudo kubeadm init --config kubelet.yaml
 ```
+
+> Use `sudo kubeadm reset` if you want to reset k8s cluster.
 
 Configure default kube config
 
