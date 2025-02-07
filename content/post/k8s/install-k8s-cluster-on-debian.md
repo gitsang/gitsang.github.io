@@ -162,17 +162,20 @@ Configure `/etc/hosts`
 Create `kubelet.yaml`
 
 ```yaml
-apiVersion: kubeadm.k8s.io/v1beta3
+apiVersion: kubeadm.k8s.io/v1beta4
 kind: InitConfiguration
 ---
-apiVersion: kubeadm.k8s.io/v1beta3
+apiVersion: kubeadm.k8s.io/v1beta4
 kind: ClusterConfiguration
 kubernetesVersion: '1.32.0' # Replace with your desired version
 controlPlaneEndpoint: 'k8s-master' # Replace with your desired control plane endpoint
+imageRepository: registry.k8s.io
 ---
 apiVersion: kubelet.config.k8s.io/v1beta1
 kind: KubeletConfiguration
 ```
+
+> In China use `imageRepository: registry.aliyuncs.com/google_containers`.
 
 Install control panel
 
@@ -193,14 +196,14 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ### 2. Join k8s cluster with kubeadm (run on worker nodes)
 
 ```sh
-sudo kubeadm join kube-master:6443 --token 21nm87.x1lgd4jf0lqiiiau \
---discovery-token-ca-cert-hash sha256:28b503f1f2a2592678724c482776f04b445c5f99d76915552f14e68a24b78009
+sudo kubeadm join k8s-master:6443 --token 21nm87.x1lgd4jf0lqiiiau \
+    --discovery-token-ca-cert-hash sha256:28b503f1f2a2592678724c482776f04b445c5f99d76915552f14e68a24b78009
 ```
 
 ### 3. Check k8s cluster status (run on control panel node)
 
 ```sh
-kubectl get nodes
+sudo kubectl get nodes
 ```
 
 ## Setup Pod Network
@@ -210,25 +213,32 @@ kubectl get nodes
 Install Calico
 
 ```sh
-kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml
+sudo kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.29.2/manifests/calico.yaml
 ```
+
+> In China:
+>
+> ```sh
+> curl -sSLO https://raw.githubusercontent.com/projectcalico/calico/v3.29.2/manifests/calico.yaml
+> sed -i 's/docker.io/dockerhub.icu/g' calico.yaml
+> ```
 
 Verify
 
 ```sh
-kubectl get pods -n kube-system
+sudo kubectl get pods -n kube-system
 ```
 
 When finished, you should see the `calico-node` pod running by
-`kubectl get pods -n kube-system` and see all nodes ready by
-`kubectl get nodes`.
+`sudo kubectl get pods -n kube-system` and see all nodes ready by
+`sudo kubectl get nodes`.
 
 ## Test
 
 ```
-kubectl create deployment nginx-app --image=nginx --replicas 2
-kubectl expose deployment nginx-app --name=nginx-web-svc --type NodePort --port 80 --target-port 80
-kubectl describe svc nginx-web-svc
+sudo kubectl create deployment nginx-app --image=nginx --replicas 2
+sudo kubectl expose deployment nginx-app --name=nginx-web-svc --type NodePort --port 80 --target-port 80
+sudo kubectl describe svc nginx-web-svc
 ```
 
 Curl using either of worker node's hostname
@@ -240,3 +250,5 @@ curl http://k8s-worker-01:32283
 ## Reference
 
 - [How to Install Kubernetes Cluster on Debian 12 | 11 - Linuxtechi](https://www.linuxtechi.com/install-kubernetes-cluster-on-debian/)
+- [Docker hub mirror](https://www.kelen.cc/dry/docker-hub-mirror)
+- [Kubernetes mirrors - aliyun](https://developer.aliyun.com/mirror/kubernetes)
