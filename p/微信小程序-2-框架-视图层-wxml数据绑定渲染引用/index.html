@@ -1,0 +1,171 @@
+<!doctype html><html lang=zh-cn dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content='一、组件与数据绑定 https://mp.weixin.qq.com/debug/wxadoc/dev/component/text.html\n1、text组件与button组件 1 2 3 <text>text组件文本</text> <button type="normal">normal button</button> <button type="primary"> primary button </button> 这里 button 标签内 type 属性用于设置按钮风格\n2、数据绑定 数据名用 {{}} 可对其内容在 .js 文件中进行绑定\n1 <text>{{bindText_1}}</text> 1 2 3 4 5 Page({ data: { bindText_1:"这是.js中绑定的数据文本" }, }) 二、button的点击响应 下例通过 bindtap 属性对 button 点击事件进行响应\n'><title>[微信小程序 - 2] 框架 视图层 WXML（数据绑定、渲染、引用）</title>
+<link rel=canonical href=https://gitsang.github.io/p/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F-2-%E6%A1%86%E6%9E%B6-%E8%A7%86%E5%9B%BE%E5%B1%82-wxml%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E6%B8%B2%E6%9F%93%E5%BC%95%E7%94%A8/><link rel=stylesheet href=/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css><meta property='og:title' content="[微信小程序 - 2] 框架 视图层 WXML（数据绑定、渲染、引用）"><meta property='og:description' content='一、组件与数据绑定 https://mp.weixin.qq.com/debug/wxadoc/dev/component/text.html\n1、text组件与button组件 1 2 3 <text>text组件文本</text> <button type="normal">normal button</button> <button type="primary"> primary button </button> 这里 button 标签内 type 属性用于设置按钮风格\n2、数据绑定 数据名用 {{}} 可对其内容在 .js 文件中进行绑定\n1 <text>{{bindText_1}}</text> 1 2 3 4 5 Page({ data: { bindText_1:"这是.js中绑定的数据文本" }, }) 二、button的点击响应 下例通过 bindtap 属性对 button 点击事件进行响应\n'><meta property='og:url' content='https://gitsang.github.io/p/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F-2-%E6%A1%86%E6%9E%B6-%E8%A7%86%E5%9B%BE%E5%B1%82-wxml%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E6%B8%B2%E6%9F%93%E5%BC%95%E7%94%A8/'><meta property='og:site_name' content="Sang's Blog"><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:published_time' content='2018-02-11T20:02:03+08:00'><meta property='article:modified_time' content='2018-02-11T20:02:03+08:00'><meta name=twitter:title content="[微信小程序 - 2] 框架 视图层 WXML（数据绑定、渲染、引用）"><meta name=twitter:description content='一、组件与数据绑定 https://mp.weixin.qq.com/debug/wxadoc/dev/component/text.html\n1、text组件与button组件 1 2 3 <text>text组件文本</text> <button type="normal">normal button</button> <button type="primary"> primary button </button> 这里 button 标签内 type 属性用于设置按钮风格\n2、数据绑定 数据名用 {{}} 可对其内容在 .js 文件中进行绑定\n1 <text>{{bindText_1}}</text> 1 2 3 4 5 Page({ data: { bindText_1:"这是.js中绑定的数据文本" }, }) 二、button的点击响应 下例通过 bindtap 属性对 button 点击事件进行响应\n'><link rel="shortcut icon" href=/favicon.png></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切换菜单>
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_c28b5601fb7aa64d.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>Sang's Blog</a></h1><h2 class=site-description>Every ordinary day we experience is continuous miracles.</h2></div></header><ol class=menu-social><li><a href=https://github.com/gitsang target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://twitter.com target=_blank title=Twitter rel=me><svg class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/links/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>暗色模式</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目录</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#一组件与数据绑定>一、组件与数据绑定</a><ol><li><a href=#1text组件与button组件>1、text组件与button组件</a></li><li><a href=#2数据绑定>2、数据绑定</a></li></ol></li><li><a href=#二button的点击响应>二、button的点击响应</a></li><li><a href=#三条件渲染>三、条件渲染</a></li><li><a href=#四列表渲染>四、列表渲染</a></li><li><a href=#五页面引用>五、页面引用</a><ol><li><a href=#1include>1、include</a></li><li><a href=#2template>2、template</a></li><li><a href=#3import-的作用域>3、import 的作用域</a></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><div class=article-title-wrapper><h2 class=article-title><a href=/p/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F-2-%E6%A1%86%E6%9E%B6-%E8%A7%86%E5%9B%BE%E5%B1%82-wxml%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E6%B8%B2%E6%9F%93%E5%BC%95%E7%94%A8/>[微信小程序 - 2] 框架 视图层 WXML（数据绑定、渲染、引用）</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>2018-02-11</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>阅读时长: 3 分钟</time></div></footer></div></header><section class=article-content><h2 id=一组件与数据绑定><a href=#%e4%b8%80%e7%bb%84%e4%bb%b6%e4%b8%8e%e6%95%b0%e6%8d%ae%e7%bb%91%e5%ae%9a class=header-anchor></a>一、组件与数据绑定</h2><p><a class=link href=https://mp.weixin.qq.com/debug/wxadoc/dev/component/text.html target=_blank rel=noopener>https://mp.weixin.qq.com/debug/wxadoc/dev/component/text.html</a></p><h3 id=1text组件与button组件><a href=#1text%e7%bb%84%e4%bb%b6%e4%b8%8ebutton%e7%bb%84%e4%bb%b6 class=header-anchor></a>1、text组件与button组件</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&lt;text&gt;text组件文本&lt;/text&gt;
+</span></span><span class=line><span class=cl>&lt;button type=&#34;normal&#34;&gt;normal button&lt;/button&gt;
+</span></span><span class=line><span class=cl>&lt;button type=&#34;primary&#34;&gt; primary button &lt;/button&gt;
+</span></span></code></pre></td></tr></table></div></div><p>这里 button 标签内 type 属性用于设置按钮风格</p><p><img src=https://raw.githubusercontent.com/gitsang/gallery/master/page/202005282011.jpg loading=lazy alt=运行结果></p><h3 id=2数据绑定><a href=#2%e6%95%b0%e6%8d%ae%e7%bb%91%e5%ae%9a class=header-anchor></a>2、数据绑定</h3><p>数据名用 {{}} 可对其内容在 .js 文件中进行绑定</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&lt;text&gt;{{bindText_1}}&lt;/text&gt;
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Page({
+</span></span><span class=line><span class=cl>  data: {
+</span></span><span class=line><span class=cl>    bindText_1:&#34;这是.js中绑定的数据文本&#34;
+</span></span><span class=line><span class=cl>  },
+</span></span><span class=line><span class=cl>})
+</span></span></code></pre></td></tr></table></div></div><h2 id=二button的点击响应><a href=#%e4%ba%8cbutton%e7%9a%84%e7%82%b9%e5%87%bb%e5%93%8d%e5%ba%94 class=header-anchor></a>二、button的点击响应</h2><p>下例通过 bindtap 属性对 button 点击事件进行响应</p><p>单击按钮后其显示文字改变</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&lt;button type=&#34;primary&#34; bindtap=&#34;btnclick&#34;&gt; {{btnText}} &lt;/button&gt;
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Page({
+</span></span><span class=line><span class=cl>  data:{
+</span></span><span class=line><span class=cl>    btnText:&#34;default btn text&#34;
+</span></span><span class=line><span class=cl>  },
+</span></span><span class=line><span class=cl>  btnclick: function () {
+</span></span><span class=line><span class=cl>    console.log(&#34;btnclick: function&#34;);
+</span></span><span class=line><span class=cl>    this.setData({btnText:&#34;set new btn text&#34;});
+</span></span><span class=line><span class=cl>  }
+</span></span><span class=line><span class=cl>})
+</span></span></code></pre></td></tr></table></div></div><h2 id=三条件渲染><a href=#%e4%b8%89%e6%9d%a1%e4%bb%b6%e6%b8%b2%e6%9f%93 class=header-anchor></a>三、条件渲染</h2><p>下例点击按钮后改变条件值从而改变文本</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&lt;button bindtap=&#34;btnclick&#34;&gt;button&lt;/button&gt;
+</span></span><span class=line><span class=cl>&lt;text wx:if=&#34;{{condition}}&#34;&gt;满足条件&lt;/text&gt;
+</span></span><span class=line><span class=cl>  &lt;text wx:else&gt;不满足条件&lt;/text&gt;
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=n>Page</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>  <span class=n>data</span><span class=p>:{</span>
+</span></span><span class=line><span class=cl>    <span class=n>condition</span><span class=p>:</span><span class=bp>true</span>
+</span></span><span class=line><span class=cl>  <span class=p>},</span>
+</span></span><span class=line><span class=cl>  <span class=n>btnclick</span><span class=p>:</span> <span class=n>function</span> <span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=n>condition</span> <span class=o>=</span> <span class=n>this</span><span class=o>.</span><span class=n>data</span><span class=o>.</span><span class=n>condition</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>//</span><span class=err>这里</span><span class=n>condition需要在函数内先进行定义</span>
+</span></span><span class=line><span class=cl>    <span class=o>//</span><span class=n>data中的condition不能直接拿来使用</span>
+</span></span><span class=line><span class=cl>    <span class=n>console</span><span class=o>.</span><span class=n>log</span><span class=p>(</span><span class=n>condition</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>this</span><span class=o>.</span><span class=n>setData</span><span class=p>({</span><span class=n>condition</span><span class=p>:</span><span class=o>!</span><span class=n>condition</span><span class=p>});</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>})</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=四列表渲染><a href=#%e5%9b%9b%e5%88%97%e8%a1%a8%e6%b8%b2%e6%9f%93 class=header-anchor></a>四、列表渲染</h2><p>在组件上使用 wx:for 控制属性绑定一个数组，即可使用数组中各项的数据重复渲染该组件。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&lt;view wx:for=&#34;{{array}}&#34;&gt;
+</span></span><span class=line><span class=cl>  {{index}} ------ {{item.message}}
+</span></span><span class=line><span class=cl>&lt;/view&gt;
+</span></span></code></pre></td></tr></table></div></div><p>默认数组的当前项的下标变量名默认为 index，数组当前项的变量名默认为 item</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Page({
+</span></span><span class=line><span class=cl>  data: {
+</span></span><span class=line><span class=cl>    array: [{
+</span></span><span class=line><span class=cl>      message: &#39;第0个文本&#39;,
+</span></span><span class=line><span class=cl>    }, {
+</span></span><span class=line><span class=cl>      message: &#39;第一个文本&#39;
+</span></span><span class=line><span class=cl>    }]
+</span></span><span class=line><span class=cl>  }
+</span></span><span class=line><span class=cl>})
+</span></span></code></pre></td></tr></table></div></div><p>运行结果：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>0 ------ 第0个文本
+</span></span><span class=line><span class=cl>1 ------ 第一个文本
+</span></span></code></pre></td></tr></table></div></div><p>item.message即为array数组中的message变量（array.message）</p><p>上述结果与一下运行结果相同</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Page({
+</span></span><span class=line><span class=cl>  data: {
+</span></span><span class=line><span class=cl>    array: [
+</span></span><span class=line><span class=cl>      &#39;第0个文本&#39;, &#39;第一个文本&#39;
+</span></span><span class=line><span class=cl>    ]
+</span></span><span class=line><span class=cl>  }
+</span></span><span class=line><span class=cl>})
+</span></span></code></pre></td></tr></table></div></div><p>使用 wx:for-item 可以指定数组当前元素的变量名，</p><p>使用 wx:for-index 可以指定数组当前下标的变量名：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&lt;view wx:for=&#34;{{array}}&#34; wx:for-index=&#34;idx&#34; wx:for-item=&#34;itemName&#34;&gt;
+</span></span><span class=line><span class=cl>  {{idx}}: {{itemName.message}}
+</span></span><span class=line><span class=cl>&lt;/view&gt;
+</span></span></code></pre></td></tr></table></div></div><h2 id=五页面引用><a href=#%e4%ba%94%e9%a1%b5%e9%9d%a2%e5%bc%95%e7%94%a8 class=header-anchor></a>五、页面引用</h2><h3 id=1include><a href=#1include class=header-anchor></a>1、include</h3><p>include 可以将目标文件除了 <code>&lt;template/></code> <code>&lt;wxs/></code> 外的整个代码引入，相当于是拷贝到 include 位置，如：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&lt;!-- pages/demo/demo.wxml --&gt;
+</span></span><span class=line><span class=cl>&lt;include src=&#34;../template/header.wxml&#34;/&gt;
+</span></span><span class=line><span class=cl>&lt;view&gt; body &lt;/view&gt;
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&lt;!-- pages/template/header.wxml --&gt;
+</span></span><span class=line><span class=cl>&lt;view&gt; header &lt;/view&gt;
+</span></span></code></pre></td></tr></table></div></div><h3 id=2template><a href=#2template class=header-anchor></a>2、template</h3><p>下例 import 了 footer.wxml 使用其中名为 footer2 的模板</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&lt;!-- pages/demo/demo.wxml --&gt;
+</span></span><span class=line><span class=cl>&lt;!--此处对footer.wxml引入，还未分配模板--&gt;
+</span></span><span class=line><span class=cl>&lt;import src=&#34;../template/footer.wxml&#34;/&gt;
+</span></span><span class=line><span class=cl>&lt;!--此处决定模板的使用，同时能对模板为定义的数据进行定义--&gt;
+</span></span><span class=line><span class=cl>&lt;template is=&#34;footer2&#34; data=&#34;{{text: &#39;footer template&#39;}}&#34;/&gt;
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&lt;!-- pages/template/footer.wxml --&gt;
+</span></span><span class=line><span class=cl>&lt;template name=&#34;footer1&#34;&gt;
+</span></span><span class=line><span class=cl>  &lt;text&gt;{{text}} 1&lt;/text&gt;
+</span></span><span class=line><span class=cl>&lt;/template&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>&lt;template name=&#34;footer2&#34;&gt;
+</span></span><span class=line><span class=cl>  &lt;text&gt;{{text}} 2&lt;/text&gt;
+</span></span><span class=line><span class=cl>&lt;/template&gt;
+</span></span></code></pre></td></tr></table></div></div><h3 id=3import-的作用域><a href=#3import-%e7%9a%84%e4%bd%9c%e7%94%a8%e5%9f%9f class=header-anchor></a>3、import 的作用域</h3><p>import 有作用域的概念，即只会 import 目标文件中定义的 template，而不会 import 目标文件 import 的 template。</p><p><em><strong>如：C import B，B import A，在C中可以使用B定义的template，在B中可以使用A定义的template，但是C不能使用A定义的template。</strong></em></p></section><footer class=article-footer><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css integrity=sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js integrity=sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8 crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js integrity=sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05 crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{const e=document.querySelector(".main-article");renderMathInElement(e,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}],ignoredClasses:["gist"]})})</script></article><script src=https://utteranc.es/client.js repo=gitsang/gitsang.github.io issue-term=pathname label=utterances crossorigin=anonymous async></script><style>.utterances{max-width:unset}</style><script>let utterancesLoaded=!1;function setUtterancesTheme(e){let t=document.querySelector(".utterances iframe");t&&t.contentWindow.postMessage({type:"set-theme",theme:`github-${e}`},"https://utteranc.es")}addEventListener("message",e=>{if(e.origin!=="https://utteranc.es")return;utterancesLoaded=!0,setUtterancesTheme(document.documentElement.dataset.scheme)}),window.addEventListener("onColorSchemeChange",e=>{if(!utterancesLoaded)return;setUtterancesTheme(e.detail)})</script><footer class=site-footer><section class=copyright>&copy;
+2018 -
+2025 Sang's Blog</section><section class=powerby>使用 <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> 构建<br>主题 <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.30.0>Stack</a></b> 由 <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a> 设计</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

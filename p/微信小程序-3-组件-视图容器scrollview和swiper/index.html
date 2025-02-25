@@ -1,0 +1,256 @@
+<!doctype html><html lang=zh-cn dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="一、scroll-view 1、基本设置 首先是参考的开发文档网址 https://mp.weixin.qq.com/debug/wxadoc/dev/framework/view/wxml/\n新建一个wxml文件，添加scroll-view组件，组件中添加“绿、红、黄、蓝”四种颜色的view组件（view组件较为简单，与html中div类似，此处省略，可参考官方开发文档中对view组件的说明）\n"><title>[微信小程序 - 3] 组件-视图容器（ScrollView和Swiper）</title>
+<link rel=canonical href=https://gitsang.github.io/p/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F-3-%E7%BB%84%E4%BB%B6-%E8%A7%86%E5%9B%BE%E5%AE%B9%E5%99%A8scrollview%E5%92%8Cswiper/><link rel=stylesheet href=/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css><meta property='og:title' content="[微信小程序 - 3] 组件-视图容器（ScrollView和Swiper）"><meta property='og:description' content="一、scroll-view 1、基本设置 首先是参考的开发文档网址 https://mp.weixin.qq.com/debug/wxadoc/dev/framework/view/wxml/\n新建一个wxml文件，添加scroll-view组件，组件中添加“绿、红、黄、蓝”四种颜色的view组件（view组件较为简单，与html中div类似，此处省略，可参考官方开发文档中对view组件的说明）\n"><meta property='og:url' content='https://gitsang.github.io/p/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F-3-%E7%BB%84%E4%BB%B6-%E8%A7%86%E5%9B%BE%E5%AE%B9%E5%99%A8scrollview%E5%92%8Cswiper/'><meta property='og:site_name' content="Sang's Blog"><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:published_time' content='2018-02-11T20:14:57+08:00'><meta property='article:modified_time' content='2018-02-11T20:14:57+08:00'><meta name=twitter:title content="[微信小程序 - 3] 组件-视图容器（ScrollView和Swiper）"><meta name=twitter:description content="一、scroll-view 1、基本设置 首先是参考的开发文档网址 https://mp.weixin.qq.com/debug/wxadoc/dev/framework/view/wxml/\n新建一个wxml文件，添加scroll-view组件，组件中添加“绿、红、黄、蓝”四种颜色的view组件（view组件较为简单，与html中div类似，此处省略，可参考官方开发文档中对view组件的说明）\n"><link rel="shortcut icon" href=/favicon.png></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切换菜单>
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_c28b5601fb7aa64d.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>Sang's Blog</a></h1><h2 class=site-description>Every ordinary day we experience is continuous miracles.</h2></div></header><ol class=menu-social><li><a href=https://github.com/gitsang target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://twitter.com target=_blank title=Twitter rel=me><svg class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/links/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>暗色模式</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目录</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#一scroll-view>一、scroll-view</a><ol><li><a href=#1基本设置>1、基本设置</a></li><li><a href=#2滚动响应事件>2、滚动响应事件</a></li><li><a href=#3scroll-into-view-与-scroll-top>3、scroll-into-view 与 scroll-top</a></li></ol></li><li><a href=#二swiper>二、swiper</a></li><li><a href=#一些bug和注意事项>一些bug和注意事项：</a></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><div class=article-title-wrapper><h2 class=article-title><a href=/p/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F-3-%E7%BB%84%E4%BB%B6-%E8%A7%86%E5%9B%BE%E5%AE%B9%E5%99%A8scrollview%E5%92%8Cswiper/>[微信小程序 - 3] 组件-视图容器（ScrollView和Swiper）</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>2018-02-11</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>阅读时长: 4 分钟</time></div></footer></div></header><section class=article-content><h2 id=一scroll-view><a href=#%e4%b8%80scroll-view class=header-anchor></a>一、scroll-view</h2><h3 id=1基本设置><a href=#1%e5%9f%ba%e6%9c%ac%e8%ae%be%e7%bd%ae class=header-anchor></a>1、基本设置</h3><p>首先是参考的开发文档网址
+<a class=link href=https://mp.weixin.qq.com/debug/wxadoc/dev/framework/view/wxml/ target=_blank rel=noopener>https://mp.weixin.qq.com/debug/wxadoc/dev/framework/view/wxml/</a></p><p>新建一个wxml文件，添加scroll-view组件，组件中添加“绿、红、黄、蓝”四种颜色的view组件（view组件较为简单，与html中div类似，此处省略，可参考官方开发文档中对view组件的说明）</p><p>需要注意的是在这里只是添加了每个view组件的id和class，还需要再wxss文件中添加其样式</p><p>这里设置scroll-view组件为竖向滚动，使用竖向滚动时，需要给<code>&lt;scroll-view/></code>一个固定高度，通过 WXSS 设置 height为250px</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&lt;scroll-view style=&#34;height:250px&#34; scroll-y=&#34;true&#34;&gt;
+</span></span><span class=line><span class=cl>  &lt;view id=&#34;green&#34; class=&#34;scroll-view-item bc_green&#34;&gt;&lt;/view&gt;
+</span></span><span class=line><span class=cl>  &lt;view id=&#34;red&#34;  class=&#34;scroll-view-item bc_red&#34;&gt;&lt;/view&gt;
+</span></span><span class=line><span class=cl>  &lt;view id=&#34;yellow&#34; class=&#34;scroll-view-item bc_yellow&#34;&gt;&lt;/view&gt;
+</span></span><span class=line><span class=cl>  &lt;view id=&#34;blue&#34; class=&#34;scroll-view-item bc_blue&#34;&gt;&lt;/view&gt;
+</span></span><span class=line><span class=cl>&lt;/scroll-view&gt;
+</span></span></code></pre></td></tr></table></div></div><p>以下是wxss中对样式的设置，<code>.scroll-view-item</code> 对4个view组件同时设置高度为200px，<code>.bc_green</code> 等分别设置每个组件不同的背景颜色。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>.scroll-view-item {
+</span></span><span class=line><span class=cl>  height: 200px;
+</span></span><span class=line><span class=cl>}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>.bc_green {
+</span></span><span class=line><span class=cl>  background-color: green;
+</span></span><span class=line><span class=cl>}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>.bc_red {
+</span></span><span class=line><span class=cl>  background-color: red;
+</span></span><span class=line><span class=cl>}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>.bc_yellow {
+</span></span><span class=line><span class=cl>  background-color: yellow;
+</span></span><span class=line><span class=cl>}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>.bc_blue {
+</span></span><span class=line><span class=cl>  background-color: blue;
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></td></tr></table></div></div><h3 id=2滚动响应事件><a href=#2%e6%bb%9a%e5%8a%a8%e5%93%8d%e5%ba%94%e4%ba%8b%e4%bb%b6 class=header-anchor></a>2、滚动响应事件</h3><p>以下分别说明<code>bindscrolltoupper</code>（滚动到顶部/左边触发）、<code>bindscrolltolower</code>（滚动到底部/右边触发）、
+<code>bindscroll</code>（滚动时触发）三个事件响应</p><p>将wxml文件改写为如下</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&lt;scroll-view style=&#34;height:250px&#34; scroll-y=&#34;true&#34; 
+</span></span><span class=line><span class=cl>  bindscrolltoupper=&#34;upper&#34; bindscrolltolower=&#34;lower&#34; bindscroll=&#34;scroll&#34; &gt;
+</span></span><span class=line><span class=cl>  &lt;view id=&#34;green&#34; class=&#34;scroll-view-item bc_green&#34;&gt;&lt;/view&gt;
+</span></span><span class=line><span class=cl>  &lt;view id=&#34;red&#34;  class=&#34;scroll-view-item bc_red&#34;&gt;&lt;/view&gt;
+</span></span><span class=line><span class=cl>  &lt;view id=&#34;yellow&#34; class=&#34;scroll-view-item bc_yellow&#34;&gt;&lt;/view&gt;
+</span></span><span class=line><span class=cl>  &lt;view id=&#34;blue&#34; class=&#34;scroll-view-item bc_blue&#34;&gt;&lt;/view&gt;
+</span></span><span class=line><span class=cl>&lt;/scroll-view&gt;
+</span></span></code></pre></td></tr></table></div></div><p>为bindscrolltoupper、bindscrolltolower、bindscroll属性添加名为“upper、lower、scroll”的function
+在.js文件中添加响应</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Page({
+</span></span><span class=line><span class=cl>  upper: function (event) {
+</span></span><span class=line><span class=cl>    console.log(&#34;to top now&#34;);
+</span></span><span class=line><span class=cl>  },
+</span></span><span class=line><span class=cl>  lower: function (event) {
+</span></span><span class=line><span class=cl>    console.log(&#34;to low now&#34;);
+</span></span><span class=line><span class=cl>  },
+</span></span><span class=line><span class=cl>  scroll: function (event) {
+</span></span><span class=line><span class=cl>    console.log(&#34;scrolling now&#34;);
+</span></span><span class=line><span class=cl>  }
+</span></span><span class=line><span class=cl>})
+</span></span></code></pre></td></tr></table></div></div><p>滚动时就能看到Console窗口中显示出log内容</p><h3 id=3scroll-into-view-与-scroll-top><a href=#3scroll-into-view-%e4%b8%8e-scroll-top class=header-anchor></a>3、scroll-into-view 与 scroll-top</h3><p>scroll-into-view属性，值应为某子元素id（id不能以数字开头）。设置哪个方向可滚动，则在哪个方向滚动到该元素
+scroll-top属性，值为竖向滚动条滚动到的位置</p><p>为<code>scroll-view</code>组件添加<code>scroll-into-view</code>与<code>scroll-top</code>属性，并添加两个button。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&lt;scroll-view style=&#34;height:250px&#34; scroll-y=&#34;true&#34; 
+</span></span><span class=line><span class=cl>scroll-into-view=&#34;{{toView}}&#34; scroll-top=&#34;{{scrollTop}}&#34;&gt;
+</span></span><span class=line><span class=cl>	...
+</span></span><span class=line><span class=cl>&lt;/scroll-view&gt;
+</span></span><span class=line><span class=cl>&lt;view&gt;
+</span></span><span class=line><span class=cl>  &lt;button bindtap=&#34;tap&#34;&gt;click me to scroll into view&lt;/button&gt;
+</span></span><span class=line><span class=cl>  &lt;button bindtap=&#34;tapMove&#34;&gt;click me to scroll&lt;/button&gt;
+</span></span><span class=line><span class=cl>&lt;/view&gt;
+</span></span></code></pre></td></tr></table></div></div><p>在.js中添加点击function——tap和tapMove
+<code>data</code>中定义<code>toView</code>初始值为<code>'red'</code> ，滚动条开始与200px的位置</p><p>其中<code>tap: function (e) {}</code> 判断当前<code>toView</code> 值与<code>order[i]</code> 值是否匹配，相同则将<code>order[i + 1]</code> 的值赋给<code>toView</code> ，即每次点击都将下一个颜色<code>id</code>传给<code>scroll-into-view</code> 属性。</p><p><code>tapMove: function (e) {}</code> 将<code>scrollTop</code> 值自加10，即滚动条位置增加10。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=k>var</span> <span class=n>order</span> <span class=o>=</span> <span class=p>[</span><span class=s1>&#39;red&#39;</span><span class=p>,</span> <span class=s1>&#39;yellow&#39;</span><span class=p>,</span> <span class=s1>&#39;blue&#39;</span><span class=p>,</span> <span class=s1>&#39;green&#39;</span><span class=p>,</span> <span class=s1>&#39;red&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>Page</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>  <span class=n>data</span><span class=p>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>toView</span><span class=p>:</span> <span class=s1>&#39;red&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>scrollTop</span><span class=p>:</span> <span class=mi>200</span>
+</span></span><span class=line><span class=cl>  <span class=p>},</span>
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  <span class=n>tap</span><span class=p>:</span> <span class=n>function</span> <span class=p>(</span><span class=n>e</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(</span><span class=k>var</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=n>order</span><span class=o>.</span><span class=n>length</span><span class=p>;</span> <span class=o>++</span><span class=n>i</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=n>order</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>===</span> <span class=n>this</span><span class=o>.</span><span class=n>data</span><span class=o>.</span><span class=n>toView</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>this</span><span class=o>.</span><span class=n>setData</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>          <span class=n>toView</span><span class=p>:</span> <span class=n>order</span><span class=p>[</span><span class=n>i</span> <span class=o>+</span> <span class=mi>1</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>        <span class=p>})</span>
+</span></span><span class=line><span class=cl>        <span class=k>break</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>},</span>
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  <span class=n>tapMove</span><span class=p>:</span> <span class=n>function</span> <span class=p>(</span><span class=n>e</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>this</span><span class=o>.</span><span class=n>setData</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>      <span class=n>scrollTop</span><span class=p>:</span> <span class=n>this</span><span class=o>.</span><span class=n>data</span><span class=o>.</span><span class=n>scrollTop</span> <span class=o>+</span> <span class=mi>10</span>
+</span></span><span class=line><span class=cl>    <span class=p>})</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>})</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=二swiper><a href=#%e4%ba%8cswiper class=header-anchor></a>二、swiper</h2><p>以下代码简单设置了swiper的几个基本属性</p><div class=table-wrapper><table><thead><tr><th>属性</th><th>作用</th><th>默认值</th></tr></thead><tbody><tr><td>indicator-dots</td><td>是否显示面板指示点</td><td>false</td></tr><tr><td>autoplay</td><td>是否自动切换</td><td>false</td></tr><tr><td>current</td><td>当前所在滑块的 index</td><td>0</td></tr><tr><td>interval</td><td>自动切换时间间隔</td><td>5000</td></tr><tr><td>duration</td><td>滑动动画时长</td><td>500</td></tr></tbody></table></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&lt;swiper indicator-dots=&#34;true&#34; autoplay=&#34;true&#34; current=&#39;1&#39; interval=&#39;1000&#39; duration=&#39;100&#39; bindchange=&#39;change&#39;&gt;
+</span></span><span class=line><span class=cl>  &lt;swiper-item&gt;&lt;view class=&#34;item bc_green&#34;&gt;green&lt;/view&gt;&lt;/swiper-item&gt;
+</span></span><span class=line><span class=cl>  &lt;swiper-item&gt;&lt;view class=&#34;item bc_red&#34;&gt;red&lt;/view&gt;&lt;/swiper-item&gt;
+</span></span><span class=line><span class=cl>  &lt;swiper-item&gt;&lt;view class=&#34;item bc_yellow&#34;&gt;yellow&lt;/view&gt;&lt;/swiper-item&gt;
+</span></span><span class=line><span class=cl>  &lt;swiper-item&gt;&lt;view class=&#34;item bc_blue&#34;&gt;blue&lt;/view&gt;&lt;/swiper-item&gt;
+</span></span><span class=line><span class=cl>&lt;/swiper&gt;
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Page({
+</span></span><span class=line><span class=cl>  change:function(a) {
+</span></span><span class=line><span class=cl>    console.log(a)
+</span></span><span class=line><span class=cl>  }
+</span></span><span class=line><span class=cl>})
+</span></span></code></pre></td></tr></table></div></div><p>以下简单介绍swiper的wxss配置</p><p>以上wxml中<code>&lt;swiper-item></code> 组件仅可放置在<code>&lt;swiper/></code>组件中，宽高自动设置为100%。</p><p>这里的100%为占满整个swiper，但值得注意的是，实际上若不设置height属性，其显示范围仅仅为文字范围，这里可以为swiper添加一个边框<code>border</code> 属性来验证，同时可以验证，滑动时是整个swiper进行滑动，而不是其中的item滑动。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>swiper {
+</span></span><span class=line><span class=cl>  height: 200px;
+</span></span><span class=line><span class=cl>}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>swiper-item {
+</span></span><span class=line><span class=cl>  border: 3px solid black;
+</span></span><span class=line><span class=cl>}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>.item {
+</span></span><span class=line><span class=cl>  height: 50%;
+</span></span><span class=line><span class=cl>  width: 50%;
+</span></span><span class=line><span class=cl>  font-size: 48px;
+</span></span><span class=line><span class=cl>  color: #fff;
+</span></span><span class=line><span class=cl>}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>.bc_green {
+</span></span><span class=line><span class=cl>  background-color: green;
+</span></span><span class=line><span class=cl>}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>.bc_red {
+</span></span><span class=line><span class=cl>  background-color: red;
+</span></span><span class=line><span class=cl>}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>.bc_yellow {
+</span></span><span class=line><span class=cl>  background-color: yellow;
+</span></span><span class=line><span class=cl>}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>.bc_blue {
+</span></span><span class=line><span class=cl>  background-color: blue;
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></td></tr></table></div></div><h2 id=一些bug和注意事项><a href=#%e4%b8%80%e4%ba%9bbug%e5%92%8c%e6%b3%a8%e6%84%8f%e4%ba%8b%e9%a1%b9 class=header-anchor></a>一些bug和注意事项：</h2><ul><li>1.02版本中若用以上方法添加border会将view挤出屏幕，而不是覆盖在view上。</li><li>swiper组件中，虽然autoplay组件默认值为false，并且其值为布尔类型，但是在1.02版本中只要写上了autoplay属性其值均为true，即使你<code>&lt;swiper autoplay='a'></code> 这样写，swiper仍然会自动播放。</li></ul></section><footer class=article-footer><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css integrity=sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js integrity=sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8 crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js integrity=sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05 crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{const e=document.querySelector(".main-article");renderMathInElement(e,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}],ignoredClasses:["gist"]})})</script></article><script src=https://utteranc.es/client.js repo=gitsang/gitsang.github.io issue-term=pathname label=utterances crossorigin=anonymous async></script><style>.utterances{max-width:unset}</style><script>let utterancesLoaded=!1;function setUtterancesTheme(e){let t=document.querySelector(".utterances iframe");t&&t.contentWindow.postMessage({type:"set-theme",theme:`github-${e}`},"https://utteranc.es")}addEventListener("message",e=>{if(e.origin!=="https://utteranc.es")return;utterancesLoaded=!0,setUtterancesTheme(document.documentElement.dataset.scheme)}),window.addEventListener("onColorSchemeChange",e=>{if(!utterancesLoaded)return;setUtterancesTheme(e.detail)})</script><footer class=site-footer><section class=copyright>&copy;
+2018 -
+2025 Sang's Blog</section><section class=powerby>使用 <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> 构建<br>主题 <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.30.0>Stack</a></b> 由 <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a> 设计</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
