@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Curl on Sang's Blog</title><link>https://gitsang.github.io/tags/curl/</link><description>Recent content in Curl on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Thu, 28 May 2020 15:22:06 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/curl/index.xml" rel="self" type="application/rss+xml"/><item><title>Curl 输出格式</title><link>https://gitsang.github.io/p/curl-write-out-format/</link><pubDate>Wed, 09 Oct 2019 14:53:28 +0800</pubDate><guid>https://gitsang.github.io/p/curl-write-out-format/</guid><description>&lt;img src="https://gitsang.github.io/p/curl-write-out-format/cover.jpg" alt="Featured image of post Curl 输出格式" />&lt;h2 id="操作方法">&lt;a href="#%e6%93%8d%e4%bd%9c%e6%96%b9%e6%b3%95" class="header-anchor">&lt;/a>操作方法
+&lt;/h2>&lt;p>默认情况下，curl 不会输出耗时信息，状态码等，若需要输出，需要使用 &lt;code>-w, --write-out FORMAT&lt;/code> 选项配置 Write Out 格式。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">curl -w &lt;span class="s2">&amp;#34;\n\ntime_total: %{time_total}s\n&amp;#34;&lt;/span> https://www.example.com
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Write Out 中支持的变量请参考：&lt;/p>
+&lt;p>&lt;a class="link" href="https://everything.curl.dev/usingcurl/verbose/writeout#available-write-out-variables" target="_blank" rel="noopener"
+>https://everything.curl.dev/usingcurl/verbose/writeout#available-write-out-variables&lt;/a>&lt;/p>
+&lt;p>也可以使用文件&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">curl -w &lt;span class="s2">&amp;#34;@curl-format.txt&amp;#34;&lt;/span> https://www.example.com
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>一个简单的文件格式参考如下：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-txt" data-lang="txt">&lt;span class="line">&lt;span class="cl">\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_namelookup: %{time_namelookup}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_connect: %{time_connect}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_appconnect: %{time_appconnect}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_pretransfer: %{time_pretransfer}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_redirect: %{time_redirect}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_starttransfer: %{time_starttransfer}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">----------\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_total: %{time_total}s\n
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>用于 debug 的详细信息格式参考：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-txt" data-lang="txt">&lt;span class="line">&lt;span class="cl">\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">url_effective: %{url_effective}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ssl_verify_result: %{ssl_verify_result}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">content_type: %{content_type}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">filename_effective: %{filename_effective}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ftp_entry_path: %{ftp_entry_path}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">http_code: %{http_code}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">http_connect: %{http_connect}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">local_ip: %{local_ip}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">local_port: %{local_port}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">num_connects: %{num_connects}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">num_redirects: %{num_redirects}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">redirect_url: %{redirect_url}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">remote_ip: %{remote_ip}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">remote_port: %{remote_port}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">response_code: %{response_code}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">size_download: %{size_download} bytes\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">size_header: %{size_header} bytes\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">size_request: %{size_request} bytes\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">size_upload: %{size_upload} bytes\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">speed_download: %{speed_download} bytes/s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">speed_upload: %{speed_upload} bytes/s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_appconnect: %{time_appconnect}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_connect: %{time_connect}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_namelookup: %{time_namelookup}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_pretransfer: %{time_pretransfer}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_redirect: %{time_redirect}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_starttransfer: %{time_starttransfer}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_total: %{time_total}s\n
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Swap on Sang's Blog</title><link>https://gitsang.github.io/tags/swap/</link><description>Recent content in Swap on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Tue, 13 Apr 2021 11:38:00 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/swap/index.xml" rel="self" type="application/rss+xml"/><item><title>Using Swap</title><link>https://gitsang.github.io/p/using-swap/</link><pubDate>Tue, 13 Apr 2021 11:38:00 +0800</pubDate><guid>https://gitsang.github.io/p/using-swap/</guid><description>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"># create swap file
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">dd if=/dev/zero of=/.swap bs=1048576 count=4096
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># format swap
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">mkswap /.swap
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># start swap
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">swapon /.swap
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># check
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">free -h
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># onboot
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">echo &amp;#34;/.swap swap swap defaults 0 0&amp;#34; &amp;gt;&amp;gt; /etc/fstab
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>
