@@ -1,18 +1,25 @@
 ---
-title: "GDB 快速入门"
-description: ""
-lead: ""
-date: 2019-10-09T14:53:28+08:00
-lastmod: 2019-10-09T14:53:28+08:00
-draft: false
-images: []
-menu:
-  docs:
-    parent: "cpp"
+title: GDB 快速入门
+slug: gdb-quick-start
+description: This document provides an overview of using GDB, a command-line-based debugging tool, essential for C++ programmers on Linux. It covers GDB commands, breakpoint settings, code navigation, expression evaluation, and introduces CGDB for enhanced debugging.
+date: "2019-10-09T14:53:28+08:00"
+lastmod: "2025-05-09T19:18:21+08:00"
 weight: 100
-toc: true
+categories: 
+- "Programming"
+- "Debugging"
+- "Linux"
+tags: 
+- "GDB"
+- "C++"
+- "Linux"
+- "Debugging"
+- "Command-line"
+- "CGDB"
+- "Programming Tools"
+
+<!-- markdown-front-matter auto -->
 ---
-<!--more-->
 
 GDB是一个由GNU开源组织发布的、UNIX/LINUX操作系统下的、基于命令行的、功能强大的程序调试工具。 对于一名Linux下工作的c++程序员，gdb是必不可少的工具；
 
@@ -52,7 +59,7 @@ gdb hello 11127
 
 启动gdb后，进入到交互模式，通过以下命令完成对程序的调试；注意高频使用的命令一般都会有缩写，熟练使用这些缩写命令能提高调试的效率；
 
-### 运行
+### 2.1 运行
 
 - run：简记为 r ，其作用是运行程序，当遇到断点后，程序会在断点处停止运行，等待用户输入下一步的命令。
 - continue （简写c ）：继续执行，到下一个断点处（或运行结束）
@@ -64,10 +71,10 @@ gdb hello 11127
 - call 函数(参数)：调用程序中可见的函数，并传递“参数”，如：call gdb_test(55)
 - quit：简记为 q ，退出gdb
 
-### 设置断点
+### 2.2 设置断点
 
 - break n （简写b n）:在第n行处设置断点
-    - （可以带上代码路径和代码名称： b OAGUPDATE.cpp:578）
+  - （可以带上代码路径和代码名称： b OAGUPDATE.cpp:578）
 - b fn1 if a＞b：条件断点设置
 - break func（break缩写为b）：在函数func()的入口处设置断点，如：break cb_button
 - delete 断点号n：删除第n个断点
@@ -77,14 +84,14 @@ gdb hello 11127
 - info b （info breakpoints） ：显示当前程序的断点设置情况
 - delete breakpoints：清除所有断点：
 
-### 查看源代码
+### 2.3 查看源代码
 
 - list ：简记为 l ，其作用就是列出程序的源代码，默认每次显示10行。
 - list 行号：将显示当前文件以“行号”为中心的前后10行代码，如：list 12
 - list 函数名：将显示“函数名”所在函数的源代码，如：list main
 - list ：不带参数，将接着上一次 list 命令的，输出下边的内容。
 
-### 打印表达式
+### 2.4 打印表达式
 
 - print 表达式：简记为 p ，其中“表达式”可以是任何当前正在被测试程序的有效表达式，比如当前正在调试C语言的程序，那么“表达式”可以是任何C语言的有效表达式，包括数字，变量甚至是函数调用。
 - print a：将显示整数 a 的值
@@ -98,7 +105,7 @@ gdb hello 11127
 - info function： 查询函数
 - 扩展info locals： 显示当前堆栈页的所有变量
 
-### 查询运行信息
+### 2.5 查询运行信息
 
 - where/bt ：当前运行的堆栈列表；
 - bt backtrace 显示当前调用堆栈
@@ -107,7 +114,7 @@ gdb hello 11127
 - show args：查看设置好的参数
 - info program： 来查看程序的是否在运行，进程号，被暂停的原因。
 
-### 分割窗口
+### 2.6 分割窗口
 
 - layout：用于分割窗口，可以一边查看代码，一边测试：
 - layout src：显示源代码窗口
@@ -116,7 +123,7 @@ gdb hello 11127
 - layout split：显示源代码和反汇编窗口
 - Ctrl + L：刷新窗口
 
-### 注解
+### 2.7 注解
 
 - 交互模式下直接回车的作用是重复上一指令，对于单步调试非常方便；
 
@@ -124,5 +131,4 @@ gdb hello 11127
 
 cgdb可以看作gdb的界面增强版,用来替代gdb的 gdb -tui。cgdb主要功能是在调试时进行代码的同步显示，这无疑增加了调试的方便性，提高了调试效率。界面类似vi，符合unix/linux下开发人员习惯;如果熟悉gdb和vi，几乎可以立即使用cgdb。
 
-
-## 参考
+## 4. 参考

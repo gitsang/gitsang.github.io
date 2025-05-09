@@ -1,18 +1,24 @@
 ---
-title: "指针、值和引用"
-description: ""
-lead: ""
-date: 2019-10-09T14:53:28+08:00
-lastmod: 2019-10-09T14:53:28+08:00
-draft: false
-images: []
-menu: 
-  docs:
-    parent: "cpp"
+title: 指针、值和引用
+slug: pointer-value-quote
+description: This article provides a detailed explanation of pointers and references in C++, highlighting their differences and uses in value passing, pointer passing, and reference passing.
+date: "2019-10-09T14:53:28+08:00"
+lastmod: "2025-05-09T19:19:08+08:00"
 weight: 100
-toc: true
+categories: 
+- "Programming"
+- "C++"
+tags: 
+- "pointers"
+- "references"
+- "C++"
+- "value passing"
+- "pointer passing"
+- "reference passing"
+- "const keyword"
+
+<!-- markdown-front-matter auto -->
 ---
-<!--more-->
 
 ## 1. 指针和引用
 
@@ -29,9 +35,9 @@ char c = 'A';
 char* p = &c;
 ```
 
-通过*可取p所指向的内容，通过&可取p的地址，即：
+通过\*可取p所指向的内容，通过&可取p的地址，即：
 
-- `*p == c的内容 == 'A'` 
+- `*p == c的内容 == 'A'`
 - `p == c的地址 == &c`
 - `&p == p的地址`
 
@@ -53,19 +59,19 @@ cout << i << endl;	// 输出 3
 #### 1.1.3 引用与指针的区别
 
 1. **引用一旦指向某一对象就不可更改：**
-	如上面程序，引用后的 r 就和普通的整形变量没有什么区别（若不考虑 i 的存在，完全可以把`int i = 1; int& r = i;`当成`int r = 1;`来看待）。引用即是将两个变量进行了绑定，而指针仅仅是存储了指向内存的地址，所以通过引用名（如`r`）可以直接访问指向的内存，而通过指针名（如`p`）却只能访问到地址，要通过（如`*p`）才能访问到地址所指的内存[^1]
+   如上面程序，引用后的 r 就和普通的整形变量没有什么区别（若不考虑 i 的存在，完全可以把`int i = 1; int& r = i;`当成`int r = 1;`来看待）。引用即是将两个变量进行了绑定，而指针仅仅是存储了指向内存的地址，所以通过引用名（如`r`）可以直接访问指向的内存，而通过指针名（如`p`）却只能访问到地址，要通过（如`*p`）才能访问到地址所指的内存[^1]
 
 2. **对引用的操作将与所指对象同步，而不是像操作指针一样会改变指针的指向：**
 
-	如引用的++操作将直接使得指向内容+1，而指针的++会让指针指向下一个地址。如`int i = 1; int& r = i; int* p = &r;`此时 r 和 p 都指向了 i 所在的空间，但其意义是完全不同的，p是开辟了一个内存来存储 i 的地址，而 r 就是 i
+   如引用的++操作将直接使得指向内容+1，而指针的++会让指针指向下一个地址。如`int i = 1; int& r = i; int* p = &r;`此时 r 和 p 都指向了 i 所在的空间，但其意义是完全不同的，p是开辟了一个内存来存储 i 的地址，而 r 就是 i
 
 3. **引用不可以为空，但指针可以为空：**
-	正因如此指针在使用前都需要进行判空操作，而引用变量若不进行初始化甚至无法通过编译
+   正因如此指针在使用前都需要进行判空操作，而引用变量若不进行初始化甚至无法通过编译
 
 虽说引用和指针有许多区别，但两者在本质上是相同的，可以根据汇编代码看出：
 
 ```
-//引用int& ref = i; 
+//引用int& ref = i;
 8048727: 8d 44 24 1c			lea 0x1c(%esp), %eax		// esp寄存器里的变量i的地址传给eax
 804872b: 89 44 24 18			mov %eax, 0x18(%esp)		// 将寄存器eax中的内容（i的地址）传给寄存器中的变量ref
 //指针int* p = &i;
@@ -80,7 +86,7 @@ cout << i << endl;	// 输出 3
 引用和const指针是不是几乎是相同的呢？引用的本质其实就是指针，只是在指针上增加了一些规则，使得它更加安全。实际上，若不考虑赋空值，那么：
 
 - 引用 `type& x` 等于 const指针 `const type* x`
-- const引用 `const type& x` 等于 指向const的const指针 `const type* const x` 
+- const引用 `const type& x` 等于 指向const的const指针 `const type* const x`
 
 ### 1.2 值传递、指针传递、引用传递
 
@@ -96,8 +102,7 @@ cout << i << endl;	// 输出 3
 
 形参相当于是实参的“别名”，对形参的操作其实就是对实参的操作，在引用传递过程中，被调函数的形式参数虽然也作为局部变量在栈中开辟了内存空间，但是这时存放的是由主调函数放进来的实参变量的地址。被调函数对形参的任何操作都被处理成间接寻址，即通过栈中存放的地址访问主调函数中的实参变量。正因为如此，被调函数对形参做的任何操作都影响了主调函数中的实参变量。
 
-
-## 参考
+## 2. 参考
 
 [^1]: [C++中引用和指针的区别](https://blog.csdn.net/listening_music/article/details/6921608)
 

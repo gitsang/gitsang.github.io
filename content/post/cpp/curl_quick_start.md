@@ -1,18 +1,24 @@
 ---
-title: "Curl 和 libcurl 快速入门"
-description: ""
-lead: ""
-date: 2019-10-15T14:53:28+08:00
-lastmod: 2019-10-15T14:53:28+08:00
-draft: false
-images: []
-menu: 
-  docs:
-    parent: "cpp"
+title: Curl 和 libcurl 快速入门
+slug: curl-quick-start
+description: Learn how to install curl and libcurl on Linux, compile and use them in C/C++ applications, and understand their command and library functions for HTTP communication.
+date: "2019-10-15T14:53:28+08:00"
+lastmod: "2025-05-09T19:18:13+08:00"
 weight: 100
-toc: true
+categories: 
+- "Programming"
+- "Software Installation"
+tags: 
+- "curl"
+- "libcurl"
+- "Linux"
+- "C++"
+- "HTTP"
+- "network programming"
+- "installation"
+
+<!-- markdown-front-matter auto -->
 ---
-<!--more-->
 
 ## 1. 安装 curl 和 libcurl
 
@@ -33,7 +39,7 @@ linux 机器一般自带 curl 工具，如果没有可以通过 `apt/yum/pkg ins
 1. 下载源码
 
 ```
-wget http://curl.haxx.se/download/curl-7.65.1.tar.gz 
+wget http://curl.haxx.se/download/curl-7.65.1.tar.gz
 tar -zxf curl-7.65.1.tar.gz
 cd curl-7.65.1
 ```
@@ -53,8 +59,8 @@ cd curl-7.65.1
 3. 编译安装
 
 ```
-make 
-make install 
+make
+make install
 ```
 
 4. 检查版本
@@ -64,7 +70,6 @@ curl --version
 ```
 
 版本信息与安装版本相符则到此步骤已经安装成功
-
 
 5. 将 curl 命令加入环境变量（如果按照默认路径安装则无需执行此步骤）
 
@@ -143,14 +148,14 @@ int httpPutFile() {
     FILE* inputFile = fopen("./put.txt", "rb");
     string outputFilename = "/1.txt";
     url += outputFilename;
-    
+
     //HttpHead
     struct curl_slist* headers = NULL;
     headers = curl_slist_append(headers, "endPoint:http://10.200.100.50:8080");
     headers = curl_slist_append(headers, "accessKeyId:id123");
     headers = curl_slist_append(headers, "secretAccessKey:key123");
     headers = curl_slist_append(headers, "Authorization:auth123");
-    
+
     //Init
     curl_global_init(CURL_GLOBAL_ALL);
     curl = curl_easy_init();
@@ -164,7 +169,7 @@ int httpPutFile() {
     //curl_easy_setopt(curl, CURLOPT_INFILESIZE, 87);
     curl_easy_setopt(curl, CURLOPT_PUT, 1);
     //curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "PUT");
-        
+
     //Perform
     result = curl_easy_perform(curl);
 
@@ -181,18 +186,18 @@ int httpGetFile() {
     CURL* curl = NULL;
     CURLcode result = CURLE_OK;
     string url = "http://10.200.100.50:8080";
-        
+
     FILE* outputFile = fopen("./get.txt", "wb");
     string inputFilename = "/1.txt";
     url += inputFilename;
-    
+
     //HttpHead
     struct curl_slist* headers = NULL;
     headers = curl_slist_append(headers, "endPoint:http://10.200.100.50:8080");
     headers = curl_slist_append(headers, "accessKeyId:id123");
     headers = curl_slist_append(headers, "secretAccessKey:key123");
     headers = curl_slist_append(headers, "Authorization:auth123");
-    
+
     //Init
     curl_global_init(CURL_GLOBAL_ALL);
     curl = curl_easy_init();
@@ -220,25 +225,24 @@ int main(int argc, char* argv[]) {
     string method = argv[1];
 
     if(method == "PUT" || method == "put") {
-        httpPutFile(); 
+        httpPutFile();
     }else if(method == "GET" || method == "get") {
-        httpGetFile(); 
+        httpGetFile();
     }else {
         cout << "Method error, please input \"PUT\" or \"GET\"." << endl;
     }
     cout << endl;
 
     return 0;
-} 
+}
 ```
 
-
-## 参考
+## 5. 参考
 
 [^1]: [Linux CURL的安装和使用](https://blog.csdn.net/lifan5/article/details/7350154)
 
 [^2]: [linux下编译安装libcurl(附使用示例)](https://blog.csdn.net/qianghaohao/article/details/51684862)
 
 [^3]: [curl_easy_setopt-curl库的关键函数之一](https://www.cnblogs.com/lidabo/p/4583067.html)
- 
+
 [^4]: [C++ 用libcurl库进行http通讯网络编程](https://www.cnblogs.com/moodlxs/archive/2012/10/15/2724318.html)

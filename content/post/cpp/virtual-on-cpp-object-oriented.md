@@ -1,15 +1,22 @@
 ---
-title: 'C++ 面向对象中的虚（Virtual）'
-description: '在 C++ 面向对象中，虚（virtual）是个重要的概念，他充分体现了面向对象实现中的继承和多态这两大特性'
+title: C++ 面向对象中的虚（Virtual）
 slug: virtual-on-cpp-object-oriented
-date: 2019-10-09T14:53:28+08:00
-lastmod: 2020-05-28T15:22:06+08:00
+description: 在 C++ 面向对象中，虚（virtual）是个重要的概念，他充分体现了面向对象实现中的继承和多态这两大特性
+date: "2019-10-09T14:53:28+08:00"
+lastmod: "2025-05-09T19:19:32+08:00"
 weight: 1
-categories:
-  - C++
-tags:
-  - C++
-  - virtual
+categories: 
+- "Programming"
+- "C++"
+- "Object-Oriented Programming"
+tags: 
+- "virtual functions"
+- "C++ inheritance"
+- "polymorphism"
+- "dynamic binding"
+- "static binding"
+
+<!-- markdown-front-matter auto -->
 ---
 
 ## 1. 虚函数
@@ -136,15 +143,22 @@ movq    %rdx, %rdi
 call    *%rax           # 间接寻址
 ```
 
-## 参考
+## 2. 参考
 
 [^1][^2][^3][^4][^5][^6][^7][^8]
 
 [^1]: [C++构造/析构函数中的多态(二)](http://codemacro.com/2014/09/06/necessary-dtor/)
+
 [^2]: [浅谈 C++多态性](https://blog.csdn.net/Hackbuteer1/article/details/7475622)
+
 [^3]: [C++多态--虚函数 virtual 及 override](https://blog.csdn.net/i_chaoren/article/details/77281785)
+
 [^4]: [C++学习:虚函数,纯虚函数,虚继承,虚析构函数](https://blog.csdn.net/qq_29924041/article/details/73522256)
+
 [^5]: [C++ Virtual 详解](https://blog.csdn.net/ring0hx/article/details/1605254)
+
 [^6]: [C++中 virtual（虚函数）的用法](https://blog.csdn.net/foreverhuylee/article/details/34107615)
+
 [^7]: [虚函数的深入理解](https://www.cnblogs.com/zsq1993/p/5804332.html)
+
 [^8]: [为什么不直接用子类引用指向子类对象，而用父类引用指向子类对象](https://bbs.csdn.net/topics/391846458)

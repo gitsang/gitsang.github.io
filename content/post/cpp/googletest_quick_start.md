@@ -1,18 +1,22 @@
 ---
-title: "Googletest Quick Start"
-description: ""
-lead: ""
-date: 2019-12-15T14:53:28+08:00
-lastmod: 2019-12-15T14:53:28+08:00
-draft: false
-images: []
-menu: 
-  docs:
-    parent: "cpp"
+title: Googletest Quick Start
+slug: googletest-quick-start
+description: Guide on how to install GoogleTest framework and run simple unit tests using CMake and g++. Includes solutions for common issues during setup.
+date: "2019-12-15T14:53:28+08:00"
+lastmod: "2025-05-09T19:18:47+08:00"
 weight: 100
-toc: true
+categories: 
+- "Software Development"
+- "Testing"
+tags: 
+- "GoogleTest"
+- "CMake"
+- "Unit Testing"
+- "g++"
+- "Installation"
+
+<!-- markdown-front-matter auto -->
 ---
-<!--more-->
 
 ## 1. Install
 
@@ -133,11 +137,12 @@ $ ./a.out
 If using `-lgtest_main`, you can coding without main() function[^4]
 
 ---
-## Q & A
 
-### Q1: Undefined reference when linking with googletest
+## 3. Q & A
 
-#### A:
+### 3.1 Q1: Undefined reference when linking with googletest
+
+#### 3.1.1 A:
 
 If you downloaded the gtest source directly and used the make install from the downloaded gtest repository it may have installed header files under `/usr/local/include/gtest`.
 
@@ -149,7 +154,7 @@ The solution is to look for `/usr/local/include/gtest` and `/usr/include/gtest` 
 
 If `/usr/include/gtest` is the older directory, you may want to remove it by uninstalling the `libgtest-dev` package.[^1]
 
-### Q2: Could not find CMAKE_ROOT
+### 3.2 Q2: Could not find CMAKE_ROOT
 
 ```
 CMake Error: Could not find CMAKE_ROOT !!!
@@ -161,7 +166,7 @@ cmake version 3.11.0-rc4
 CMake suite maintained and supported by Kitware (kitware.com/cmake).
 ```
 
-#### A:
+#### 3.2.1 A:
 
 ```sh
 $ wget https://cmake.org/files/v3.12/cmake-3.12.0-rc1.tar.gz
@@ -172,9 +177,9 @@ $ gmake
 $ gmake install
 ```
 
-### Q3: Compile error
+### 3.3 Q3: Compile error
 
-#### A:
+#### 3.3.1 A:
 
 add `-std=c++11` when compile
 
@@ -182,8 +187,7 @@ add `-std=c++11` when compile
 $ g++ *.cpp -lgtest -lpthread -std=c++11
 ```
 
-
-## Reference
+## 4. Reference
 
 [^1]: [Undefined reference when linking with googletest - Stack Overflow](https://stackoverflow.com/questions/39207940/undefined-reference-when-linking-with-googletest)
 

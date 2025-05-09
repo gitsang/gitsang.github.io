@@ -1,18 +1,22 @@
 ---
-title: "调用和回调函数"
-description: ""
-lead: ""
-date: 2019-10-09T14:53:28+08:00
-lastmod: 2019-10-09T14:53:28+08:00
-draft: false
-images: []
-menu:
-  docs:
-    parent: "cpp"
+title: 调用和回调函数
+slug: call-and-callback
+description: This article explains what callback functions are in C++ programming, how they differ from normal function calls, and provides insights into their usage and registration. Examples are provided to elucidate these concepts.
+date: "2019-10-09T14:53:28+08:00"
+lastmod: "2025-05-09T19:18:03+08:00"
 weight: 100
-toc: true
+categories: 
+- "Programming"
+- "C++"
+tags: 
+- "callback functions"
+- "C++ programming"
+- "function pointers"
+- "system operations"
+- "kernel programming"
+
+<!-- markdown-front-matter auto -->
 ---
-<!--more-->
 
 ## 1. 回调函数简介
 
@@ -90,8 +94,7 @@ int main() {
 
 用户在调用othfunc_max时，只需传入对应的回调函数名称，系统会将a, b, &max传给mymax_callback函数，函数只给&max赋上a和b的最大值（其实是最小值），并未将max值返回（即使返回也不是返回给用户，用户能收到的仅仅是othfunc_max()的返回值）。[^3] [^4]
 
-
-## 参考
+## 3. 参考
 
 [^1]: [C++中回调函数(CallBack)的使用](https://blog.csdn.net/bzhxuexi/article/details/11767979)
 

@@ -1,18 +1,22 @@
 ---
-title: "结构体的定义方式"
-description: ""
-lead: ""
-date: 2019-10-09T14:53:28+08:00
-lastmod: 2019-10-09T14:53:28+08:00
-draft: false
-images: []
-menu: 
-  docs:
-    parent: "cpp"
+title: 结构体的定义方式
+slug: struct-define
+description: A guide on using typedef to simplify the definition of structures and pointers in C/C++, including practical coding examples. Explore different syntactical variations to optimize code readability and efficiency.
+date: "2019-10-09T14:53:28+08:00"
+lastmod: "2025-05-09T19:19:18+08:00"
 weight: 100
-toc: true
+categories: 
+- "Programming"
+- "C/C++"
+tags: 
+- "typedef"
+- "struct"
+- "pointers"
+- "C++"
+- "coding examples"
+
+<!-- markdown-front-matter auto -->
 ---
-<!--more-->
 
 ## 1. 使用typedef定义结构体
 
@@ -56,7 +60,7 @@ typedef struct student
         int age;
         int height;
 }std;
-//std相当于struct student	
+//std相当于struct student
 
 struct student
 {
@@ -97,7 +101,7 @@ Node *PtrToTreeNode;            //定义指针
 /* 或可不定义别名直接定义结构体指针：
  * typedef struct TreeNode* PtrToTreeNode
  * 若使用智能指针：
- * typedef std::shared_ptr<TreeNode> PtrToTreeNode 
+ * typedef std::shared_ptr<TreeNode> PtrToTreeNode
  */
 ```
 
@@ -126,8 +130,7 @@ typedef struct TreeNode
 
 在定义结构体时，省略struct后面的结构体名也是可以的，但是由于没有名字，操作（如定义结构体变量）只能在定义的同时进行
 
-
-## 参考
+## 3. 参考
 
 [^1]: [typedef关键字与结构体、结构体指针的定义 - 一路洒满阳光XD](https://blog.csdn.net/u013632190/article/details/47720703)
 
