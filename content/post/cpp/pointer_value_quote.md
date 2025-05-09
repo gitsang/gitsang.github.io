@@ -5,20 +5,20 @@ description: This article provides a detailed explanation of pointers and refere
 date: "2019-10-09T14:53:28+08:00"
 lastmod: "2025-05-09T19:19:08+08:00"
 weight: 100
-categories: 
-- "Programming"
-- "C++"
-tags: 
-- "pointers"
-- "references"
-- "C++"
-- "value passing"
-- "pointer passing"
-- "reference passing"
-- "const keyword"
-
-<!-- markdown-front-matter auto -->
+categories:
+  - "Programming"
+  - "C++"
+tags:
+  - "pointers"
+  - "references"
+  - "C++"
+  - "value passing"
+  - "pointer passing"
+  - "reference passing"
+  - "const keyword"
 ---
+
+<!-- markdown-front-matter -->
 
 ## 1. 指针和引用
 

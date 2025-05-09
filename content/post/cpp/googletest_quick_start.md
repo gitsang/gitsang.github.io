@@ -5,18 +5,18 @@ description: Guide on how to install GoogleTest framework and run simple unit te
 date: "2019-12-15T14:53:28+08:00"
 lastmod: "2025-05-09T19:18:47+08:00"
 weight: 100
-categories: 
-- "Software Development"
-- "Testing"
-tags: 
-- "GoogleTest"
-- "CMake"
-- "Unit Testing"
-- "g++"
-- "Installation"
-
-<!-- markdown-front-matter auto -->
+categories:
+  - "Software Development"
+  - "Testing"
+tags:
+  - "GoogleTest"
+  - "CMake"
+  - "Unit Testing"
+  - "g++"
+  - "Installation"
 ---
+
+<!-- markdown-front-matter -->
 
 ## 1. Install
 

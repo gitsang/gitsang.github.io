@@ -5,19 +5,19 @@ description: Explore the nuances of using defer in Golang functions and its impa
 date: "2020-08-28T16:08:25+08:00"
 lastmod: "2025-05-09T18:41:04+08:00"
 weight: 100
-categories: 
-- "Programming"
-- "Golang"
-- "Software Development"
-tags: 
-- "Golang"
-- "defer"
-- "return values"
-- "programming functions"
-- "error handling"
-
-<!-- markdown-front-matter auto -->
+categories:
+  - "Programming"
+  - "Golang"
+  - "Software Development"
+tags:
+  - "Golang"
+  - "defer"
+  - "return values"
+  - "programming functions"
+  - "error handling"
 ---
+
+<!-- markdown-front-matter -->
 
 Golang 中 defer 几乎被当作 try catch final 使用，但事实上 defer 对返回值的修改和 final 仍然有些一些微妙的不同
 

@@ -3,21 +3,23 @@ title: C++ 面向对象中的虚（Virtual）
 slug: virtual-on-cpp-object-oriented
 description: 在 C++ 面向对象中，虚（virtual）是个重要的概念，他充分体现了面向对象实现中的继承和多态这两大特性
 date: "2019-10-09T14:53:28+08:00"
-lastmod: "2025-05-09T19:19:32+08:00"
+lastmod: "2025-05-09T19:46:30+08:00"
 weight: 1
-categories: 
-- "Programming"
-- "C++"
-- "Object-Oriented Programming"
-tags: 
-- "virtual functions"
-- "C++ inheritance"
-- "polymorphism"
-- "dynamic binding"
-- "static binding"
-
-<!-- markdown-front-matter auto -->
+categories:
+  - "Programming"
+  - "C++"
+  - "Object-Oriented Programming"
+tags:
+  - "C++"
+  - "virtual functions"
+  - "polymorphism"
+  - "dynamic binding"
+  - "object-oriented programming"
+  - "code example"
+  - "assembly code"
 ---
+
+<!-- markdown-front-matter -->
 
 ## 1. 虚函数
 

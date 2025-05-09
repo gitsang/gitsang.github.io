@@ -5,20 +5,20 @@ description: Learn how to install curl and libcurl on Linux, compile and use the
 date: "2019-10-15T14:53:28+08:00"
 lastmod: "2025-05-09T19:18:13+08:00"
 weight: 100
-categories: 
-- "Programming"
-- "Software Installation"
-tags: 
-- "curl"
-- "libcurl"
-- "Linux"
-- "C++"
-- "HTTP"
-- "network programming"
-- "installation"
-
-<!-- markdown-front-matter auto -->
+categories:
+  - "Programming"
+  - "Software Installation"
+tags:
+  - "curl"
+  - "libcurl"
+  - "Linux"
+  - "C++"
+  - "HTTP"
+  - "network programming"
+  - "installation"
 ---
+
+<!-- markdown-front-matter -->
 
 ## 1. 安装 curl 和 libcurl
 

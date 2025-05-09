@@ -3,20 +3,20 @@ title: Dynamic Partition Expansion Without LVM
 slug: lvm
 description: Guide on expanding system partitions without formatting or remounting disks. Example using /dev/sda2 to increase size on a system with sufficient space or virtualized capacity increases.
 date: "2025-05-09T19:17:37+08:00"
-lastmod: "2025-05-09T19:17:37+08:00"
+lastmod: "2025-05-09T19:25:20+08:00"
 weight: 1
-categories: 
-- "System Administration"
-- "Linux"
-tags: 
-- "partition expansion"
-- "fdisk"
-- "ext4"
-- "Linux filesystem"
-- "dynamic allocation"
-
-<!-- markdown-front-matter auto -->
+categories:
+  - "Technology"
+  - "Linux Administration"
+tags:
+  - "partition expansion"
+  - "fdisk"
+  - "Linux filesystems"
+  - "ext4"
+  - "system management"
 ---
+
+<!-- markdown-front-matter -->
 
 > 非 LVM 分区实现动态扩容，适用于系统分区扩容，无需格式化磁盘，无需重新挂载磁盘
 

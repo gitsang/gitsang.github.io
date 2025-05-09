@@ -5,19 +5,19 @@ description: Guidance on configuring Docker-specific firewall rules using firewa
 date: "2024-05-07T11:09:00+08:00"
 lastmod: "2025-05-09T18:41:41+08:00"
 weight: 1
-categories: 
-- "Networking"
-- "Docker"
-- "Security"
-tags: 
-- "Docker"
-- "firewalld"
-- "iptables"
-- "firewall rules"
-- "network security"
-
-<!-- markdown-front-matter auto -->
+categories:
+  - "Networking"
+  - "Docker"
+  - "Security"
+tags:
+  - "Docker"
+  - "firewalld"
+  - "iptables"
+  - "firewall rules"
+  - "network security"
 ---
+
+<!-- markdown-front-matter -->
 
 ## 1. 背景
 

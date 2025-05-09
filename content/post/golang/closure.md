@@ -1,24 +1,23 @@
 ---
-title: 什么是闭包
+title: Understanding Closures in Programming
 slug: closure
-description: A closure is an entity that stores a function along with its associated environment, allowing it to execute outside its context. This guide explores closures' isolation and encapsulation features beyond their scope extension abilities.
-date: "2020-07-23T15:00:35+08:00"
-lastmod: "2025-05-09T18:41:13+08:00"
-weight: 100
-categories: 
-- "Programming"
-- "Computer Science"
-tags: 
-- "closures"
-- "closure isolation"
-- "lexical environment"
-- "function scope"
-- "object relation"
-
-<!-- markdown-front-matter auto -->
+description: This content explores closures, clarifying their nature as entities that store functions and their environment, and discussing their distinction from objects and functions. It highlights the encapsulation aspect and how closures extend variable scope while being isolated from external states.
+date: "2025-05-09T19:43:07+08:00"
+lastmod: "2025-05-09T19:45:17+08:00"
+weight: 1
+categories:
+  - "Programming"
+  - "JavaScript"
+  - "Computer Science"
+tags:
+  - "closures"
+  - "scope"
+  - "functions"
+  - "JavaScript"
+  - "programming concepts"
 ---
 
-<!--more-->
+<!-- markdown-front-matter -->
 
 ## 1. 什么是闭包
 

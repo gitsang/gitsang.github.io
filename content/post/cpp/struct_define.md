@@ -5,18 +5,18 @@ description: A guide on using typedef to simplify the definition of structures a
 date: "2019-10-09T14:53:28+08:00"
 lastmod: "2025-05-09T19:19:18+08:00"
 weight: 100
-categories: 
-- "Programming"
-- "C/C++"
-tags: 
-- "typedef"
-- "struct"
-- "pointers"
-- "C++"
-- "coding examples"
-
-<!-- markdown-front-matter auto -->
+categories:
+  - "Programming"
+  - "C/C++"
+tags:
+  - "typedef"
+  - "struct"
+  - "pointers"
+  - "C++"
+  - "coding examples"
 ---
+
+<!-- markdown-front-matter -->
 
 ## 1. 使用typedef定义结构体
 

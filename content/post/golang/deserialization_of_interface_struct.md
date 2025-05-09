@@ -5,20 +5,20 @@ description: 通过创建临时结构体实现 struct 内 interface struct 的 j
 date: "2021-09-24T13:55:01+08:00"
 lastmod: "2025-05-09T18:38:30+08:00"
 weight: 100
-categories: 
-- "Programming"
-- "Golang"
-tags: 
-- "JSON"
-- "Serialization"
-- "Deserialization"
-- "Golang"
-- "Interface"
-- "Struct"
-- "Type Conversion"
-
-<!-- markdown-front-matter auto -->
+categories:
+  - "Programming"
+  - "Golang"
+tags:
+  - "JSON"
+  - "Serialization"
+  - "Deserialization"
+  - "Golang"
+  - "Interface"
+  - "Struct"
+  - "Type Conversion"
 ---
+
+<!-- markdown-front-matter -->
 
 ## 1. 背景
 
