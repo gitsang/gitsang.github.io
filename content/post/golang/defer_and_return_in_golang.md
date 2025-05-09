@@ -1,16 +1,22 @@
 ---
-title: "defer 和 return 的执行顺序陷阱"
-description: ""
-lead: "Golang 中 defer 几乎被当作 try catch final 使用，但事实上 defer 对返回值的修改和 final 仍然有些一些微妙的不同"
-date: 2020-08-28T16:08:25+08:00
-lastmod: 2020-08-28T16:08:25+08:00
-draft: false
-images: []
-menu: 
-  docs:
-    parent: "golang"
+title: defer 和 return 的执行顺序陷阱
+slug: defer-and-return-in-golang
+description: Explore the nuances of using defer in Golang functions and its impact on named vs unnamed return values. This article provides a detailed explanation of how defer affects the return process.
+date: "2020-08-28T16:08:25+08:00"
+lastmod: "2025-05-09T18:41:04+08:00"
 weight: 100
-toc: true
+categories: 
+- "Programming"
+- "Golang"
+- "Software Development"
+tags: 
+- "Golang"
+- "defer"
+- "return values"
+- "programming functions"
+- "error handling"
+
+<!-- markdown-front-matter auto -->
 ---
 
 Golang 中 defer 几乎被当作 try catch final 使用，但事实上 defer 对返回值的修改和 final 仍然有些一些微妙的不同
@@ -80,8 +86,8 @@ return 的执行顺序应该是这样的：
 1. 给 `返回值` 赋值
 
 2. 调用 RET 指令，并传入 `返回值`
-    - RET 先检查是否存在 defer，存在则逆序执行
-    - RET 携带 `返回值` 退出函数
+   - RET 先检查是否存在 defer，存在则逆序执行
+   - RET 携带 `返回值` 退出函数
 
 这里的第一步，若是匿名返回值，那么在给 `返回值` 赋值时，将会先声明一个 `返回值` (因为没有定义返回值的名称)
 

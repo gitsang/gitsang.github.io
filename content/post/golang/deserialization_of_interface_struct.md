@@ -1,22 +1,26 @@
-
 ---
-
-title: "interface struct 的 json 反序列化"
-description: "通过创建临时结构体实现 struct 内 interface struct 的 json 反序列化"
-lead: "通过创建临时结构体实现 struct 内 interface struct 的 json 反序列化"
-date: 2021-09-24T13:55:01+08:00
-lastmod: 2021-09-24T13:55:11+08:00
-draft: false
-images: []
-menu:
-  docs:
-    parent: "golang"
+title: interface struct 的 json 反序列化
+slug: deserialization-of-interface-struct
+description: 通过创建临时结构体实现 struct 内 interface struct 的 json 反序列化
+date: "2021-09-24T13:55:01+08:00"
+lastmod: "2025-05-09T18:38:30+08:00"
 weight: 100
-toc: true
+categories: 
+- "Programming"
+- "Golang"
+tags: 
+- "JSON"
+- "Serialization"
+- "Deserialization"
+- "Golang"
+- "Interface"
+- "Struct"
+- "Type Conversion"
 
+<!-- markdown-front-matter auto -->
 ---
 
-## 背景
+## 1. 背景
 
 ```golang
 type AData struct {
@@ -70,7 +74,7 @@ log.Info("X", zap.Reflect("msgX", msgX), zap.Reflect("msgX.Data.A", msgX.Data.(A
 
 此处是无法直接用 `msgX.Data.A` 来访问的，同样的 `msgX.Data.(AData).A` 也是不行的，因为这时候的 `data` 已经被反序列化成了 `map[string]interface`
 
-### 解决方法 1
+### 1.1 解决方法 1
 
 解决方法也很简单，只要再反序列化时能够知道需要反序列化成的类型即可。
 
@@ -92,7 +96,7 @@ _ = json.Unmarshal(msgBJ, &msgXB)
 log.Info("XB", zap.Reflect("msgXB", msgXB), zap.Reflect("msgXB.Data.B", msgXB.Data.B))
 ```
 
-### 解决方法 2
+### 1.2 解决方法 2
 
 另一种思路是拆分 `struct` 每次序列化时将其合并，反序列化时再将其拆分[^1][^2]
 
@@ -151,7 +155,7 @@ func TestJsonStructSplit(t *testing.T) {
 }
 ```
 
-### 解决方法 3
+### 1.3 解决方法 3
 
 只在反序列化时拆分[^1][^2]
 
@@ -177,7 +181,7 @@ msgXB.Data = dataXB
 t.Log("msgXB", msgXB, "data", msgXB.Data.(BData).B)
 ```
 
-## 完整测试代码
+## 2. 完整测试代码
 
 ```golang
 package main
@@ -323,7 +327,8 @@ func TestJsonStructFull(t *testing.T) {
 }
 ```
 
-## 参考
+## 3. 参考
 
 [^1]: [Golang 中使用 JSON 的一些小技巧](https://zhuanlan.zhihu.com/p/27472716)
+
 [^2]: [JSON and struct composition in Go](https://attilaolah.eu/2014/09/10/json-and-struct-composition-in-go/)

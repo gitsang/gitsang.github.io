@@ -1,16 +1,21 @@
 ---
-title: "Go Module 管理和 Toolchain 配置"
+title: Go Module 管理和 Toolchain 配置
 slug: go-module-and-toolchain
-description: |-
-  Go 1.21 版本对向前兼容性进行了改进，并引入了 go toolchain 规则。
-  本文主要阐述 Go 语言的向前兼容性以及 Go 1.21 中新引入的 toolchain 的决策逻辑。
-date: 2024-05-08T15:16:00+08:00
-lastmod: 2024-05-08T15:16:00+08:00
+description: This document reviews core rules for managing Go module versions and toolchain compatibility, analyzes different scenarios, and provides best practice recommendations to ensure successful builds.
+date: "2024-05-08T15:16:00+08:00"
+lastmod: "2025-05-09T18:13:13+08:00"
 weight: 1
-categories:
-  - golang
-tags:
-  - golang
+categories: 
+- "Programming"
+- "Software Development"
+tags: 
+- "Go"
+- "Toolchain"
+- "Module Compatibility"
+- "Version Management"
+- "Best Practices"
+
+<!-- markdown-front-matter auto -->
 ---
 
 <!-- more -->

@@ -1,17 +1,23 @@
 ---
-title: "什么是闭包"
-description: ""
-lead: ""
-date: 2020-07-23T15:00:35+08:00
-lastmod: 2020-07-23T15:00:35+08:00
-draft: false
-images: []
-menu: 
-  docs:
-    parent: "golang"
+title: 什么是闭包
+slug: closure
+description: A closure is an entity that stores a function along with its associated environment, allowing it to execute outside its context. This guide explores closures' isolation and encapsulation features beyond their scope extension abilities.
+date: "2020-07-23T15:00:35+08:00"
+lastmod: "2025-05-09T18:41:13+08:00"
 weight: 100
-toc: true
+categories: 
+- "Programming"
+- "Computer Science"
+tags: 
+- "closures"
+- "closure isolation"
+- "lexical environment"
+- "function scope"
+- "object relation"
+
+<!-- markdown-front-matter auto -->
 ---
+
 <!--more-->
 
 ## 1. 什么是闭包
@@ -44,8 +50,7 @@ toc: true
 
 并且实际上对象系统能够基于闭包实现。[^3]
 
-
-## 参考
+## 4. 参考
 
 [^1]: [Closures - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)
 
