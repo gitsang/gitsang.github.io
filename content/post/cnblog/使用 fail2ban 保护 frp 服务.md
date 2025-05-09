@@ -1,21 +1,4 @@
----
-title: '使用 fail2ban 保护 frp 服务'
-slug: firewall-rule-for-docker-port-mapping
-description: |-
-  使用 frp 穿透后所有访问都会变成 127.0.0.1 进入，
-  需要通过 filter 规则在上游 fail2ban 执行。
-date: 2022-01-20T19:22:00+08:00
-lastmod: 2022-01-20T19:22:00+08:00
-weight: 1
-categories:
-  - linux
-tags:
-  - linux
-  - frp
-  - fail2ban
----
-
-## 背景
+## 1. 背景
 
 我们一般会使用 fail2ban 来保护暴露到公网的提供密码登录的 ssh 连接等。
 
@@ -23,7 +6,7 @@ tags:
 
 因此 fail2ban 应该放到 frps 服务器上。但 frps 的日志并不会对失败进行辨别，无论你访问哪个服务，frp 日志只会有连接和断开两种日志。
 
-### 不完美的解决途径
+### 1.1 不完美的解决途径
 
 正常情况下，我们不会频繁地连接和断开，只有被扫描时才容易出现。
 
@@ -61,7 +44,7 @@ action = iptables-allports[name=frp,protocol=tcp]
 
 然后你可以把阈值改小一点，用多次 telnet 来验证是否能过成功封锁。 然后用 `fail2ban-client set frp unbanip 12.36.14.241` 来解除封锁。
 
-## Outlook
+## 2. Outlook
 
 不是很完美的方案，比如如果是 http 连接，很可能超过限制，实际使用需要做一些排除的匹配。
 

@@ -1,4 +1,4 @@
-## 背景
+## 1. 背景
 
 背景：
 
@@ -9,9 +9,9 @@
 
 - 每套环境需要拥有自己的一套 AK，并能自己管理自己的域名，互不冲突
 
-## 操作步骤
+## 2. 操作步骤
 
-### 1 添加子域名
+### 2.1 添加子域名
 
 阿里云的 RAM 访问控制中，不允许使用通配等方式配置域名资源（因为操作是针对 AUTHORITY SECTION 的），因此必须先拆分出子域名。
 
@@ -25,35 +25,34 @@
 
 按照提示要求在你的主域名添加对应的 TXT 主机记录后点击验证即可添加成功。
 
-### 2 创建子域名的 RAM 权限策略
+### 2.2 创建子域名的 RAM 权限策略
 
 其策略类似如下（需要把 `${your-sub-domain}` 改为刚才创建的子域名，如本文的 `env1.domain.com`），此处虽然可以使用通配，但名称必须是域名解析中列出的域名值。
 
 ```json
 {
-    "Version": "1",
-    "Statement": [
-        {
-            "Action": "alidns:*",
-            "Resource": "acs:alidns:::domain/${your-sub-domain}",
-            "Effect": "Allow"
-        },
-        {
-            "Action": [
-                "alidns:Describe*"
-            ],
-            "Resource": "acs:alidns:::*",
-            "Effect": "Allow"
-        }
-    ]
+  "Version": "1",
+  "Statement": [
+    {
+      "Action": "alidns:*",
+      "Resource": "acs:alidns:::domain/${your-sub-domain}",
+      "Effect": "Allow"
+    },
+    {
+      "Action": ["alidns:Describe*"],
+      "Resource": "acs:alidns:::*",
+      "Effect": "Allow"
+    }
+  ]
 }
 ```
 
 这里配置了两个策略：
+
 - 第一个策略是允许 `acs:alidns:::domain/${your-sub-domain}` 资源的所有 `alidns:*` 操作
 - 第二个策略是允许所有 `acs:alidns:::*` 资源的 Describe `alidns:Describe*` 操作（此处可能还需要 Describe 其他的资源，阿里云文档和客服并没有给出明确的答复）
 
-### 3 子账号赋权和 AK 申请
+### 2.3 子账号赋权和 AK 申请
 
 新建一个 RAM 用户，需要勾选 `OpenAPI 调用访问`
 
@@ -67,6 +66,6 @@
 
 ![image](https://img2023.cnblogs.com/blog/2038910/202305/2038910-20230525104202528-918302234.png)
 
-### 4 使用 AK
+### 2.4 使用 AK
 
 之后根据使用的不同的 ACME 或 DDNS 服务等的文档配置 AK 即可
