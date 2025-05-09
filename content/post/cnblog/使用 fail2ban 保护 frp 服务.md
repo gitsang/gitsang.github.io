@@ -1,3 +1,26 @@
+---
+title: Enhancing Security with Fail2ban for FRP Servers
+slug: fail2ban-frp
+description: This content discusses configuring Fail2ban to protect services accessed via FRP by detecting excessive connection attempts through custom filters. It outlines solution limitations and suggests improvements.
+date: "2025-05-09T19:16:59+08:00"
+lastmod: "2025-05-09T19:16:59+08:00"
+weight: 1
+categories: 
+- "Security"
+- "Networking"
+- "Linux"
+tags: 
+- "fail2ban"
+- "FRP servers"
+- "SSH protection"
+- "custom filters"
+- "connection attempts"
+- "iptables"
+- "log analysis"
+
+<!-- markdown-front-matter auto -->
+---
+
 ## 1. 背景
 
 我们一般会使用 fail2ban 来保护暴露到公网的提供密码登录的 ssh 连接等。

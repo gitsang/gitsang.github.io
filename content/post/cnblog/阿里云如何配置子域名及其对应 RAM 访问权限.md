@@ -1,3 +1,25 @@
+---
+title: RAM Permissions and Domain Management in Alibaba Cloud
+slug: ram
+description: This guide details steps to manage subdomains and assign RAM permissions for secure domain handling in Alibaba Cloud, ensuring each environment has its own AccessKey. It covers subdomain creation, RAM policy setup, and AccessKey application for streamlined operations.
+date: "2025-05-09T19:17:31+08:00"
+lastmod: "2025-05-09T19:17:31+08:00"
+weight: 1
+categories: 
+- "Cloud Computing"
+- "Domain Management"
+- "Security"
+tags: 
+- "Alibaba Cloud"
+- "RAM Permissions"
+- "Domain Configuration"
+- "AccessKey Management"
+- "ACME"
+- "DDNS"
+
+<!-- markdown-front-matter auto -->
+---
+
 ## 1. 背景
 
 背景：
