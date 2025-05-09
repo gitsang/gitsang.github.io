@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on Sang's Blog</title><link>https://gitsang.github.io/categories/linux/</link><description>Recent content in Linux on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Fri, 09 May 2025 19:18:21 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>开启 IPv6 自动配置</title><link>https://gitsang.github.io/p/enable-ipv6-slaac/</link><pubDate>Wed, 04 Dec 2024 10:43:07 +0800</pubDate><guid>https://gitsang.github.io/p/enable-ipv6-slaac/</guid><description>&lt;h2 id="sysctl-配置">&lt;a href="#sysctl-%e9%85%8d%e7%bd%ae" class="header-anchor">&lt;/a>sysctl 配置
+&lt;/h2>&lt;p>在某些情况下，IPv6 并不会自动配置，需要手动开启 sysctl 选项&lt;/p>
+&lt;p>编辑 &lt;code>/etc/sysctl.conf&lt;/code> 文件，并在末尾添加以下内容，输入 &lt;code>sysctl -p&lt;/code> 立即生效配置&lt;/p>
+&lt;p>此选项将开启 IPv6 功能，通常情况下，只需要配置此选项即可开启 IPv6&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">net.ipv6.conf.default.disable_ipv6 = 0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">net.ipv6.conf.all.disable_ipv6 = 0
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>此选项将允许数据包在 Interface 之间转发，当你的网络接口是使用桥接时，通常需要开启此选项&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">net.ipv6.conf.default.forwarding = 1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">net.ipv6.conf.all.forwarding = 1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>此选项将允许接收路由器通告，如果上面两个选项配置后仍然无法获取 IPv6 地址，可以尝试开启以下选项&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">net.ipv6.conf.all.accept_ra = 1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">net.ipv6.conf.default.accept_ra = 1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>此选项用于开启 SLAAC (Stateless Address Autoconfiguration)，一般默认是开着的&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">net.ipv6.conf.all.autoconf = 1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">net.ipv6.conf.default.autoconf = 1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="网络接口配置">&lt;a href="#%e7%bd%91%e7%bb%9c%e6%8e%a5%e5%8f%a3%e9%85%8d%e7%bd%ae" class="header-anchor">&lt;/a>网络接口配置
+&lt;/h2>&lt;p>编辑 &lt;code>/etc/network/interfaces&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">iface vmbr0 inet6 auto
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>当 inet6 配置为 &lt;code>auto&lt;/code> 时将使用 SLAAC 自动配置&lt;/p></description></item><item><title>Install Git from Source Code</title><link>https://gitsang.github.io/p/install-git-from-source-code/</link><pubDate>Mon, 08 May 2023 11:31:00 +0800</pubDate><guid>https://gitsang.github.io/p/install-git-from-source-code/</guid><description>&lt;h1 id="install-git-from-source-code">&lt;a href="#install-git-from-source-code" class="header-anchor">&lt;/a>Install Git from Source Code
+&lt;/h1>&lt;h2 id="prerequisite">&lt;a href="#prerequisite" class="header-anchor">&lt;/a>Prerequisite
+&lt;/h2>&lt;h3 id="centos">&lt;a href="#centos" class="header-anchor">&lt;/a>CentOS
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">yum install zlib-devel
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">yum install asciidoc
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">yum install xmlto
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="debian">&lt;a href="#debian" class="header-anchor">&lt;/a>Debian
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">apt-get install zlib1g-dev
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">apt-get install asciidoc
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">apt-get install xmlto
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="install">&lt;a href="#install" class="header-anchor">&lt;/a>Install
+&lt;/h2>&lt;p>You can get it via the kernel.org site, at &lt;a class="link" href="https://www.kernel.org/pub/software/scm/git" target="_blank" rel="noopener"
+>https://www.kernel.org/pub/software/scm/git&lt;/a>, or the mirror on the GitHub website, at &lt;a class="link" href="https://github.com/git/git/tags" target="_blank" rel="noopener"
+>https://github.com/git/git/tags&lt;/a>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">wget https://github.com/git/git/archive/refs/tags/v2.40.1.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tar -zxf v2.40.1.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cd v2.40.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">make configure
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./configure --prefix=/usr
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">make all doc info
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo make install install-doc install-html install-info
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="reference">&lt;a href="#reference" class="header-anchor">&lt;/a>Reference
+&lt;/h2>&lt;ul>
+&lt;li>&lt;a class="link" href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git" target="_blank" rel="noopener"
+>Getting-Started-Installing-Git&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Using Swap</title><link>https://gitsang.github.io/p/using-swap/</link><pubDate>Tue, 13 Apr 2021 11:38:00 +0800</pubDate><guid>https://gitsang.github.io/p/using-swap/</guid><description>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"># create swap file
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">dd if=/dev/zero of=/.swap bs=1048576 count=4096
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># format swap
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">mkswap /.swap
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># start swap
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">swapon /.swap
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># check
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">free -h
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># onboot
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">echo &amp;#34;/.swap swap swap defaults 0 0&amp;#34; &amp;gt;&amp;gt; /etc/fstab
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>How To Remove Systemd Service</title><link>https://gitsang.github.io/p/how-to-remove-systemd-service/</link><pubDate>Thu, 18 Mar 2021 09:21:00 +0800</pubDate><guid>https://gitsang.github.io/p/how-to-remove-systemd-service/</guid><description>&lt;h2 id="method">&lt;a href="#method" class="header-anchor">&lt;/a>Method
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="n">systemctl&lt;/span> &lt;span class="n">stop&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">servicename&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">systemctl&lt;/span> &lt;span class="n">disable&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">servicename&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">rm&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">your&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">service&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">locations&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">servicename&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">rm&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">your&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">service&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">locations&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">servicename&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="c1"># and symlinks that might be related&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">systemctl&lt;/span> &lt;span class="n">daemon&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">reload&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">systemctl&lt;/span> &lt;span class="n">reset&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">failed&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Systemd uses unit (file to define services) to remove a service the unit have to be removed&amp;hellip; here is a list of unit locations :&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">/etc/systemd/system/ (and sub directories)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/usr/local/etc/systemd/system/ (and sub directories)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">~/.config/systemd/user/ (and sub directories)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/usr/lib/systemd/ (and sub directories)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/usr/local/lib/systemd/ (and sub directories)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/etc/init.d/ (Converted old service system)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>You can easily find location in &lt;code>loaded&lt;/code> property using &lt;code>systemctl status [service]&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="o">$&lt;/span> &lt;span class="n">systemctl&lt;/span> &lt;span class="n">status&lt;/span> &lt;span class="n">bluetooth&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">service&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">bluetooth&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">service&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">Bluetooth&lt;/span> &lt;span class="n">service&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Loaded&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">loaded&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">systemd&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">system&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bluetooth&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">service&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">disabled&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">vendor&lt;/span> &lt;span class="n">preset&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">enabled&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Active&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">inactive&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">dead&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Docs&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">man&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">bluetoothd&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Or using &lt;code>systemctl cat [service]&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"># systemctl cat frps.service
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># /lib/systemd/system/frps.service
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[Unit]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Description=Frp Server Service
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">After=network.target
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[Service]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Type=simple
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">User=nobody
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Restart=on-failure
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">RestartSec=5s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ExecStart=/usr/bin/frps -c /etc/frp/frps.ini
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[Install]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">WantedBy=multi-user.target
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="about-reset-failed-option">&lt;a href="#about-reset-failed-option" class="header-anchor">&lt;/a>About &amp;ldquo;reset-failed&amp;rdquo; Option
+&lt;/h3>&lt;p>From the systemd man page:&lt;/p>
+&lt;blockquote>
+&lt;p>reset-failed [PATTERN&amp;hellip;]&lt;/p>
+&lt;p>Reset the &amp;ldquo;failed&amp;rdquo; state of the specified units, or if no unit name is passed, reset the state of all units. When a unit fails in some way (i.e. process exiting with non-zero error code, terminating abnormally or timing out), it will automatically enter the &amp;ldquo;failed&amp;rdquo; state and its exit code and status is recorded for introspection by the administrator until the service is restarted or reset with this command.&lt;/p>&lt;/blockquote>
+&lt;h2 id="reference">&lt;a href="#reference" class="header-anchor">&lt;/a>Reference
+&lt;/h2>&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a class="link" href="https://superuser.com/questions/513159/how-to-remove-systemd-services/1344239#1344239" target="_blank" rel="noopener"
+>How to remove systemd services&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>Build SSH Tunnel</title><link>https://gitsang.github.io/p/build-ssh-tunnel/</link><pubDate>Sat, 14 Mar 2020 14:53:28 +0800</pubDate><guid>https://gitsang.github.io/p/build-ssh-tunnel/</guid><description>&lt;h2 id="使用场景">&lt;a href="#%e4%bd%bf%e7%94%a8%e5%9c%ba%e6%99%af" class="header-anchor">&lt;/a>使用场景
+&lt;/h2>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>机器代号&lt;/th>
+&lt;th>操作系统&lt;/th>
+&lt;th>机器位置&lt;/th>
+&lt;th>IP&lt;/th>
+&lt;th>账户名&lt;/th>
+&lt;th>ssh/sshd 端口&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>OuterNet&lt;/td>
+&lt;td>CentOS 7&lt;/td>
+&lt;td>公网&lt;/td>
+&lt;td>50.100.50.100&lt;/td>
+&lt;td>OuterUser&lt;/td>
+&lt;td>22&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>LocalNet&lt;/td>
+&lt;td>CentOs 7&lt;/td>
+&lt;td>内网(局域网)&lt;/td>
+&lt;td>10.200.100.10&lt;/td>
+&lt;td>LocalUser&lt;/td>
+&lt;td>22&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>想要通过公网上的机器 OuterNet 访问内网机器 LocalNet&lt;/p>
+&lt;p>并能够使用 OuterNet 机器的 10022 端口访问 LocalNet 机器的 22 端口&lt;/p>
+&lt;p>相当于&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OuterUser@OuterNet&lt;span class="o">]&lt;/span> $ ssh -p &lt;span class="m">10022&lt;/span> LocalUser@127.0.0.1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>替代在内网时候&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">$ ssh LocalUser@10.200.100.10
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="建立简单的-ssh-反向隧道">&lt;a href="#%e5%bb%ba%e7%ab%8b%e7%ae%80%e5%8d%95%e7%9a%84-ssh-%e5%8f%8d%e5%90%91%e9%9a%a7%e9%81%93" class="header-anchor">&lt;/a>建立简单的 ssh 反向隧道
+&lt;/h3>&lt;ol>
+&lt;li>在 LocalNet 机器上执行以下命令建立隧道&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[LocalUser@LocalNet] $ ssh -p 22 -qngfNTR 10022:localhost:22 OuterUser@50.100.50.100
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>或（以下参数似乎比较稳定）&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[root@LocalNet] $ ssh -fN -R :55555:localhost:22 50.100.50.100
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="2">
+&lt;li>在 OuterNet 上连接 LocalNet&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OuterUser@OuterNet&lt;span class="o">]&lt;/span> $ ssh -p &lt;span class="m">10022&lt;/span> LocalUser@127.0.0.1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="维持隧道">&lt;a href="#%e7%bb%b4%e6%8c%81%e9%9a%a7%e9%81%93" class="header-anchor">&lt;/a>维持隧道
+&lt;/h3>&lt;ol>
+&lt;li>安装 autossh&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>LocalUser@LocalNet&lt;span class="o">]&lt;/span> $ sudo yum install autossh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="2">
+&lt;li>内网建立隧道&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>LocalUser@LocalNet&lt;span class="o">]&lt;/span> $ autossh -p &lt;span class="m">22&lt;/span> -M &lt;span class="m">7777&lt;/span> -NR 10022:localhost:22 OuterUser@50.100.50.100
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="3">
+&lt;li>在 OuterNet 上连接 LocalNet&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OuterUser@OuterNet&lt;span class="o">]&lt;/span> $ ssh -p &lt;span class="m">10022&lt;/span> LocalUser@127.0.0.1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="监听-0000">&lt;a href="#%e7%9b%91%e5%90%ac-0000" class="header-anchor">&lt;/a>监听 0.0.0.0
+&lt;/h3>&lt;p>如果需要监听 0.0.0.0 需要在服务端，即公网机器上开启 GatewayPorts&lt;/p>
+&lt;p>在 /etc/ssh/sshd_config 中把 &lt;code>GatewayPorts&lt;/code> 设为 yes&lt;/p>
+&lt;h2 id="参考">&lt;a href="#%e5%8f%82%e8%80%83" class="header-anchor">&lt;/a>参考
+&lt;/h2>&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a class="link" href="https://www.zsythink.net/archives/2450" target="_blank" rel="noopener"
+>ssh 端口转发：ssh 隧道&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>Curl 输出格式</title><link>https://gitsang.github.io/p/curl-write-out-format/</link><pubDate>Wed, 09 Oct 2019 14:53:28 +0800</pubDate><guid>https://gitsang.github.io/p/curl-write-out-format/</guid><description>&lt;img src="https://gitsang.github.io/p/curl-write-out-format/cover.jpg" alt="Featured image of post Curl 输出格式" />&lt;h2 id="操作方法">&lt;a href="#%e6%93%8d%e4%bd%9c%e6%96%b9%e6%b3%95" class="header-anchor">&lt;/a>操作方法
+&lt;/h2>&lt;p>默认情况下，curl 不会输出耗时信息，状态码等，若需要输出，需要使用 &lt;code>-w, --write-out FORMAT&lt;/code> 选项配置 Write Out 格式。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">curl -w &lt;span class="s2">&amp;#34;\n\ntime_total: %{time_total}s\n&amp;#34;&lt;/span> https://www.example.com
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Write Out 中支持的变量请参考：&lt;/p>
+&lt;p>&lt;a class="link" href="https://everything.curl.dev/usingcurl/verbose/writeout#available-write-out-variables" target="_blank" rel="noopener"
+>https://everything.curl.dev/usingcurl/verbose/writeout#available-write-out-variables&lt;/a>&lt;/p>
+&lt;p>也可以使用文件&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">curl -w &lt;span class="s2">&amp;#34;@curl-format.txt&amp;#34;&lt;/span> https://www.example.com
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>一个简单的文件格式参考如下：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-txt" data-lang="txt">&lt;span class="line">&lt;span class="cl">\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_namelookup: %{time_namelookup}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_connect: %{time_connect}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_appconnect: %{time_appconnect}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_pretransfer: %{time_pretransfer}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_redirect: %{time_redirect}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_starttransfer: %{time_starttransfer}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">----------\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_total: %{time_total}s\n
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>用于 debug 的详细信息格式参考：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-txt" data-lang="txt">&lt;span class="line">&lt;span class="cl">\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">url_effective: %{url_effective}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ssl_verify_result: %{ssl_verify_result}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">content_type: %{content_type}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">filename_effective: %{filename_effective}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ftp_entry_path: %{ftp_entry_path}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">http_code: %{http_code}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">http_connect: %{http_connect}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">local_ip: %{local_ip}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">local_port: %{local_port}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">num_connects: %{num_connects}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">num_redirects: %{num_redirects}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">redirect_url: %{redirect_url}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">remote_ip: %{remote_ip}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">remote_port: %{remote_port}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">response_code: %{response_code}\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">size_download: %{size_download} bytes\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">size_header: %{size_header} bytes\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">size_request: %{size_request} bytes\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">size_upload: %{size_upload} bytes\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">speed_download: %{speed_download} bytes/s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">speed_upload: %{speed_upload} bytes/s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_appconnect: %{time_appconnect}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_connect: %{time_connect}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_namelookup: %{time_namelookup}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_pretransfer: %{time_pretransfer}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_redirect: %{time_redirect}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_starttransfer: %{time_starttransfer}s\n
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">time_total: %{time_total}s\n
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>GDB 快速入门</title><link>https://gitsang.github.io/p/gdb-quick-start/</link><pubDate>Wed, 09 Oct 2019 14:53:28 +0800</pubDate><guid>https://gitsang.github.io/p/gdb-quick-start/</guid><description>&lt;!-- markdown-front-matter -->
+&lt;p>GDB是一个由GNU开源组织发布的、UNIX/LINUX操作系统下的、基于命令行的、功能强大的程序调试工具。 对于一名Linux下工作的c++程序员，gdb是必不可少的工具；&lt;/p>
+&lt;h2 id="1-启动gdb">&lt;a href="#1-%e5%90%af%e5%8a%a8gdb" class="header-anchor">&lt;/a>1. 启动gdb
+&lt;/h2>&lt;ul>
+&lt;li>&lt;strong>对C/C++程序的调试，需要在编译前就加上-g选项:&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">g++ -g hello.cpp -o hello
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>&lt;strong>调试可执行文件:&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">gdb &amp;lt;program&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>program也就是你的执行文件，一般在当前目录下。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>调试core文件(core是程序非法执行后core dump后产生的文件):&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">gdb &amp;lt;program&amp;gt; &amp;lt;core dump file&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gdb program core.11127
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>&lt;strong>调试服务程序:&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">gdb &amp;lt;program&amp;gt; &amp;lt;PID&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gdb hello &lt;span class="m">11127&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>如果你的程序是一个服务程序，那么你可以指定这个服务程序运行时的进程ID。gdb会自动attach上去，并调试他。program应该在PATH环境变量中搜索得到。&lt;/p>
+&lt;h2 id="2-gdb交互命令">&lt;a href="#2-gdb%e4%ba%a4%e4%ba%92%e5%91%bd%e4%bb%a4" class="header-anchor">&lt;/a>2. gdb交互命令
+&lt;/h2>&lt;p>启动gdb后，进入到交互模式，通过以下命令完成对程序的调试；注意高频使用的命令一般都会有缩写，熟练使用这些缩写命令能提高调试的效率；&lt;/p>
+&lt;h3 id="21-运行">&lt;a href="#21-%e8%bf%90%e8%a1%8c" class="header-anchor">&lt;/a>2.1 运行
+&lt;/h3>&lt;ul>
+&lt;li>run：简记为 r ，其作用是运行程序，当遇到断点后，程序会在断点处停止运行，等待用户输入下一步的命令。&lt;/li>
+&lt;li>continue （简写c ）：继续执行，到下一个断点处（或运行结束）&lt;/li>
+&lt;li>next：（简写 n），单步跟踪程序，当遇到函数调用时，也不进入此函数体；此命令同 step 的主要区别是，step 遇到用户自定义的函数，将步进到函数中去运行，而 next 则直接调用函数，不会进入到函数体内。&lt;/li>
+&lt;li>step （简写s）：单步调试如果有函数调用，则进入函数；与命令n不同，n是不进入调用的函数的&lt;/li>
+&lt;li>until：当你厌倦了在一个循环体内单步跟踪时，这个命令可以运行程序直到退出循环体。&lt;/li>
+&lt;li>until+行号： 运行至某行，不仅仅用来跳出循环&lt;/li>
+&lt;li>finish： 运行程序，直到当前函数完成返回，并打印函数返回时的堆栈地址和返回值及参数值等信息。&lt;/li>
+&lt;li>call 函数(参数)：调用程序中可见的函数，并传递“参数”，如：call gdb_test(55)&lt;/li>
+&lt;li>quit：简记为 q ，退出gdb&lt;/li>
+&lt;/ul>
+&lt;h3 id="22-设置断点">&lt;a href="#22-%e8%ae%be%e7%bd%ae%e6%96%ad%e7%82%b9" class="header-anchor">&lt;/a>2.2 设置断点
+&lt;/h3>&lt;ul>
+&lt;li>break n （简写b n）:在第n行处设置断点
+&lt;ul>
+&lt;li>（可以带上代码路径和代码名称： b OAGUPDATE.cpp:578）&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>b fn1 if a＞b：条件断点设置&lt;/li>
+&lt;li>break func（break缩写为b）：在函数func()的入口处设置断点，如：break cb_button&lt;/li>
+&lt;li>delete 断点号n：删除第n个断点&lt;/li>
+&lt;li>disable 断点号n：暂停第n个断点&lt;/li>
+&lt;li>enable 断点号n：开启第n个断点&lt;/li>
+&lt;li>clear 行号n：清除第n行的断点&lt;/li>
+&lt;li>info b （info breakpoints） ：显示当前程序的断点设置情况&lt;/li>
+&lt;li>delete breakpoints：清除所有断点：&lt;/li>
+&lt;/ul>
+&lt;h3 id="23-查看源代码">&lt;a href="#23-%e6%9f%a5%e7%9c%8b%e6%ba%90%e4%bb%a3%e7%a0%81" class="header-anchor">&lt;/a>2.3 查看源代码
+&lt;/h3>&lt;ul>
+&lt;li>list ：简记为 l ，其作用就是列出程序的源代码，默认每次显示10行。&lt;/li>
+&lt;li>list 行号：将显示当前文件以“行号”为中心的前后10行代码，如：list 12&lt;/li>
+&lt;li>list 函数名：将显示“函数名”所在函数的源代码，如：list main&lt;/li>
+&lt;li>list ：不带参数，将接着上一次 list 命令的，输出下边的内容。&lt;/li>
+&lt;/ul>
+&lt;h3 id="24-打印表达式">&lt;a href="#24-%e6%89%93%e5%8d%b0%e8%a1%a8%e8%be%be%e5%bc%8f" class="header-anchor">&lt;/a>2.4 打印表达式
+&lt;/h3>&lt;ul>
+&lt;li>print 表达式：简记为 p ，其中“表达式”可以是任何当前正在被测试程序的有效表达式，比如当前正在调试C语言的程序，那么“表达式”可以是任何C语言的有效表达式，包括数字，变量甚至是函数调用。&lt;/li>
+&lt;li>print a：将显示整数 a 的值&lt;/li>
+&lt;li>print ++a：将把 a 中的值加1,并显示出来&lt;/li>
+&lt;li>print name：将显示字符串 name 的值&lt;/li>
+&lt;li>print gdb_test(22)：将以整数22作为参数调用 gdb_test() 函数&lt;/li>
+&lt;li>print gdb_test(a)：将以变量 a 作为参数调用 gdb_test() 函数&lt;/li>
+&lt;li>display 表达式：在单步运行时将非常有用，使用display命令设置一个表达式后，它将在每次单步进行指令后，紧接着输出被设置的表达式及值。如： display a&lt;/li>
+&lt;li>watch 表达式：设置一个监视点，一旦被监视的“表达式”的值改变，gdb将强行终止正在被调试的程序。如： watch a&lt;/li>
+&lt;li>whatis ：查询变量或函数&lt;/li>
+&lt;li>info function： 查询函数&lt;/li>
+&lt;li>扩展info locals： 显示当前堆栈页的所有变量&lt;/li>
+&lt;/ul>
+&lt;h3 id="25-查询运行信息">&lt;a href="#25-%e6%9f%a5%e8%af%a2%e8%bf%90%e8%a1%8c%e4%bf%a1%e6%81%af" class="header-anchor">&lt;/a>2.5 查询运行信息
+&lt;/h3>&lt;ul>
+&lt;li>where/bt ：当前运行的堆栈列表；&lt;/li>
+&lt;li>bt backtrace 显示当前调用堆栈&lt;/li>
+&lt;li>up/down 改变堆栈显示的深度&lt;/li>
+&lt;li>set args 参数:指定运行时的参数&lt;/li>
+&lt;li>show args：查看设置好的参数&lt;/li>
+&lt;li>info program： 来查看程序的是否在运行，进程号，被暂停的原因。&lt;/li>
+&lt;/ul>
+&lt;h3 id="26-分割窗口">&lt;a href="#26-%e5%88%86%e5%89%b2%e7%aa%97%e5%8f%a3" class="header-anchor">&lt;/a>2.6 分割窗口
+&lt;/h3>&lt;ul>
+&lt;li>layout：用于分割窗口，可以一边查看代码，一边测试：&lt;/li>
+&lt;li>layout src：显示源代码窗口&lt;/li>
+&lt;li>layout asm：显示反汇编窗口&lt;/li>
+&lt;li>layout regs：显示源代码/反汇编和CPU寄存器窗口&lt;/li>
+&lt;li>layout split：显示源代码和反汇编窗口&lt;/li>
+&lt;li>Ctrl + L：刷新窗口&lt;/li>
+&lt;/ul>
+&lt;h3 id="27-注解">&lt;a href="#27-%e6%b3%a8%e8%a7%a3" class="header-anchor">&lt;/a>2.7 注解
+&lt;/h3>&lt;ul>
+&lt;li>交互模式下直接回车的作用是重复上一指令，对于单步调试非常方便；&lt;/li>
+&lt;/ul>
+&lt;h2 id="3-更强大的工具cgdb">&lt;a href="#3-%e6%9b%b4%e5%bc%ba%e5%a4%a7%e7%9a%84%e5%b7%a5%e5%85%b7cgdb" class="header-anchor">&lt;/a>3. 更强大的工具cgdb
+&lt;/h2>&lt;p>cgdb可以看作gdb的界面增强版,用来替代gdb的 gdb -tui。cgdb主要功能是在调试时进行代码的同步显示，这无疑增加了调试的方便性，提高了调试效率。界面类似vi，符合unix/linux下开发人员习惯;如果熟悉gdb和vi，几乎可以立即使用cgdb。&lt;/p>
+&lt;h2 id="4-参考">&lt;a href="#4-%e5%8f%82%e8%80%83" class="header-anchor">&lt;/a>4. 参考
+&lt;/h2></description></item></channel></rss>
