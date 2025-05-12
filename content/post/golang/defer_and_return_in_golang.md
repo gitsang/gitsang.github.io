@@ -3,18 +3,16 @@ title: defer 和 return 的执行顺序陷阱
 slug: defer-and-return-in-golang
 description: Explore the nuances of using defer in Golang functions and its impact on named vs unnamed return values. This article provides a detailed explanation of how defer affects the return process.
 date: "2020-08-28T16:08:25+08:00"
-lastmod: "2025-05-09T18:41:04+08:00"
+lastmod: "2025-05-12T10:42:00+08:00"
 weight: 100
 categories:
-  - "Programming"
-  - "Golang"
-  - "Software Development"
+  - "golang"
 tags:
   - "Golang"
   - "defer"
   - "return values"
-  - "programming functions"
-  - "error handling"
+  - "programming"
+  - "code example"
 ---
 
 <!-- markdown-front-matter -->

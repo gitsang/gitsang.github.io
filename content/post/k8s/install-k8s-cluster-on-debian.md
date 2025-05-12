@@ -1,24 +1,29 @@
 ---
-title: 'Install k8s cluster on debian'
+title: Install k8s cluster on debian
 slug: install-k8s-cluster-on-debian
 description: |-
-  An step by step guide to install k8s cluster on debian 12
-date: 2025-02-07T14:01:24+08:00
-lastmod: 2025-02-07T14:01:24+08:00
+date: "2025-02-07T14:01:24+08:00"
+lastmod: "2025-05-12T10:44:19+08:00"
 weight: 1
 categories:
-  - k8s
+  - "k8s"
 tags:
-  - k8s
+  - "Kubernetes"
+  - "Debian"
+  - "kubeadm"
+  - "containerd"
+  - "Calico"
 ---
 
-## Machine initialization
+<!-- markdown-front-matter -->
 
-### 1. Disable swap
+## 1. Machine initialization
+
+### 1.1 Disable swap
 
 Run `sudo swapoff -a` then configure `/etc/fstab`
 
-### 2. Configure kernel parameters
+### 1.2 Configure kernel parameters
 
 ```sh
 cat <<EOF | sudo tee /etc/modules-load.d/containerd.conf
@@ -44,14 +49,14 @@ EOF
 sudo sysctl --system
 ```
 
-### 3. Install containerd
+### 1.3 Install containerd
 
 ```sh
 sudo apt update
 sudo apt -y install containerd
 ```
 
-### 4. Configure containerd
+### 1.4 Configure containerd
 
 Config file is in `/etc/containerd/config.toml`
 
@@ -86,7 +91,7 @@ sudo systemctl restart containerd
 sudo systemctl enable containerd
 ```
 
-### 5. Install Kubernetes Tools
+### 1.5 Install Kubernetes Tools
 
 > Follow [Installing kubeadm, kubelet and kubectl](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl)
 
@@ -137,9 +142,9 @@ In this time `journalctl -f -u kubelet` should failure by
 `error: failed to load Kubelet config file /var/lib/kubelet/config.yaml`,
 it's ok, we will fix it later.
 
-## Install k8s cluster
+## 2. Install k8s cluster
 
-### 0. Configure hostnames
+### 2.1 Configure hostnames
 
 Configure hostname
 
@@ -157,7 +162,7 @@ Configure `/etc/hosts`
 192.168.5.102  k8s-worker-02.local  k8s-worker-02
 ```
 
-### 1. Install k8s cluster with kubeadm (run on control panel node)
+### 2.2 Install k8s cluster with kubeadm (run on control panel node)
 
 Create `kubelet.yaml`
 
@@ -167,8 +172,8 @@ kind: InitConfiguration
 ---
 apiVersion: kubeadm.k8s.io/v1beta4
 kind: ClusterConfiguration
-kubernetesVersion: '1.32.0' # Replace with your desired version
-controlPlaneEndpoint: 'k8s-master' # Replace with your desired control plane endpoint
+kubernetesVersion: "1.32.0" # Replace with your desired version
+controlPlaneEndpoint: "k8s-master" # Replace with your desired control plane endpoint
 imageRepository: registry.k8s.io
 ---
 apiVersion: kubelet.config.k8s.io/v1beta1
@@ -193,22 +198,22 @@ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
-### 2. Join k8s cluster with kubeadm (run on worker nodes)
+### 2.3 Join k8s cluster with kubeadm (run on worker nodes)
 
 ```sh
 sudo kubeadm join k8s-master:6443 --token 21nm87.x1lgd4jf0lqiiiau \
     --discovery-token-ca-cert-hash sha256:28b503f1f2a2592678724c482776f04b445c5f99d76915552f14e68a24b78009
 ```
 
-### 3. Check k8s cluster status (run on control panel node)
+### 2.4 Check k8s cluster status (run on control panel node)
 
 ```sh
 sudo kubectl get nodes
 ```
 
-## Setup Pod Network
+## 3. Setup Pod Network
 
-### 1. Install Calico (run on control panel node)
+### 3.1 Install Calico (run on control panel node)
 
 Install Calico
 
@@ -233,7 +238,7 @@ When finished, you should see the `calico-node` pod running by
 `sudo kubectl get pods -n kube-system` and see all nodes ready by
 `sudo kubectl get nodes`.
 
-## Test
+## 4. Test
 
 ```
 sudo kubectl create deployment nginx-app --image=nginx --replicas 2
@@ -247,7 +252,7 @@ Curl using either of worker node's hostname
 curl http://k8s-worker-01:32283
 ```
 
-## Reference
+## 5. Reference
 
 - [How to Install Kubernetes Cluster on Debian 12 | 11 - Linuxtechi](https://www.linuxtechi.com/install-kubernetes-cluster-on-debian/)
 - [Docker hub mirror](https://www.kelen.cc/dry/docker-hub-mirror)

@@ -3,17 +3,16 @@ title: Googletest Quick Start
 slug: googletest-quick-start
 description: Guide on how to install GoogleTest framework and run simple unit tests using CMake and g++. Includes solutions for common issues during setup.
 date: "2019-12-15T14:53:28+08:00"
-lastmod: "2025-05-09T19:18:47+08:00"
+lastmod: "2025-05-12T10:41:19+08:00"
 weight: 100
 categories:
-  - "Software Development"
-  - "Testing"
+  - "cpp"
 tags:
-  - "GoogleTest"
+  - "Google Test"
+  - "gtest"
+  - "C++ testing"
   - "CMake"
-  - "Unit Testing"
-  - "g++"
-  - "Installation"
+  - "installation guide"
 ---
 
 <!-- markdown-front-matter -->

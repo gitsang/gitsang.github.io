@@ -1,20 +1,24 @@
 ---
-title: 'Build SSH Tunnel'
+title: Build SSH Tunnel
 slug: build-ssh-tunnel
 description: |-
-  搭建 SSH 反向隧道
-date: 2020-03-14T14:53:28+08:00
-lastmod: 2020-03-14T14:53:28+08:00
+date: "2020-03-14T14:53:28+08:00"
+lastmod: "2025-05-12T10:44:44+08:00"
 weight: 1
 categories:
-  - linux
+  - "linux"
 tags:
-  - linux
-  - ssh
-  - tunnel
+  - "SSH reverse tunnel"
+  - "network access"
+  - "autossh"
+  - "Linux"
+  - "CentOS"
+  - "GatewayPorts"
 ---
 
-## 使用场景
+<!-- markdown-front-matter -->
+
+## 1. 使用场景
 
 | 机器代号 | 操作系统 | 机器位置     | IP            | 账户名    | ssh/sshd 端口 |
 | -------- | -------- | ------------ | ------------- | --------- | ------------- |
@@ -37,7 +41,7 @@ tags:
 $ ssh LocalUser@10.200.100.10
 ```
 
-### 建立简单的 ssh 反向隧道
+### 1.1 建立简单的 ssh 反向隧道
 
 1. 在 LocalNet 机器上执行以下命令建立隧道
 
@@ -57,7 +61,7 @@ $ ssh LocalUser@10.200.100.10
 [OuterUser@OuterNet] $ ssh -p 10022 LocalUser@127.0.0.1
 ```
 
-### 维持隧道
+### 1.2 维持隧道
 
 1. 安装 autossh
 
@@ -77,12 +81,12 @@ $ ssh LocalUser@10.200.100.10
 [OuterUser@OuterNet] $ ssh -p 10022 LocalUser@127.0.0.1
 ```
 
-### 监听 0.0.0.0
+### 1.3 监听 0.0.0.0
 
 如果需要监听 0.0.0.0 需要在服务端，即公网机器上开启 GatewayPorts
 
 在 /etc/ssh/sshd_config 中把 `GatewayPorts` 设为 yes
 
-## 参考
+## 2. 参考
 
 [^1]: [ssh 端口转发：ssh 隧道](https://www.zsythink.net/archives/2450)

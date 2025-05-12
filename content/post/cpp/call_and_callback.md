@@ -3,17 +3,17 @@ title: 调用和回调函数
 slug: call-and-callback
 description: This article explains what callback functions are in C++ programming, how they differ from normal function calls, and provides insights into their usage and registration. Examples are provided to elucidate these concepts.
 date: "2019-10-09T14:53:28+08:00"
-lastmod: "2025-05-09T19:25:33+08:00"
+lastmod: "2025-05-12T10:41:00+08:00"
 weight: 100
 categories:
-  - "Programming"
-  - "C++"
+  - "cpp"
 tags:
   - "callback functions"
   - "C++ programming"
-  - "function calls"
-  - "programming concepts"
-  - "code examples"
+  - "event handling"
+  - "kernel programming"
+  - "function pointers"
+  - "system operations"
 ---
 
 <!-- markdown-front-matter -->

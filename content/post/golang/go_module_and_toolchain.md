@@ -3,17 +3,17 @@ title: Go Module 管理和 Toolchain 配置
 slug: go-module-and-toolchain
 description: This document reviews core rules for managing Go module versions and toolchain compatibility, analyzes different scenarios, and provides best practice recommendations to ensure successful builds.
 date: "2024-05-08T15:16:00+08:00"
-lastmod: "2025-05-09T19:47:09+08:00"
+lastmod: "2025-05-12T10:42:13+08:00"
 weight: 1
 categories:
-  - "Programming"
-  - "Software Development"
+  - "golang"
 tags:
-  - "Go Language"
-  - "Toolchain Compatibility"
-  - "Version Management"
-  - "Dependency Analysis"
-  - "Best Practices"
+  - "Go语言"
+  - "工具链"
+  - "版本兼容性"
+  - "依赖管理"
+  - "最佳实践"
+  - "GOTOOLCHAIN"
 ---
 
 <!-- markdown-front-matter -->

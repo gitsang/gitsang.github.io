@@ -3,17 +3,16 @@ title: 结构体的定义方式
 slug: struct-define
 description: A guide on using typedef to simplify the definition of structures and pointers in C/C++, including practical coding examples. Explore different syntactical variations to optimize code readability and efficiency.
 date: "2019-10-09T14:53:28+08:00"
-lastmod: "2025-05-09T19:19:18+08:00"
+lastmod: "2025-05-12T10:41:32+08:00"
 weight: 100
 categories:
-  - "Programming"
-  - "C/C++"
+  - "cpp"
 tags:
   - "typedef"
   - "struct"
+  - "C programming"
   - "pointers"
-  - "C++"
-  - "coding examples"
+  - "data types"
 ---
 
 <!-- markdown-front-matter -->

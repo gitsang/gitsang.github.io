@@ -3,19 +3,16 @@ title: Curl 和 libcurl 快速入门
 slug: curl-quick-start
 description: Learn how to install curl and libcurl on Linux, compile and use them in C/C++ applications, and understand their command and library functions for HTTP communication.
 date: "2019-10-15T14:53:28+08:00"
-lastmod: "2025-05-09T19:18:13+08:00"
+lastmod: "2025-05-12T10:41:05+08:00"
 weight: 100
 categories:
-  - "Programming"
-  - "Software Installation"
+  - "cpp"
 tags:
-  - "curl"
-  - "libcurl"
-  - "Linux"
-  - "C++"
-  - "HTTP"
-  - "network programming"
-  - "installation"
+  - "curl installation"
+  - "libcurl setup"
+  - "HTTP communication"
+  - "C++ programming"
+  - "source compilation"
 ---
 
 <!-- markdown-front-matter -->

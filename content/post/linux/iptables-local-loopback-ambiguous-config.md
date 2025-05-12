@@ -1,17 +1,21 @@
 ---
-title: 'Iptables 本地回环接口容易造成误解的配置'
+title: Iptables 本地回环接口容易造成误解的配置
 slug: iptables-local-loopback-ambiguous-config
-description: |-
-  Iptables List 展示的信息有部分进行了省略，可能造成误解
-date: 2024-05-07T11:11:00+08:00
-lastmod: 2024-05-07T11:11:00+08:00
+description: Iptables List 展示的信息有部分进行了省略，可能造成误解
+date: "2024-05-07T11:11:00+08:00"
+lastmod: "2025-05-12T10:47:17+08:00"
 weight: 1
 categories:
-  - docker
+  - "linux"
 tags:
-  - docker
-  - iptables
+  - "iptables"
+  - "firewall rules"
+  - "local loopback"
+  - "iptables-save"
+  - "network security"
 ---
+
+<!-- markdown-front-matter -->
 
 使用 `iptables -L` 可能会看到类似如下的配置
 

@@ -3,19 +3,18 @@ title: 指针、值和引用
 slug: pointer-value-quote
 description: This article provides a detailed explanation of pointers and references in C++, highlighting their differences and uses in value passing, pointer passing, and reference passing.
 date: "2019-10-09T14:53:28+08:00"
-lastmod: "2025-05-09T19:19:08+08:00"
+lastmod: "2025-05-12T10:41:25+08:00"
 weight: 100
 categories:
-  - "Programming"
-  - "C++"
+  - "cpp"
 tags:
-  - "pointers"
-  - "references"
+  - "Pointers"
+  - "References"
   - "C++"
-  - "value passing"
-  - "pointer passing"
-  - "reference passing"
-  - "const keyword"
+  - "Programming"
+  - "Const"
+  - "Value Passing"
+  - "Pointer Passing"
 ---
 
 <!-- markdown-front-matter -->

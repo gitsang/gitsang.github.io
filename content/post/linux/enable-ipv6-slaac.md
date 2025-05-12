@@ -1,18 +1,23 @@
 ---
-title: '开启 IPv6 自动配置'
+title: 开启 IPv6 自动配置
 slug: enable-ipv6-slaac
-description: ''
-date: 2024-12-04T10:43:07+08:00
-lastmod: 2024-12-04T10:43:12+08:00
+description: This guide provides instructions on enabling IPv6 functionality through sysctl options and configuring network interfaces for automatic address assignment using SLAAC.
+date: "2024-12-04T10:43:07+08:00"
+lastmod: "2025-05-12T10:45:32+08:00"
 weight: 1
 categories:
-  - linux
+  - "linux"
 tags:
-  - linux
-  - ipv6
+  - "IPv6"
+  - "sysctl"
+  - "network configuration"
+  - "SLAAC"
+  - "Linux"
 ---
 
-## sysctl 配置
+<!-- markdown-front-matter -->
+
+## 1. sysctl 配置
 
 在某些情况下，IPv6 并不会自动配置，需要手动开启 sysctl 选项
 
@@ -46,7 +51,7 @@ net.ipv6.conf.all.autoconf = 1
 net.ipv6.conf.default.autoconf = 1
 ```
 
-## 网络接口配置
+## 2. 网络接口配置
 
 编辑 `/etc/network/interfaces`
 

@@ -3,20 +3,18 @@ title: GDB 快速入门
 slug: gdb-quick-start
 description: This document provides an overview of using GDB, a command-line-based debugging tool, essential for C++ programmers on Linux. It covers GDB commands, breakpoint settings, code navigation, expression evaluation, and introduces CGDB for enhanced debugging.
 date: "2019-10-09T14:53:28+08:00"
-lastmod: "2025-05-09T19:18:21+08:00"
+lastmod: "2025-05-12T10:41:11+08:00"
 weight: 100
 categories:
-  - "Programming"
-  - "Debugging"
-  - "Linux"
+  - "cpp"
 tags:
   - "GDB"
-  - "C++"
-  - "Linux"
-  - "Debugging"
-  - "Command-line"
-  - "CGDB"
-  - "Programming Tools"
+  - "C++ debugging"
+  - "command-line tool"
+  - "Linux programming"
+  - "breakpoints"
+  - "source code inspection"
+  - "interactive debugging"
 ---
 
 <!-- markdown-front-matter -->

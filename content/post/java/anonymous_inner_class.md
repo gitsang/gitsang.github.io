@@ -1,19 +1,25 @@
 ---
-title: "匿名内部类"
-description: ""
-lead: ""
-date: 2020-04-29T14:53:28+08:00
-lastmod: 2020-04-29T14:53:28+08:00
-draft: false
-images: []
-menu: 
-  docs:
-    parent: "java"
+title: 匿名内部类
+slug: anonymous-inner-class
+description: This document provides examples of implementing anonymous classes, abstract class inheritance, anonymous method overriding, and adding execution statements in constructors in Java. It includes detailed code snippets and explanations for each scenario.
+date: "2020-04-29T14:53:28+08:00"
+lastmod: "2025-05-12T10:42:52+08:00"
 weight: 100
-toc: true
+categories:
+  - "java"
+tags:
+  - "Java"
+  - "Anonymous Classes"
+  - "Interface Implementation"
+  - "Abstract Classes"
+  - "Method Overriding"
+  - "Constructors"
+  - "Code Examples"
 ---
 
-## Example 1: 匿名接口实现类
+<!-- markdown-front-matter -->
+
+## 1. Example 1: 匿名接口实现类
 
 1. 接口类：
 
@@ -74,7 +80,7 @@ public class NewInterfaceTest implements InterfaceTest {
 }
 ```
 
-## Example 2: 抽象类的匿名继承类
+## 2. Example 2: 抽象类的匿名继承类
 
 ```java
 public abstract class AbsTest {
@@ -128,7 +134,7 @@ public class ExtAbsClass extends AbsTest{
 }
 ```
 
-## Example 3: 对象匿名重写
+## 3. Example 3: 对象匿名重写
 
 对于非抽象得类，也可以通过 {} 重写类方法
 
@@ -155,6 +161,7 @@ public class Test {
 ```
 
 输出结果：
+
 ```
 null
 value_override
@@ -164,9 +171,9 @@ Process finished with exit code 0
 
 也相当于创建了一个新的类继承原本非抽象类，然后重写其中的方法，但新的类匿名，且这个方法被重写了的类仅对这一个对象有效。
 
-## Example 4: 为构造函数添加执行语句
+## 4. Example 4: 为构造函数添加执行语句
 
-在匿名类中使用 {} 
+在匿名类中使用 {}
 
 ```java
 import java.util.ArrayList;
@@ -207,6 +214,6 @@ public class MyArrayList<E> extends ArrayList<E> {
 }
 ```
 
-## 参考
+## 5. 参考
 
 https://blog.csdn.net/shenhaiyushitiaoyu/article/details/84142618?utm_source=distribute.pc_relevant.none-task

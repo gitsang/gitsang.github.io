@@ -1,29 +1,31 @@
-
 ---
-
-title: "Install PHP 7.4 on CentOS 7"
-description: ""
-lead: ""
-date: 2021-09-30T09:23:35+08:00
-lastmod: 2021-09-30T09:23:35+08:00
-draft: false
-images: []
-menu:
-  docs:
-    parent: "linux"
+title: Install PHP 7.4 on CentOS 7
+slug: install-php74-on-centos7
+description: This tutorial provides a step-by-step guide to adding EPEL and REMI repositories and installing PHP 7.4 on CentOS 7. It includes commands for installing PHP and additional packages, and verifying the PHP installation.
+date: "2021-09-30T09:23:35+08:00"
+lastmod: "2025-05-12T10:47:00+08:00"
 weight: 100
-toc: true
-
+categories:
+  - "linux"
+tags:
+  - "CentOS 7"
+  - "PHP 7.4"
+  - "EPEL"
+  - "REMI Repository"
+  - "Linux Installation"
+  - "Yum Package Manager"
 ---
 
-## Step 1: Add EPEL and REMI Repository
+<!-- markdown-front-matter -->
+
+## 1. Step 1: Add EPEL and REMI Repository
 
 ```
 sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 sudo yum -y install https://rpms.remirepo.net/enterprise/remi-release-7.rpm
 ```
 
-## Step 2: Install PHP 7.4 on CentOS 7
+## 2. Step 2: Install PHP 7.4 on CentOS 7
 
 - Enable PHP 7.4 Remi repository
 

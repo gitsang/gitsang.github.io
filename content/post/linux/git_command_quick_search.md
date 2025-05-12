@@ -1,20 +1,23 @@
-
 ---
-
-title: "Git Command Quick Search"
-description: ""
-lead: "Git 使用速查"
-data: 2020-01-14T14:53:28+08:00
-lastmod: 2020-05-27T17:33:00+08:00
-draft: false
-images: []
-menu:
-  docs:
-    parent: "linux"
+title: Git Command Quick Search
+slug: git-command-quick-search
+description: This document provides detailed instructions on various Git operations, including password management, resetting commits, handling commits, and modifying remote repositories. It also covers advanced topics like auto-conversion of line endings and merging commits.
+date: "2025-05-12T10:46:23+08:00"
+lastmod: "2025-05-12T10:46:23+08:00"
 weight: 1
-toc: true
-
+categories:
+  - "linux"
+tags:
+  - "Git commands"
+  - "commit management"
+  - "branching"
+  - "reset operations"
+  - "password storage"
+  - "stash"
+  - "rebase"
 ---
+
+<!-- markdown-front-matter -->
 
 ## 1. git 用户密码的保存和删除
 
@@ -86,7 +89,6 @@ git reflog
 ```
 
 如果你的队友 `push -f` 了代码，而你又不幸 `pull` 了代码，可以通过 reflog 找回你之前的本地提交
-
 
 ## 4. 代码入栈[^1]
 
@@ -165,8 +167,7 @@ git rebase -i HEAD~3
 # set merge commit to squash
 ```
 
-
-## 参考
+## 10. 参考
 
 [^1]: [git使用情景1：正在写代码，突然线上出现了bug](https://blog.csdn.net/w958796636/article/details/53609589)
 
@@ -175,4 +176,3 @@ git rebase -i HEAD~3
 [^3]: [git 删除远程分支上的某次提交](https://blog.csdn.net/QQxiaoqiang1573/article/details/68074847)
 
 [^4]: [git合并历史提交](https://www.cnblogs.com/woshimrf/p/git-rebase.html)
-

@@ -3,17 +3,17 @@ title: Docker 端口映射防火墙规则配置
 slug: firewall-rule-for-docker-port-mapping
 description: Guidance on configuring Docker-specific firewall rules using firewalld and iptables, including stopping Docker, creating custom chains, and setting default rules.
 date: "2024-05-07T11:09:00+08:00"
-lastmod: "2025-05-09T18:41:41+08:00"
+lastmod: "2025-05-12T10:41:45+08:00"
 weight: 1
 categories:
-  - "Networking"
-  - "Docker"
-  - "Security"
+  - "docker"
 tags:
   - "Docker"
   - "firewalld"
   - "iptables"
-  - "firewall rules"
+  - "DOCKER-USER"
+  - "firewall configuration"
+  - "conntrack module"
   - "network security"
 ---
 

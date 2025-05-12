@@ -1,23 +1,26 @@
 ---
-title: 'Install Git from Source Code'
+title: Install Git from Source Code
 slug: install-git-from-source-code
-description: |-
-  Step by step to install git from source code.
-date: 2023-05-08T11:31:00+08:00
-lastmod: 2023-05-08T11:31:00+08:00
+description: Step by step to install git from source code.
+date: "2023-05-08T11:31:00+08:00"
+lastmod: "2025-05-12T10:46:48+08:00"
 weight: 1
 categories:
-  - linux
+  - "linux"
 tags:
-  - linux
-  - git
+  - "Git installation"
+  - "CentOS"
+  - "Debian"
+  - "prerequisites"
+  - "kernel.org"
+  - "GitHub"
 ---
 
-# Install Git from Source Code
+<!-- markdown-front-matter -->
 
-## Prerequisite
+## 1. Prerequisite
 
-### CentOS
+### 1.1 CentOS
 
 ```
 yum install zlib-devel
@@ -25,7 +28,7 @@ yum install asciidoc
 yum install xmlto
 ```
 
-### Debian
+### 1.2 Debian
 
 ```
 apt-get install zlib1g-dev
@@ -33,7 +36,7 @@ apt-get install asciidoc
 apt-get install xmlto
 ```
 
-## Install
+## 2. Install
 
 You can get it via the kernel.org site, at https://www.kernel.org/pub/software/scm/git, or the mirror on the GitHub website, at https://github.com/git/git/tags.
 
@@ -47,6 +50,6 @@ make all doc info
 sudo make install install-doc install-html install-info
 ```
 
-## Reference
+## 3. Reference
 
 - [Getting-Started-Installing-Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)

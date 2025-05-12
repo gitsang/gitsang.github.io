@@ -3,18 +3,16 @@ title: Understanding Closures in Programming
 slug: closure
 description: This content explores closures, clarifying their nature as entities that store functions and their environment, and discussing their distinction from objects and functions. It highlights the encapsulation aspect and how closures extend variable scope while being isolated from external states.
 date: "2025-05-09T19:43:07+08:00"
-lastmod: "2025-05-09T19:45:17+08:00"
+lastmod: "2025-05-12T10:41:52+08:00"
 weight: 1
 categories:
-  - "Programming"
-  - "JavaScript"
-  - "Computer Science"
+  - "golang"
 tags:
   - "closures"
-  - "scope"
-  - "functions"
-  - "JavaScript"
-  - "programming concepts"
+  - "programming"
+  - "function scope"
+  - "lexical environment"
+  - "object-oriented"
 ---
 
 <!-- markdown-front-matter -->

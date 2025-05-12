@@ -1,19 +1,24 @@
 ---
-title: 'Using Swap'
+title: Using Swap
 slug: using-swap
-description: |-
-  Step by step to enable swap.
-date: 2021-04-13T11:38:00+08:00
-lastmod: 2021-04-13T11:38:00+08:00
+description: Instructions on creating, formatting, and enabling a swap file in Linux, including configuration for automatic activation at boot.
+date: "2021-04-13T11:38:00+08:00"
+lastmod: "2025-05-12T10:47:59+08:00"
 weight: 1
 categories:
-  - linux
+  - "linux"
 tags:
-  - linux
-  - swap
+  - "Linux"
+  - "swap file"
+  - "memory management"
+  - "mkswap"
+  - "swapon"
+  - "fstab"
 ---
 
-```
+<!-- markdown-front-matter -->
+
+```sh
 # create swap file
 dd if=/dev/zero of=/.swap bs=1048576 count=4096
 

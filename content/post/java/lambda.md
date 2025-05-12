@@ -1,17 +1,21 @@
 ---
-title: "Lambda 表达式"
-description: ""
-lead: ""
-date: 2020-04-29T14:53:28+08:00
-lastmod: 2020-04-29T14:53:28+08:00
-draft: false
-images: []
-menu: 
-  docs:
-    parent: "java"
+title: Lambda 表达式
+slug: lambda
+description: This content demonstrates the use of anonymous inner classes and lambda expressions in Java, particularly in the context of threading and action listeners.
+date: "2020-04-29T14:53:28+08:00"
+lastmod: "2025-05-12T10:43:08+08:00"
 weight: 100
-toc: true
+categories:
+  - "java"
+tags:
+  - "Java"
+  - "Lambda Expressions"
+  - "Anonymous Inner Classes"
+  - "Threads"
+  - "ActionListener"
 ---
+
+<!-- markdown-front-matter -->
 
 ```java
     // 使用匿名内部类

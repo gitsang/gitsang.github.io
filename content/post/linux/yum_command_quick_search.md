@@ -1,19 +1,23 @@
 ---
-title: "Yum Command Quick Search"
-description: ""
-lead: "Yum 命令速查"
-date: 2020-01-14T14:53:28+08:00
-lastmod: 2020-01-14T14:53:28+08:00
-draft: false
-images: []
-menu:
-  docs:
-    parent: "linux"
+title: Yum Command Quick Search
+slug: yum-command-quick-search
+description: This guide provides a list of essential commands for managing software packages using Yum, including commands for listing, searching, and removing packages.
+date: "2020-01-14T14:53:28+08:00"
+lastmod: "2025-05-12T10:50:03+08:00"
 weight: 100
-toc: true
+categories:
+  - "linux"
+tags:
+  - "Yum"
+  - "package management"
+  - "Linux commands"
+  - "software installation"
+  - "system administration"
 ---
 
-## yum 针对软件包操作常用命令
+<!-- markdown-front-matter -->
+
+## 1. yum 针对软件包操作常用命令
 
 1. 查看安装了哪些软件包
 
