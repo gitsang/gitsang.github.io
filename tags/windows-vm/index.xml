@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Windows VM on Sang's Blog</title><link>https://gitsang.github.io/tags/windows-vm/</link><description>Recent content in Windows VM on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 May 2025 10:40:38 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/windows-vm/index.xml" rel="self" type="application/rss+xml"/><item><title>Configuring Multi-NIC Routing in Windows VMs</title><link>https://gitsang.github.io/p/configuring-multi-nic-routing-in-windows-vms/</link><pubDate>Fri, 09 May 2025 19:17:19 +0800</pubDate><guid>https://gitsang.github.io/p/configuring-multi-nic-routing-in-windows-vms/</guid><description>&lt;!-- markdown-front-matter -->
+&lt;h2 id="1-背景">&lt;a href="#1-%e8%83%8c%e6%99%af" class="header-anchor">&lt;/a>1. 背景
+&lt;/h2>&lt;p>Windows 创建的虚拟机只能通过 NAT 上网（桥接需要过认证），但需要桥接到内网供外部访问。&lt;/p>
+&lt;p>此场景使用的两张网卡会同时被设置为默认网关，出口流量有概率从桥接网卡出口导致无法访问。&lt;/p>
+&lt;h2 id="2-路由表基础操作">&lt;a href="#2-%e8%b7%af%e7%94%b1%e8%a1%a8%e5%9f%ba%e7%a1%80%e6%93%8d%e4%bd%9c" class="header-anchor">&lt;/a>2. 路由表基础操作
+&lt;/h2>&lt;h3 id="21-查看路由策略">&lt;a href="#21-%e6%9f%a5%e7%9c%8b%e8%b7%af%e7%94%b1%e7%ad%96%e7%95%a5" class="header-anchor">&lt;/a>2.1 查看路由策略
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[root@localhost ~]# ip rule
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">0: from all lookup local
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">32766: from all lookup main
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">32767: from all lookup default
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="22-查看路由表">&lt;a href="#22-%e6%9f%a5%e7%9c%8b%e8%b7%af%e7%94%b1%e8%a1%a8" class="header-anchor">&lt;/a>2.2 查看路由表
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[root@localhost ~]# ip route list
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">default via 172.21.208.1 dev eth0 proto dhcp metric 101
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">10.60.20.0/24 dev eth1 proto kernel scope link src 10.60.20.12 metric 100
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">172.21.208.0/20 dev eth0 proto kernel scope link src 172.21.219.71 metric 101
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="23-新增默认路由">&lt;a href="#23-%e6%96%b0%e5%a2%9e%e9%bb%98%e8%ae%a4%e8%b7%af%e7%94%b1" class="header-anchor">&lt;/a>2.3 新增默认路由
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[root@localhost ~]# ip route add default via 10.60.20.254 dev eth1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="24-删除默认路由">&lt;a href="#24-%e5%88%a0%e9%99%a4%e9%bb%98%e8%ae%a4%e8%b7%af%e7%94%b1" class="header-anchor">&lt;/a>2.4 删除默认路由
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[root@localhost ~]# ip route del default via 10.60.20.254 dev eth1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="3-多网口出口配置">&lt;a href="#3-%e5%a4%9a%e7%bd%91%e5%8f%a3%e5%87%ba%e5%8f%a3%e9%85%8d%e7%bd%ae" class="header-anchor">&lt;/a>3. 多网口出口配置
+&lt;/h2>&lt;p>一般配置多网卡时，两张网卡都会被配置为默认路由，使用 &lt;code>ip route list&lt;/code> 查看能看到类似如下配置&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[root@localhost ~]# ip route list
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">default via 10.60.20.254 dev eth1 proto dhcp metric 100
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">default via 172.21.208.1 dev eth0 proto dhcp metric 101
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">10.60.20.0/24 dev eth1 proto kernel scope link src 10.60.20.12 metric 100
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">172.21.208.0/20 dev eth0 proto kernel scope link src 172.21.219.71 metric 101
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>对于 &lt;code>default via 10.60.20.254 dev eth1 proto dhcp metric 100&lt;/code>&lt;/p>
+&lt;ul>
+&lt;li>default 表示默认路由&lt;/li>
+&lt;li>via 10.60.20.254 表示数据包将发往 10.60.20.254 这个目标 IP 地址&lt;/li>
+&lt;li>dev eth1 指定数据包将从 eth1 接口发送&lt;/li>
+&lt;li>proto dhcp 表示该路由规则是通过 DHCP 协议动态分配的&lt;/li>
+&lt;li>metric 100 表示优先级度量值（越小优先级越高）&lt;/li>
+&lt;/ul>
+&lt;p>对于 &lt;code>10.60.20.0/24 dev eth1 proto kernel scope link src 10.60.20.12 metric 100&lt;/code>&lt;/p>
+&lt;ul>
+&lt;li>这是一个具体的子网路由规则，用于指定数据包如何到达 10.60.20.0/24 子网。&lt;/li>
+&lt;li>10.60.20.0/24 表示目标子网地址范围&lt;/li>
+&lt;li>dev eth1 指定数据包将从 eth1 接口发送&lt;/li>
+&lt;li>proto kernel 表示该路由规则由内核自动生成&lt;/li>
+&lt;li>scope link 表示这是一个本地链接，即目标 IP 地址与本机直接相连&lt;/li>
+&lt;li>src 10.60.20.12 表示源 IP 地址，即从 10.60.20.12 发送到目标子网&lt;/li>
+&lt;li>metric 100 表示优先级度量值（越小优先级越高）&lt;/li>
+&lt;/ul>
+&lt;p>如果不希望访问外网时通过 &lt;code>10.60.20.254&lt;/code> 网关，只需将第一条路由删除即可，执行&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[root@localhost ~]# ip route del default via 10.60.20.254 dev eth1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>验证除了 10.60.20.0/24 的地址，都会走 eth0 网卡&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[root@localhost ~]# ip route get 10.60.20.10
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">10.60.20.10 dev eth1 src 10.60.20.12
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> cache
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[root@localhost ~]# ip route get 1.1.1.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1.1.1.1 via 172.21.208.1 dev eth0 src 172.21.219.71
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> cache
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[root@localhost ~]# ip route get 8.8.8.8
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">8.8.8.8 via 172.21.208.1 dev eth0 src 172.21.219.71
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> cache
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="4-保存设置">&lt;a href="#4-%e4%bf%9d%e5%ad%98%e8%ae%be%e7%bd%ae" class="header-anchor">&lt;/a>4. 保存设置
+&lt;/h2>&lt;p>以上路由会在重启后被清理，应使用 &lt;code>ip route save&lt;/code> 保存信息&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="n">sudo&lt;/span> &lt;span class="n">ip&lt;/span> &lt;span class="n">route&lt;/span> &lt;span class="n">save&lt;/span> &lt;span class="n">table&lt;/span> &lt;span class="n">main&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">opt&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">route&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">main&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">rules&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>使用 &lt;code>ip route restore&lt;/code> 恢复&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="n">sudo&lt;/span> &lt;span class="n">ip&lt;/span> &lt;span class="n">route&lt;/span> &lt;span class="n">flush&lt;/span> &lt;span class="n">table&lt;/span> &lt;span class="n">main&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">sudo&lt;/span> &lt;span class="n">ip&lt;/span> &lt;span class="n">route&lt;/span> &lt;span class="n">restore&lt;/span> &lt;span class="n">table&lt;/span> &lt;span class="n">main&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">opt&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">route&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">main&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">rules&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>也可以将其写为 systemd 脚本，当网卡准备完成后执行&lt;/p></description></item></channel></rss>

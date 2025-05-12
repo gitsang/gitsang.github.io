@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Thrift on Sang's Blog</title><link>https://gitsang.github.io/tags/thrift/</link><description>Recent content in Thrift on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Thu, 14 May 2020 14:53:28 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/thrift/index.xml" rel="self" type="application/rss+xml"/><item><title>Thrift C++ 快速入门</title><link>https://gitsang.github.io/p/thrift-quick-start-for-cpp/</link><pubDate>Thu, 14 May 2020 14:53:28 +0800</pubDate><guid>https://gitsang.github.io/p/thrift-quick-start-for-cpp/</guid><description>&lt;h2 id="1-thrift-基本使用">&lt;a href="#1-thrift-%e5%9f%ba%e6%9c%ac%e4%bd%bf%e7%94%a8" class="header-anchor">&lt;/a>1. thrift 基本使用
+&lt;/h2>&lt;h3 id="11-创建-thrift-文件">&lt;a href="#11-%e5%88%9b%e5%bb%ba-thrift-%e6%96%87%e4%bb%b6" class="header-anchor">&lt;/a>1.1 创建 thrift 文件
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-thrift" data-lang="thrift">&lt;span class="line">&lt;span class="cl">&lt;span class="c"># worker.thrift&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="kn">namespace&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nn">cpp&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">freebird&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="kd">service&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nc">WorkerManager&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">ping&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="12-生成-cpp-代码">&lt;a href="#12-%e7%94%9f%e6%88%90-cpp-%e4%bb%a3%e7%a0%81" class="header-anchor">&lt;/a>1.2 生成 cpp 代码
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">thrift -r --gen cpp worker.thrift
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>在当前目录创建 gen-cpp 目录，里面包含了所有生成的 C++ 代码。&lt;/p>
+&lt;blockquote>
+&lt;p>worker_constants.cpp&lt;/p>
+&lt;p>worker_constants.h
+WorkerManager.cpp
+WorkerManager.h
+WorkerManager_server.skeleton.cpp
+worker_types.cpp
+worker_types.h&lt;/p>&lt;/blockquote>
+&lt;p>WorkerManager_server.skeleton.cpp 就是 C++ 服务端的 main 函数入口文件&lt;/p>
+&lt;h3 id="13-编写-client">&lt;a href="#13-%e7%bc%96%e5%86%99-client" class="header-anchor">&lt;/a>1.3 编写 Client&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="cm">/* Client.cpp */&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;thrift/protocol/TBinaryProtocol.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;thrift/transport/TSocket.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;thrift/transport/TTransportUtils.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;#34;WorkerManager.h&amp;#34;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">using&lt;/span> &lt;span class="k">namespace&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">using&lt;/span> &lt;span class="k">namespace&lt;/span> &lt;span class="n">apache&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">thrift&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">using&lt;/span> &lt;span class="k">namespace&lt;/span> &lt;span class="n">apache&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">thrift&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">protocol&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">using&lt;/span> &lt;span class="k">namespace&lt;/span> &lt;span class="n">apache&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">thrift&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">transport&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">using&lt;/span> &lt;span class="k">namespace&lt;/span> &lt;span class="n">freebird&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">boost&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">shared_ptr&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">TTransport&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">socket&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">new&lt;/span> &lt;span class="n">TSocket&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;localhost&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">9090&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">boost&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">shared_ptr&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">TTransport&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">transport&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">new&lt;/span> &lt;span class="n">TBufferedTransport&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">socket&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">boost&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">shared_ptr&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">TProtocol&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">protocol&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">new&lt;/span> &lt;span class="n">TBinaryProtocol&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">transport&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">WorkerManagerClient&lt;/span> &lt;span class="n">client&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">protocol&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">try&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">transport&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">open&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">client&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">ping&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;ping()&amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">transport&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">close&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> &lt;span class="k">catch&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">TException&lt;/span>&lt;span class="o">&amp;amp;&lt;/span> &lt;span class="n">tx&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;ERROR: &amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">tx&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">what&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="14-编译">&lt;a href="#14-%e7%bc%96%e8%af%91" class="header-anchor">&lt;/a>1.4 编译
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># make.sh&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># server&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">g++ -g -Wall -I./ -I/usr/local/include/thrift WorkerManager.cpp worker_types.cpp worker_constants.cpp WorkerManager_server.skeleton.cpp -L/usr/local/lib/*.so -lthrift -std&lt;span class="o">=&lt;/span>c++11 -o server
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># client&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">g++ -g -Wall -I./ -I/usr/local/include/thrift WorkerManager.cpp worker_types.cpp worker_constants.cpp Client.cpp -L/usr/local/lib/*.so -lthrift -std&lt;span class="o">=&lt;/span>c++11 -o client
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="15-运行">&lt;a href="#15-%e8%bf%90%e8%a1%8c" class="header-anchor">&lt;/a>1.5 运行
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">./server
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">./client
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="2-错误汇总">&lt;a href="#2-%e9%94%99%e8%af%af%e6%b1%87%e6%80%bb" class="header-anchor">&lt;/a>2. 错误汇总
+&lt;/h2>&lt;h3 id="21-stdcxx-和-boost-冲突">&lt;a href="#21-stdcxx-%e5%92%8c-boost-%e5%86%b2%e7%aa%81" class="header-anchor">&lt;/a>2.1 stdcxx 和 boost 冲突
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="o">/&lt;/span>&lt;span class="n">tmp&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">ccX2bX8q&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">o&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">In&lt;/span> &lt;span class="n">function&lt;/span> &lt;span class="err">`&lt;/span>&lt;span class="n">main&lt;/span>&lt;span class="s1">&amp;#39;:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">/&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">workspace&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">thrift&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">test3&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">gen&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">cpp&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">WorkerManager_server&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">skeleton&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cpp&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">41&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">undefined&lt;/span> &lt;span class="n">reference&lt;/span> &lt;span class="n">to&lt;/span> &lt;span class="err">`&lt;/span>&lt;span class="n">apache&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">thrift&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">server&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">TSimpleServer&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">TSimpleServer&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">boost&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">shared_ptr&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">apache&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">thrift&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">TProcessor&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="k">const&lt;/span>&lt;span class="o">&amp;amp;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">boost&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">shared_ptr&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">apache&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">thrift&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">transport&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">TServerTransport&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="k">const&lt;/span>&lt;span class="o">&amp;amp;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">boost&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">shared_ptr&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">apache&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">thrift&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">transport&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">TTransportFactory&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="k">const&lt;/span>&lt;span class="o">&amp;amp;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">boost&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">shared_ptr&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">apache&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">thrift&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">protocol&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">TProtocolFactory&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="k">const&lt;/span>&lt;span class="o">&amp;amp;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">collect2&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">error&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">ld&lt;/span> &lt;span class="n">returned&lt;/span> &lt;span class="mi">1&lt;/span> &lt;span class="n">exit&lt;/span> &lt;span class="n">status&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>由于链接的 thrift 为 stdcxx 编译版，而代码中又使用了 boost （使用了 boost 编译版的 thrift 进行代码生成），因此报错。&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>&lt;/p>
+&lt;p>编译时添加 &lt;code>-std=c++11&lt;/code> 即可，或将代码中使用 boost 的代码改为 stdcxx 亦可，或使用 stdcxx 编译版的 thrift 重新生成代码。&lt;/p>
+&lt;h2 id="参考">&lt;a href="#%e5%8f%82%e8%80%83" class="header-anchor">&lt;/a>参考
+&lt;/h2>&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/csfreebird/article/details/50319035" target="_blank" rel="noopener"
+>用 C++编写 thrift 第一个例子 - csfreebird&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>&lt;a class="link" href="https://ask.csdn.net/questions/691659#answer_1269976" target="_blank" rel="noopener"
+>Ubuntu thrift 服务编译 未找到 TSimpleServer 的引用 - Templar101&lt;/a>&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item></channel></rss>

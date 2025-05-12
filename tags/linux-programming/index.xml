@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux Programming on Sang's Blog</title><link>https://gitsang.github.io/tags/linux-programming/</link><description>Recent content in Linux Programming on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 May 2025 10:41:11 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/linux-programming/index.xml" rel="self" type="application/rss+xml"/><item><title>GDB 快速入门</title><link>https://gitsang.github.io/p/gdb-quick-start/</link><pubDate>Wed, 09 Oct 2019 14:53:28 +0800</pubDate><guid>https://gitsang.github.io/p/gdb-quick-start/</guid><description>&lt;!-- markdown-front-matter -->
+&lt;p>GDB是一个由GNU开源组织发布的、UNIX/LINUX操作系统下的、基于命令行的、功能强大的程序调试工具。 对于一名Linux下工作的c++程序员，gdb是必不可少的工具；&lt;/p>
+&lt;h2 id="1-启动gdb">&lt;a href="#1-%e5%90%af%e5%8a%a8gdb" class="header-anchor">&lt;/a>1. 启动gdb
+&lt;/h2>&lt;ul>
+&lt;li>&lt;strong>对C/C++程序的调试，需要在编译前就加上-g选项:&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">g++ -g hello.cpp -o hello
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>&lt;strong>调试可执行文件:&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">gdb &amp;lt;program&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>program也就是你的执行文件，一般在当前目录下。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>调试core文件(core是程序非法执行后core dump后产生的文件):&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">gdb &amp;lt;program&amp;gt; &amp;lt;core dump file&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gdb program core.11127
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>&lt;strong>调试服务程序:&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">gdb &amp;lt;program&amp;gt; &amp;lt;PID&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gdb hello &lt;span class="m">11127&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>如果你的程序是一个服务程序，那么你可以指定这个服务程序运行时的进程ID。gdb会自动attach上去，并调试他。program应该在PATH环境变量中搜索得到。&lt;/p>
+&lt;h2 id="2-gdb交互命令">&lt;a href="#2-gdb%e4%ba%a4%e4%ba%92%e5%91%bd%e4%bb%a4" class="header-anchor">&lt;/a>2. gdb交互命令
+&lt;/h2>&lt;p>启动gdb后，进入到交互模式，通过以下命令完成对程序的调试；注意高频使用的命令一般都会有缩写，熟练使用这些缩写命令能提高调试的效率；&lt;/p>
+&lt;h3 id="21-运行">&lt;a href="#21-%e8%bf%90%e8%a1%8c" class="header-anchor">&lt;/a>2.1 运行
+&lt;/h3>&lt;ul>
+&lt;li>run：简记为 r ，其作用是运行程序，当遇到断点后，程序会在断点处停止运行，等待用户输入下一步的命令。&lt;/li>
+&lt;li>continue （简写c ）：继续执行，到下一个断点处（或运行结束）&lt;/li>
+&lt;li>next：（简写 n），单步跟踪程序，当遇到函数调用时，也不进入此函数体；此命令同 step 的主要区别是，step 遇到用户自定义的函数，将步进到函数中去运行，而 next 则直接调用函数，不会进入到函数体内。&lt;/li>
+&lt;li>step （简写s）：单步调试如果有函数调用，则进入函数；与命令n不同，n是不进入调用的函数的&lt;/li>
+&lt;li>until：当你厌倦了在一个循环体内单步跟踪时，这个命令可以运行程序直到退出循环体。&lt;/li>
+&lt;li>until+行号： 运行至某行，不仅仅用来跳出循环&lt;/li>
+&lt;li>finish： 运行程序，直到当前函数完成返回，并打印函数返回时的堆栈地址和返回值及参数值等信息。&lt;/li>
+&lt;li>call 函数(参数)：调用程序中可见的函数，并传递“参数”，如：call gdb_test(55)&lt;/li>
+&lt;li>quit：简记为 q ，退出gdb&lt;/li>
+&lt;/ul>
+&lt;h3 id="22-设置断点">&lt;a href="#22-%e8%ae%be%e7%bd%ae%e6%96%ad%e7%82%b9" class="header-anchor">&lt;/a>2.2 设置断点
+&lt;/h3>&lt;ul>
+&lt;li>break n （简写b n）:在第n行处设置断点
+&lt;ul>
+&lt;li>（可以带上代码路径和代码名称： b OAGUPDATE.cpp:578）&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>b fn1 if a＞b：条件断点设置&lt;/li>
+&lt;li>break func（break缩写为b）：在函数func()的入口处设置断点，如：break cb_button&lt;/li>
+&lt;li>delete 断点号n：删除第n个断点&lt;/li>
+&lt;li>disable 断点号n：暂停第n个断点&lt;/li>
+&lt;li>enable 断点号n：开启第n个断点&lt;/li>
+&lt;li>clear 行号n：清除第n行的断点&lt;/li>
+&lt;li>info b （info breakpoints） ：显示当前程序的断点设置情况&lt;/li>
+&lt;li>delete breakpoints：清除所有断点：&lt;/li>
+&lt;/ul>
+&lt;h3 id="23-查看源代码">&lt;a href="#23-%e6%9f%a5%e7%9c%8b%e6%ba%90%e4%bb%a3%e7%a0%81" class="header-anchor">&lt;/a>2.3 查看源代码
+&lt;/h3>&lt;ul>
+&lt;li>list ：简记为 l ，其作用就是列出程序的源代码，默认每次显示10行。&lt;/li>
+&lt;li>list 行号：将显示当前文件以“行号”为中心的前后10行代码，如：list 12&lt;/li>
+&lt;li>list 函数名：将显示“函数名”所在函数的源代码，如：list main&lt;/li>
+&lt;li>list ：不带参数，将接着上一次 list 命令的，输出下边的内容。&lt;/li>
+&lt;/ul>
+&lt;h3 id="24-打印表达式">&lt;a href="#24-%e6%89%93%e5%8d%b0%e8%a1%a8%e8%be%be%e5%bc%8f" class="header-anchor">&lt;/a>2.4 打印表达式
+&lt;/h3>&lt;ul>
+&lt;li>print 表达式：简记为 p ，其中“表达式”可以是任何当前正在被测试程序的有效表达式，比如当前正在调试C语言的程序，那么“表达式”可以是任何C语言的有效表达式，包括数字，变量甚至是函数调用。&lt;/li>
+&lt;li>print a：将显示整数 a 的值&lt;/li>
+&lt;li>print ++a：将把 a 中的值加1,并显示出来&lt;/li>
+&lt;li>print name：将显示字符串 name 的值&lt;/li>
+&lt;li>print gdb_test(22)：将以整数22作为参数调用 gdb_test() 函数&lt;/li>
+&lt;li>print gdb_test(a)：将以变量 a 作为参数调用 gdb_test() 函数&lt;/li>
+&lt;li>display 表达式：在单步运行时将非常有用，使用display命令设置一个表达式后，它将在每次单步进行指令后，紧接着输出被设置的表达式及值。如： display a&lt;/li>
+&lt;li>watch 表达式：设置一个监视点，一旦被监视的“表达式”的值改变，gdb将强行终止正在被调试的程序。如： watch a&lt;/li>
+&lt;li>whatis ：查询变量或函数&lt;/li>
+&lt;li>info function： 查询函数&lt;/li>
+&lt;li>扩展info locals： 显示当前堆栈页的所有变量&lt;/li>
+&lt;/ul>
+&lt;h3 id="25-查询运行信息">&lt;a href="#25-%e6%9f%a5%e8%af%a2%e8%bf%90%e8%a1%8c%e4%bf%a1%e6%81%af" class="header-anchor">&lt;/a>2.5 查询运行信息
+&lt;/h3>&lt;ul>
+&lt;li>where/bt ：当前运行的堆栈列表；&lt;/li>
+&lt;li>bt backtrace 显示当前调用堆栈&lt;/li>
+&lt;li>up/down 改变堆栈显示的深度&lt;/li>
+&lt;li>set args 参数:指定运行时的参数&lt;/li>
+&lt;li>show args：查看设置好的参数&lt;/li>
+&lt;li>info program： 来查看程序的是否在运行，进程号，被暂停的原因。&lt;/li>
+&lt;/ul>
+&lt;h3 id="26-分割窗口">&lt;a href="#26-%e5%88%86%e5%89%b2%e7%aa%97%e5%8f%a3" class="header-anchor">&lt;/a>2.6 分割窗口
+&lt;/h3>&lt;ul>
+&lt;li>layout：用于分割窗口，可以一边查看代码，一边测试：&lt;/li>
+&lt;li>layout src：显示源代码窗口&lt;/li>
+&lt;li>layout asm：显示反汇编窗口&lt;/li>
+&lt;li>layout regs：显示源代码/反汇编和CPU寄存器窗口&lt;/li>
+&lt;li>layout split：显示源代码和反汇编窗口&lt;/li>
+&lt;li>Ctrl + L：刷新窗口&lt;/li>
+&lt;/ul>
+&lt;h3 id="27-注解">&lt;a href="#27-%e6%b3%a8%e8%a7%a3" class="header-anchor">&lt;/a>2.7 注解
+&lt;/h3>&lt;ul>
+&lt;li>交互模式下直接回车的作用是重复上一指令，对于单步调试非常方便；&lt;/li>
+&lt;/ul>
+&lt;h2 id="3-更强大的工具cgdb">&lt;a href="#3-%e6%9b%b4%e5%bc%ba%e5%a4%a7%e7%9a%84%e5%b7%a5%e5%85%b7cgdb" class="header-anchor">&lt;/a>3. 更强大的工具cgdb
+&lt;/h2>&lt;p>cgdb可以看作gdb的界面增强版,用来替代gdb的 gdb -tui。cgdb主要功能是在调试时进行代码的同步显示，这无疑增加了调试的方便性，提高了调试效率。界面类似vi，符合unix/linux下开发人员习惯;如果熟悉gdb和vi，几乎可以立即使用cgdb。&lt;/p>
+&lt;h2 id="4-参考">&lt;a href="#4-%e5%8f%82%e8%80%83" class="header-anchor">&lt;/a>4. 参考
+&lt;/h2></description></item></channel></rss>

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CMake on Sang's Blog</title><link>https://gitsang.github.io/tags/cmake/</link><description>Recent content in CMake on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 May 2025 10:41:19 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/cmake/index.xml" rel="self" type="application/rss+xml"/><item><title>Googletest Quick Start</title><link>https://gitsang.github.io/p/googletest-quick-start/</link><pubDate>Sun, 15 Dec 2019 14:53:28 +0800</pubDate><guid>https://gitsang.github.io/p/googletest-quick-start/</guid><description>&lt;!-- markdown-front-matter -->
+&lt;h2 id="1-install">&lt;a href="#1-install" class="header-anchor">&lt;/a>1. Install
+&lt;/h2>&lt;h3 id="11-get-package">&lt;a href="#11-get-package" class="header-anchor">&lt;/a>1.1 Get package
+&lt;/h3>&lt;p>Using git clone.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">git clone https://github.com/google/googletest.git
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Using wget to achieve tar package, you can find newest tar address at &lt;code>README.md&lt;/code>.&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> &lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">wget https://github.com/google/googletest/archive/release-1.10.0.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tar -zxvf release-1.10.0.tar.gz
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="12-make--install">&lt;a href="#12-make--install" class="header-anchor">&lt;/a>1.2 Make &amp;amp; Install
+&lt;/h3>&lt;p>Both &lt;code>cmake&lt;/code> or &lt;code>cmake3&lt;/code> is ok.&lt;/p>
+&lt;p>Read &lt;code>googletest/googletest/README.md&lt;/code> for more infomation.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ cd googletest
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ mkdir build
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ cd build
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ cmake ..
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ make
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ sudo make install
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="13-attention-when-cmake-processing">&lt;a href="#13-attention-when-cmake-processing" class="header-anchor">&lt;/a>1.3 Attention when cmake processing
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">-- The C compiler identification is GNU 4.8.5
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- The CXX compiler identification is GNU 4.8.5
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Check for working C compiler: /usr/bin/cc
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Check for working C compiler: /usr/bin/cc -- works
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Detecting C compiler ABI info
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Detecting C compiler ABI info - done
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Detecting C compile features
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Detecting C compile features - done
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Check for working CXX compiler: /usr/bin/c++
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Check for working CXX compiler: /usr/bin/c++ -- works
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Detecting CXX compiler ABI info
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Detecting CXX compiler ABI info - done
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Detecting CXX compile features
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Detecting CXX compile features - done
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Found PythonInterp: /usr/bin/python (found version &amp;#34;2.7.5&amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Looking for pthread.h
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Looking for pthread.h - found
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Looking for pthread_create
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Looking for pthread_create - not found
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Looking for pthread_create in pthreads
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Looking for pthread_create in pthreads - not found
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Looking for pthread_create in pthread
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Looking for pthread_create in pthread - found
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Found Threads: TRUE
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Configuring done
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Generating done
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Build files have been written to: /root/project/googletest-release-1.10.0/build
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>In the above log, pthread_create is finally found in pthread, so it is not found on the way, but it should be fine.&lt;/p>
+&lt;h2 id="2-simple-test">&lt;a href="#2-simple-test" class="header-anchor">&lt;/a>2. Simple Test
+&lt;/h2>&lt;h3 id="21-testing-code">&lt;a href="#21-testing-code" class="header-anchor">&lt;/a>2.1 Testing code
+&lt;/h3>&lt;ul>
+&lt;li>&lt;code>add.cc&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">add&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>&lt;code>testAdd.cpp&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;gtest/gtest.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">extern&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="nf">add&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">TEST&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">testCase&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">test0&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">EXPECT_EQ&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">3&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="mi">5&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">argc&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">char&lt;/span> &lt;span class="o">**&lt;/span>&lt;span class="n">argv&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">testing&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">InitGoogleTest&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">argc&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">argv&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">RUN_ALL_TESTS&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="22-compile-and-run">&lt;a href="#22-compile-and-run" class="header-anchor">&lt;/a>2.2 Compile and Run
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">$ g++ add.cpp testAdd.cpp -lgtest -lpthread
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ ./a.out
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[==========]&lt;/span> Running &lt;span class="m">1&lt;/span> &lt;span class="nb">test&lt;/span> from &lt;span class="m">1&lt;/span> &lt;span class="nb">test&lt;/span> &lt;span class="k">case&lt;/span>.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>----------&lt;span class="o">]&lt;/span> Global &lt;span class="nb">test&lt;/span> environment set-up.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>----------&lt;span class="o">]&lt;/span> &lt;span class="m">1&lt;/span> &lt;span class="nb">test&lt;/span> from testCase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span> RUN &lt;span class="o">]&lt;/span> testCase.test0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span> OK &lt;span class="o">]&lt;/span> testCase.test0 &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> ms&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>----------&lt;span class="o">]&lt;/span> &lt;span class="m">1&lt;/span> &lt;span class="nb">test&lt;/span> from testCase &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> ms total&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>----------&lt;span class="o">]&lt;/span> Global &lt;span class="nb">test&lt;/span> environment tear-down
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[==========]&lt;/span> &lt;span class="m">1&lt;/span> &lt;span class="nb">test&lt;/span> from &lt;span class="m">1&lt;/span> &lt;span class="nb">test&lt;/span> &lt;span class="k">case&lt;/span> ran. &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> ms total&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span> PASSED &lt;span class="o">]&lt;/span> &lt;span class="m">1&lt;/span> test.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;code>-lgtest&lt;/code> is used for linking &lt;code>libgtest.a&lt;/code>&lt;/p>
+&lt;p>If using &lt;code>-lgtest_main&lt;/code>, you can coding without main() function&lt;sup id="fnref:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup>&lt;/p>
+&lt;hr>
+&lt;h2 id="3-q--a">&lt;a href="#3-q--a" class="header-anchor">&lt;/a>3. Q &amp;amp; A
+&lt;/h2>&lt;h3 id="31-q1-undefined-reference-when-linking-with-googletest">&lt;a href="#31-q1-undefined-reference-when-linking-with-googletest" class="header-anchor">&lt;/a>3.1 Q1: Undefined reference when linking with googletest
+&lt;/h3>&lt;h4 id="311-a">&lt;a href="#311-a" class="header-anchor">&lt;/a>3.1.1 A:
+&lt;/h4>&lt;p>If you downloaded the gtest source directly and used the make install from the downloaded gtest repository it may have installed header files under &lt;code>/usr/local/include/gtest&lt;/code>.&lt;/p>
+&lt;p>If you later use apt-get (yum install) to install the gtest, it installs the header files under &lt;code>/usr/include/gtest&lt;/code>.&lt;/p>
+&lt;p>If the version installed from the debian package is newer, your Makefile can pick up the older header files from &lt;code>/usr/include&lt;/code> and give you link errors even though you are correctly linking the new &lt;code>libgtest.a&lt;/code> archive.&lt;/p>
+&lt;p>The solution is to look for &lt;code>/usr/local/include/gtest&lt;/code> and &lt;code>/usr/include/gtest&lt;/code> to see if they both exist. If they do then delete the older directory.&lt;/p>
+&lt;p>If &lt;code>/usr/include/gtest&lt;/code> is the older directory, you may want to remove it by uninstalling the &lt;code>libgtest-dev&lt;/code> package.&lt;sup id="fnref:4">&lt;a href="#fn:4" class="footnote-ref" role="doc-noteref">4&lt;/a>&lt;/sup>&lt;/p>
+&lt;h3 id="32-q2-could-not-find-cmake_root">&lt;a href="#32-q2-could-not-find-cmake_root" class="header-anchor">&lt;/a>3.2 Q2: Could not find CMAKE_ROOT
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">CMake Error: Could not find CMAKE_ROOT !!!
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">CMake has most likely not been installed correctly.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Modules directory not found in
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/usr/local/share/cmake-3.11
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cmake version 3.11.0-rc4
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">CMake suite maintained and supported by Kitware (kitware.com/cmake).
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="321-a">&lt;a href="#321-a" class="header-anchor">&lt;/a>3.2.1 A:
+&lt;/h4>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">$ wget https://cmake.org/files/v3.12/cmake-3.12.0-rc1.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ tar -zxvf cmake-3.12.0-rc1.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ &lt;span class="nb">cd&lt;/span> cmake-3.12.0-rc1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ ./bootstrap
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ gmake
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ gmake install
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="33-q3-compile-error">&lt;a href="#33-q3-compile-error" class="header-anchor">&lt;/a>3.3 Q3: Compile error
+&lt;/h3>&lt;h4 id="331-a">&lt;a href="#331-a" class="header-anchor">&lt;/a>3.3.1 A:
+&lt;/h4>&lt;p>add &lt;code>-std=c++11&lt;/code> when compile&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ g++ *.cpp -lgtest -lpthread -std=c++11
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="4-reference">&lt;a href="#4-reference" class="header-anchor">&lt;/a>4. Reference
+&lt;/h2>&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a class="link" href="https://qiita.com/shohirose/items/30e39949d8bf990b0462" target="_blank" rel="noopener"
+>Google Testの使い方 - Qiita&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>&lt;a class="link" href="http://senlinzhan.github.io/2017/10/08/gtest/" target="_blank" rel="noopener"
+>使用 Google Test 测试框架 - Senlin&amp;rsquo;s Blog&lt;/a>&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:3">
+&lt;p>&lt;a class="link" href="http://www.manongjc.com/article/68895.html" target="_blank" rel="noopener"
+>第一个gtest程序 - 码农教程&lt;/a>&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:4">
+&lt;p>&lt;a class="link" href="https://stackoverflow.com/questions/39207940/undefined-reference-when-linking-with-googletest" target="_blank" rel="noopener"
+>Undefined reference when linking with googletest - Stack Overflow&lt;/a>&amp;#160;&lt;a href="#fnref:4" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item></channel></rss>

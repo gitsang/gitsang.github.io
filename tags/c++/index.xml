@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>C++ on Sang's Blog</title><link>https://gitsang.github.io/tags/c++/</link><description>Recent content in C++ on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 May 2025 10:41:37 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml"/><item><title>Thrift C++ 快速入门</title><link>https://gitsang.github.io/p/thrift-quick-start-for-cpp/</link><pubDate>Thu, 14 May 2020 14:53:28 +0800</pubDate><guid>https://gitsang.github.io/p/thrift-quick-start-for-cpp/</guid><description>&lt;h2 id="1-thrift-基本使用">&lt;a href="#1-thrift-%e5%9f%ba%e6%9c%ac%e4%bd%bf%e7%94%a8" class="header-anchor">&lt;/a>1. thrift 基本使用
+&lt;/h2>&lt;h3 id="11-创建-thrift-文件">&lt;a href="#11-%e5%88%9b%e5%bb%ba-thrift-%e6%96%87%e4%bb%b6" class="header-anchor">&lt;/a>1.1 创建 thrift 文件
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-thrift" data-lang="thrift">&lt;span class="line">&lt;span class="cl">&lt;span class="c"># worker.thrift&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="kn">namespace&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nn">cpp&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">freebird&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="kd">service&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nc">WorkerManager&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">ping&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="12-生成-cpp-代码">&lt;a href="#12-%e7%94%9f%e6%88%90-cpp-%e4%bb%a3%e7%a0%81" class="header-anchor">&lt;/a>1.2 生成 cpp 代码
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">thrift -r --gen cpp worker.thrift
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>在当前目录创建 gen-cpp 目录，里面包含了所有生成的 C++ 代码。&lt;/p>
+&lt;blockquote>
+&lt;p>worker_constants.cpp&lt;/p>
+&lt;p>worker_constants.h
+WorkerManager.cpp
+WorkerManager.h
+WorkerManager_server.skeleton.cpp
+worker_types.cpp
+worker_types.h&lt;/p>&lt;/blockquote>
+&lt;p>WorkerManager_server.skeleton.cpp 就是 C++ 服务端的 main 函数入口文件&lt;/p>
+&lt;h3 id="13-编写-client">&lt;a href="#13-%e7%bc%96%e5%86%99-client" class="header-anchor">&lt;/a>1.3 编写 Client&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="cm">/* Client.cpp */&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;thrift/protocol/TBinaryProtocol.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;thrift/transport/TSocket.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;thrift/transport/TTransportUtils.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;#34;WorkerManager.h&amp;#34;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">using&lt;/span> &lt;span class="k">namespace&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">using&lt;/span> &lt;span class="k">namespace&lt;/span> &lt;span class="n">apache&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">thrift&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">using&lt;/span> &lt;span class="k">namespace&lt;/span> &lt;span class="n">apache&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">thrift&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">protocol&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">using&lt;/span> &lt;span class="k">namespace&lt;/span> &lt;span class="n">apache&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">thrift&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">transport&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">using&lt;/span> &lt;span class="k">namespace&lt;/span> &lt;span class="n">freebird&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">boost&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">shared_ptr&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">TTransport&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">socket&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">new&lt;/span> &lt;span class="n">TSocket&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;localhost&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">9090&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">boost&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">shared_ptr&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">TTransport&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">transport&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">new&lt;/span> &lt;span class="n">TBufferedTransport&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">socket&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">boost&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">shared_ptr&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">TProtocol&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">protocol&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">new&lt;/span> &lt;span class="n">TBinaryProtocol&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">transport&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">WorkerManagerClient&lt;/span> &lt;span class="n">client&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">protocol&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">try&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">transport&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">open&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">client&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">ping&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;ping()&amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">transport&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">close&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> &lt;span class="k">catch&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">TException&lt;/span>&lt;span class="o">&amp;amp;&lt;/span> &lt;span class="n">tx&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;ERROR: &amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">tx&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">what&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="14-编译">&lt;a href="#14-%e7%bc%96%e8%af%91" class="header-anchor">&lt;/a>1.4 编译
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># make.sh&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># server&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">g++ -g -Wall -I./ -I/usr/local/include/thrift WorkerManager.cpp worker_types.cpp worker_constants.cpp WorkerManager_server.skeleton.cpp -L/usr/local/lib/*.so -lthrift -std&lt;span class="o">=&lt;/span>c++11 -o server
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># client&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">g++ -g -Wall -I./ -I/usr/local/include/thrift WorkerManager.cpp worker_types.cpp worker_constants.cpp Client.cpp -L/usr/local/lib/*.so -lthrift -std&lt;span class="o">=&lt;/span>c++11 -o client
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="15-运行">&lt;a href="#15-%e8%bf%90%e8%a1%8c" class="header-anchor">&lt;/a>1.5 运行
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">./server
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">./client
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="2-错误汇总">&lt;a href="#2-%e9%94%99%e8%af%af%e6%b1%87%e6%80%bb" class="header-anchor">&lt;/a>2. 错误汇总
+&lt;/h2>&lt;h3 id="21-stdcxx-和-boost-冲突">&lt;a href="#21-stdcxx-%e5%92%8c-boost-%e5%86%b2%e7%aa%81" class="header-anchor">&lt;/a>2.1 stdcxx 和 boost 冲突
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="o">/&lt;/span>&lt;span class="n">tmp&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">ccX2bX8q&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">o&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">In&lt;/span> &lt;span class="n">function&lt;/span> &lt;span class="err">`&lt;/span>&lt;span class="n">main&lt;/span>&lt;span class="s1">&amp;#39;:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">/&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">workspace&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">thrift&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">test3&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">gen&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">cpp&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">WorkerManager_server&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">skeleton&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cpp&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">41&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">undefined&lt;/span> &lt;span class="n">reference&lt;/span> &lt;span class="n">to&lt;/span> &lt;span class="err">`&lt;/span>&lt;span class="n">apache&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">thrift&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">server&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">TSimpleServer&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">TSimpleServer&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">boost&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">shared_ptr&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">apache&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">thrift&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">TProcessor&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="k">const&lt;/span>&lt;span class="o">&amp;amp;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">boost&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">shared_ptr&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">apache&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">thrift&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">transport&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">TServerTransport&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="k">const&lt;/span>&lt;span class="o">&amp;amp;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">boost&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">shared_ptr&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">apache&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">thrift&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">transport&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">TTransportFactory&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="k">const&lt;/span>&lt;span class="o">&amp;amp;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">boost&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">shared_ptr&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">apache&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">thrift&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">protocol&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="n">TProtocolFactory&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="k">const&lt;/span>&lt;span class="o">&amp;amp;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">collect2&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">error&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">ld&lt;/span> &lt;span class="n">returned&lt;/span> &lt;span class="mi">1&lt;/span> &lt;span class="n">exit&lt;/span> &lt;span class="n">status&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>由于链接的 thrift 为 stdcxx 编译版，而代码中又使用了 boost （使用了 boost 编译版的 thrift 进行代码生成），因此报错。&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>&lt;/p>
+&lt;p>编译时添加 &lt;code>-std=c++11&lt;/code> 即可，或将代码中使用 boost 的代码改为 stdcxx 亦可，或使用 stdcxx 编译版的 thrift 重新生成代码。&lt;/p>
+&lt;h2 id="参考">&lt;a href="#%e5%8f%82%e8%80%83" class="header-anchor">&lt;/a>参考
+&lt;/h2>&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/csfreebird/article/details/50319035" target="_blank" rel="noopener"
+>用 C++编写 thrift 第一个例子 - csfreebird&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>&lt;a class="link" href="https://ask.csdn.net/questions/691659#answer_1269976" target="_blank" rel="noopener"
+>Ubuntu thrift 服务编译 未找到 TSimpleServer 的引用 - Templar101&lt;/a>&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>C++ 面向对象中的虚（Virtual）</title><link>https://gitsang.github.io/p/virtual-on-cpp-object-oriented/</link><pubDate>Wed, 09 Oct 2019 14:53:28 +0800</pubDate><guid>https://gitsang.github.io/p/virtual-on-cpp-object-oriented/</guid><description>&lt;!-- markdown-front-matter -->
+&lt;h2 id="1-虚函数">&lt;a href="#1-%e8%99%9a%e5%87%bd%e6%95%b0" class="header-anchor">&lt;/a>1. 虚函数
+&lt;/h2>&lt;h3 id="11-简述">&lt;a href="#11-%e7%ae%80%e8%bf%b0" class="header-anchor">&lt;/a>1.1 简述
+&lt;/h3>&lt;p>所谓虚函数是指：在类中希望被重写(override)的虚构的函数。也就是说 C++ 可以在派生类(derived class)中通过重写基类(based class)的虚函数来实现对基类虚函数的覆盖(override)&lt;/p>
+&lt;h3 id="12-常见用法">&lt;a href="#12-%e5%b8%b8%e8%a7%81%e7%94%a8%e6%b3%95" class="header-anchor">&lt;/a>1.2 常见用法
+&lt;/h3>&lt;p>最常见的用法就是：声明基类的指针，指向任意一个子类对象，调用相应虚函数，就调用了子类重写的函数。由于编写基类时候并不能确定将被调用的是那个派生类的函数，因此被称为“虚”函数。&lt;/p>
+&lt;p>如果不使用虚函数，则使用基类指针时，将总是被限制在基类函数本身，无论如何都无法调用到子类重写的函数。&lt;/p>
+&lt;h3 id="13-代码示例">&lt;a href="#13-%e4%bb%a3%e7%a0%81%e7%a4%ba%e4%be%8b" class="header-anchor">&lt;/a>1.3 代码示例
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">Base&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">public&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Base&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">public&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">void&lt;/span> &lt;span class="n">print&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;Base&amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">virtual&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">vprint&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;vBase&amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">};&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">Derived&lt;/span> &lt;span class="o">:&lt;/span> &lt;span class="k">public&lt;/span> &lt;span class="n">Base&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">public&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Derived&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">public&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">void&lt;/span> &lt;span class="n">print&lt;/span>&lt;span class="p">(){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;Derived&amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">void&lt;/span> &lt;span class="nf">vprint&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;vDerived&amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">};&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Base&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">p1&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">Base&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">p1&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">print&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">p1&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">vprint&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Derived&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">p2&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">Derived&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">p2&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">print&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">p2&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">vprint&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Base&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">p3&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">Derived&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">p3&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">print&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">p3&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">vprint&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>代码中定义了一个基类 Base，并定义了一个函数 print() 和一个虚函数 vprint()，派生类 Derived 继承自 Base，并重写了 print 和 vprint 两个函数。&lt;/p>
+&lt;p>main 中分别 new 了 Base 和 Derived 对象，并调用自身的函数，这结果是很好预知的，一定是&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">Base
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">vBase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Derived
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">vDerived
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>之后定义了 基类指针 p3 并将其指向派生类，输出结果是：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">Base
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">vDerived
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这里就可以注意到基类指针调用函数 print() 时，实际上调用的是基类自身的 print()，即使这个指针已经指向了其派生类 Derived。&lt;/p>
+&lt;h3 id="14-结果解释">&lt;a href="#14-%e7%bb%93%e6%9e%9c%e8%a7%a3%e9%87%8a" class="header-anchor">&lt;/a>1.4 结果解释
+&lt;/h3>&lt;p>这是由于 C++ 在编译时，内部成员函数一般都是静态加载的，编译器对于非虚函数他的调用地址是写死的，会将其定义类的函数地址写到调用语句上，这就是静态联编。只有在编译器遇到虚函数时才会将调用修改为寄存器间接寻址，即为动态联编。&lt;/p>
+&lt;p>因此，p3 虽然指向了派生类，但编译时仍然会给调用写上一个 Base::print() 的地址，即使编译器此时知道 p3 指向的并不是 Base，这是由编译逻辑决定的。&lt;/p>
+&lt;p>虽然你也可以不用虚函数，而是直接定义一个派生类的对象来调用派生类的方法，但这样就已经不是一个接口了，这就不是多态了。&lt;/p>
+&lt;h3 id="15-总结">&lt;a href="#15-%e6%80%bb%e7%bb%93" class="header-anchor">&lt;/a>1.5 总结
+&lt;/h3>&lt;p>其实你也不必知道这么多的细节，你只要知道如果你想要仅仅暴露一个基类接口来实现多态，那么只需要为基类函数加上 virtual 标识符，然后用派生类重写该函数，最后将基类指针指向派生类就可以了。&lt;/p>
+&lt;h3 id="16-附录">&lt;a href="#16-%e9%99%84%e5%bd%95" class="header-anchor">&lt;/a>1.6 附录
+&lt;/h3>&lt;ul>
+&lt;li>使用 g++ 生成汇编代码&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">g++ -S -fverbose-asm -g t_virtual.cpp -o t_virtual.s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">as -alhnd t_virtual.s &amp;gt; t_virtual.as
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>&lt;code>p3-&amp;gt;print()&lt;/code> 的汇编&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-as" data-lang="as">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">movq&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">40&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="nx">rbp&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="o">%&lt;/span>&lt;span class="nx">rax&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">movq&lt;/span> &lt;span class="o">%&lt;/span>&lt;span class="nx">rax&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="o">%&lt;/span>&lt;span class="nx">rdi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">call&lt;/span> &lt;span class="nx">_ZN4Base5printEv&lt;/span> &lt;span class="err">#&lt;/span> &lt;span class="err">地址标号直接寻址，跳转到&lt;/span> &lt;span class="nx">Base&lt;/span> &lt;span class="err">类的&lt;/span> &lt;span class="nx">print&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>&lt;code>p3-&amp;gt;vprint()&lt;/code> 的汇编&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-as" data-lang="as">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">movq&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">40&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="nx">rbp&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="o">%&lt;/span>&lt;span class="nx">rax&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">movq&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="nx">rax&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="o">%&lt;/span>&lt;span class="nx">rax&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">movq&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="nx">rax&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="o">%&lt;/span>&lt;span class="nx">rax&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">movq&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">40&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="nx">rbp&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="o">%&lt;/span>&lt;span class="nx">rdx&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">movq&lt;/span> &lt;span class="o">%&lt;/span>&lt;span class="nx">rdx&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="o">%&lt;/span>&lt;span class="nx">rdi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">call&lt;/span> &lt;span class="o">*%&lt;/span>&lt;span class="nx">rax&lt;/span> &lt;span class="err">#&lt;/span> &lt;span class="err">间接寻址&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="2-参考">&lt;a href="#2-%e5%8f%82%e8%80%83" class="header-anchor">&lt;/a>2. 参考
+&lt;/h2>&lt;p>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>&lt;sup id="fnref:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup>&lt;sup id="fnref:4">&lt;a href="#fn:4" class="footnote-ref" role="doc-noteref">4&lt;/a>&lt;/sup>&lt;sup id="fnref:5">&lt;a href="#fn:5" class="footnote-ref" role="doc-noteref">5&lt;/a>&lt;/sup>&lt;sup id="fnref:6">&lt;a href="#fn:6" class="footnote-ref" role="doc-noteref">6&lt;/a>&lt;/sup>&lt;sup id="fnref:7">&lt;a href="#fn:7" class="footnote-ref" role="doc-noteref">7&lt;/a>&lt;/sup>&lt;sup id="fnref:8">&lt;a href="#fn:8" class="footnote-ref" role="doc-noteref">8&lt;/a>&lt;/sup>&lt;/p>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a class="link" href="http://codemacro.com/2014/09/06/necessary-dtor/" target="_blank" rel="noopener"
+>C++构造/析构函数中的多态(二)&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/Hackbuteer1/article/details/7475622" target="_blank" rel="noopener"
+>浅谈 C++多态性&lt;/a>&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:3">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/i_chaoren/article/details/77281785" target="_blank" rel="noopener"
+>C++多态&amp;ndash;虚函数 virtual 及 override&lt;/a>&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:4">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/qq_29924041/article/details/73522256" target="_blank" rel="noopener"
+>C++学习:虚函数,纯虚函数,虚继承,虚析构函数&lt;/a>&amp;#160;&lt;a href="#fnref:4" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:5">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/ring0hx/article/details/1605254" target="_blank" rel="noopener"
+>C++ Virtual 详解&lt;/a>&amp;#160;&lt;a href="#fnref:5" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:6">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/foreverhuylee/article/details/34107615" target="_blank" rel="noopener"
+>C++中 virtual（虚函数）的用法&lt;/a>&amp;#160;&lt;a href="#fnref:6" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:7">
+&lt;p>&lt;a class="link" href="https://www.cnblogs.com/zsq1993/p/5804332.html" target="_blank" rel="noopener"
+>虚函数的深入理解&lt;/a>&amp;#160;&lt;a href="#fnref:7" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:8">
+&lt;p>&lt;a class="link" href="https://bbs.csdn.net/topics/391846458" target="_blank" rel="noopener"
+>为什么不直接用子类引用指向子类对象，而用父类引用指向子类对象&lt;/a>&amp;#160;&lt;a href="#fnref:8" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>指针、值和引用</title><link>https://gitsang.github.io/p/pointer-value-quote/</link><pubDate>Wed, 09 Oct 2019 14:53:28 +0800</pubDate><guid>https://gitsang.github.io/p/pointer-value-quote/</guid><description>&lt;!-- markdown-front-matter -->
+&lt;h2 id="1-指针和引用">&lt;a href="#1-%e6%8c%87%e9%92%88%e5%92%8c%e5%bc%95%e7%94%a8" class="header-anchor">&lt;/a>1. 指针和引用
+&lt;/h2>&lt;h3 id="11-指针和引用概述">&lt;a href="#11-%e6%8c%87%e9%92%88%e5%92%8c%e5%bc%95%e7%94%a8%e6%a6%82%e8%bf%b0" class="header-anchor">&lt;/a>1.1 指针和引用概述
+&lt;/h3>&lt;h4 id="111-指针">&lt;a href="#111-%e6%8c%87%e9%92%88" class="header-anchor">&lt;/a>1.1.1 指针
+&lt;/h4>&lt;p>对于char* ptr，ptr为指向char的指针，即char*类型的变量ptr保存的是一个char对象的地址，而char可加限定c词const、volatile等。（char可换为其他类型）&lt;/p>
+&lt;p>如下所示，p中存储的是c的地址，c中存储的是‘A&amp;rsquo;字符&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">char&lt;/span> &lt;span class="n">c&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="sc">&amp;#39;A&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">char&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">p&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">c&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>通过*可取p所指向的内容，通过&amp;amp;可取p的地址，即：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>*p == c的内容 == 'A'&lt;/code>&lt;/li>
+&lt;li>&lt;code>p == c的地址 == &amp;amp;c&lt;/code>&lt;/li>
+&lt;li>&lt;code>&amp;amp;p == p的地址&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h4 id="112-引用">&lt;a href="#112-%e5%bc%95%e7%94%a8" class="header-anchor">&lt;/a>1.1.2 引用
+&lt;/h4>&lt;p>引用相当于一个对象的别名，主要用于函数参数和返回值类型。int&amp;amp;表示对int类型的引用（int可换为其他类型）&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span>&lt;span class="o">&amp;amp;&lt;/span> &lt;span class="n">r&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">i&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// r指向了i的空间，此时对i和r的操作将是相同的
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">r&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// 输出 2
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">r&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">3&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// 输出 3
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>可以认为引用就是将 i 和 r 相关联（绑定）了，使得 i 和 r 代表了相同的一块空间&lt;/p>
+&lt;h4 id="113-引用与指针的区别">&lt;a href="#113-%e5%bc%95%e7%94%a8%e4%b8%8e%e6%8c%87%e9%92%88%e7%9a%84%e5%8c%ba%e5%88%ab" class="header-anchor">&lt;/a>1.1.3 引用与指针的区别
+&lt;/h4>&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>引用一旦指向某一对象就不可更改：&lt;/strong>
+如上面程序，引用后的 r 就和普通的整形变量没有什么区别（若不考虑 i 的存在，完全可以把&lt;code>int i = 1; int&amp;amp; r = i;&lt;/code>当成&lt;code>int r = 1;&lt;/code>来看待）。引用即是将两个变量进行了绑定，而指针仅仅是存储了指向内存的地址，所以通过引用名（如&lt;code>r&lt;/code>）可以直接访问指向的内存，而通过指针名（如&lt;code>p&lt;/code>）却只能访问到地址，要通过（如&lt;code>*p&lt;/code>）才能访问到地址所指的内存&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>对引用的操作将与所指对象同步，而不是像操作指针一样会改变指针的指向：&lt;/strong>&lt;/p>
+&lt;p>如引用的++操作将直接使得指向内容+1，而指针的++会让指针指向下一个地址。如&lt;code>int i = 1; int&amp;amp; r = i; int* p = &amp;amp;r;&lt;/code>此时 r 和 p 都指向了 i 所在的空间，但其意义是完全不同的，p是开辟了一个内存来存储 i 的地址，而 r 就是 i&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>引用不可以为空，但指针可以为空：&lt;/strong>
+正因如此指针在使用前都需要进行判空操作，而引用变量若不进行初始化甚至无法通过编译&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;p>虽说引用和指针有许多区别，但两者在本质上是相同的，可以根据汇编代码看出：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">//引用int&amp;amp; ref = i;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">8048727: 8d 44 24 1c lea 0x1c(%esp), %eax // esp寄存器里的变量i的地址传给eax
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">804872b: 89 44 24 18 mov %eax, 0x18(%esp) // 将寄存器eax中的内容（i的地址）传给寄存器中的变量ref
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">//指针int* p = &amp;amp;i;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">8048777: 8d 44 24 1c lea 0x1c(%esp), %eax // esp寄存器里的变量i的地址传给eax
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">804877b: 89 44 24 10 mov %eax, 0x10(%esp) // 将寄存器eax中的内容（i的地址）传给寄存器中的变量p
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>引用和指针在汇编上的实现是完全相同的，即是说引用的本质其实就是指针，只是比指针更加安全。&lt;/p>
+&lt;h4 id="114-const关键字">&lt;a href="#114-const%e5%85%b3%e9%94%ae%e5%ad%97" class="header-anchor">&lt;/a>1.1.4 const关键字
+&lt;/h4>&lt;p>引用和const指针是不是几乎是相同的呢？引用的本质其实就是指针，只是在指针上增加了一些规则，使得它更加安全。实际上，若不考虑赋空值，那么：&lt;/p>
+&lt;ul>
+&lt;li>引用 &lt;code>type&amp;amp; x&lt;/code> 等于 const指针 &lt;code>const type* x&lt;/code>&lt;/li>
+&lt;li>const引用 &lt;code>const type&amp;amp; x&lt;/code> 等于 指向const的const指针 &lt;code>const type* const x&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h3 id="12-值传递指针传递引用传递">&lt;a href="#12-%e5%80%bc%e4%bc%a0%e9%80%92%e6%8c%87%e9%92%88%e4%bc%a0%e9%80%92%e5%bc%95%e7%94%a8%e4%bc%a0%e9%80%92" class="header-anchor">&lt;/a>1.2 值传递、指针传递、引用传递
+&lt;/h3>&lt;h4 id="121-值传递">&lt;a href="#121-%e5%80%bc%e4%bc%a0%e9%80%92" class="header-anchor">&lt;/a>1.2.1 值传递
+&lt;/h4>&lt;p>值传递是形参对实参的拷贝，即将实参赋值到了形参上，改变形参的值并不会影响外部实参的值。从被调用函数的角度来说，值传递是单向的，参数的值只能传入，不能传出。当函数内部需要修改参数，并且不希望这个改变影响调用者时，采用值传递。&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>&lt;/p>
+&lt;h4 id="122-指针传递">&lt;a href="#122-%e6%8c%87%e9%92%88%e4%bc%a0%e9%80%92" class="header-anchor">&lt;/a>1.2.2 指针传递
+&lt;/h4>&lt;p>形参为指向实参地址的指针，当对形参的指向操作时，就相当于对实参本身进行的操作，但对于形参的操作并不会改变实参的值（改变形参存储的地址不会改变实参的指向），因为指针传递的本质也是值的传递（将指针变量存储的地址复制给形参的变量）&lt;/p>
+&lt;h4 id="123-引用传递">&lt;a href="#123-%e5%bc%95%e7%94%a8%e4%bc%a0%e9%80%92" class="header-anchor">&lt;/a>1.2.3 引用传递
+&lt;/h4>&lt;p>形参相当于是实参的“别名”，对形参的操作其实就是对实参的操作，在引用传递过程中，被调函数的形式参数虽然也作为局部变量在栈中开辟了内存空间，但是这时存放的是由主调函数放进来的实参变量的地址。被调函数对形参的任何操作都被处理成间接寻址，即通过栈中存放的地址访问主调函数中的实参变量。正因为如此，被调函数对形参做的任何操作都影响了主调函数中的实参变量。&lt;/p>
+&lt;h2 id="2-参考">&lt;a href="#2-%e5%8f%82%e8%80%83" class="header-anchor">&lt;/a>2. 参考
+&lt;/h2>&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/listening_music/article/details/6921608" target="_blank" rel="noopener"
+>C++中引用和指针的区别&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>&lt;a class="link" href="https://www.cnblogs.com/yanlingyin/archive/2011/12/07/2278961.html" target="_blank" rel="noopener"
+>C++ 值传递、指针传递、引用传递详解 - Geek_Ling&lt;/a>&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item></channel></rss>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Event Handling on Sang's Blog</title><link>https://gitsang.github.io/tags/event-handling/</link><description>Recent content in Event Handling on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 May 2025 10:41:00 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/event-handling/index.xml" rel="self" type="application/rss+xml"/><item><title>调用和回调函数</title><link>https://gitsang.github.io/p/call-and-callback/</link><pubDate>Wed, 09 Oct 2019 14:53:28 +0800</pubDate><guid>https://gitsang.github.io/p/call-and-callback/</guid><description>&lt;!-- markdown-front-matter -->
+&lt;h2 id="1-回调函数简介">&lt;a href="#1-%e5%9b%9e%e8%b0%83%e5%87%bd%e6%95%b0%e7%ae%80%e4%bb%8b" class="header-anchor">&lt;/a>1. 回调函数简介
+&lt;/h2>&lt;p>回调函数就是那些自己写的，但是不是自己来调，而是给别人来调用的函数。&lt;/p>
+&lt;p>消息响应函数就可以看成是回调函数，因为是让系统在合适的时候去调用。这不过消息响应函数就是为了处理消息的，所以就拿出来单做一类了。其实本质上就是回调函数。&lt;/p>
+&lt;p>比如按键事件，其实是个消息，你的函数比按键事件更早存在，所以你要将这个函数做为回调函数提交给系统， 然后系统在接收到按键事件后，再调用你的函数&lt;/p>
+&lt;p>但是回调函数不是只有消息响应函数一种，比如在内核编程中，驱动程序就要提供一些回调函数，当一个设备的数据读写完成后，让系统调用这些回调函数来执行一些后续工作。回调函数赋予程序员这样一种能力，让自己编写的代码能够跳出正常的程序控制流，适应具体的运行环境在正确的时间执行。&lt;/p>
+&lt;h2 id="2-回调和调用的关系">&lt;a href="#2-%e5%9b%9e%e8%b0%83%e5%92%8c%e8%b0%83%e7%94%a8%e7%9a%84%e5%85%b3%e7%b3%bb" class="header-anchor">&lt;/a>2. 回调和调用的关系
+&lt;/h2>&lt;h3 id="21-调用">&lt;a href="#21-%e8%b0%83%e7%94%a8" class="header-anchor">&lt;/a>2.1 调用
+&lt;/h3>&lt;p>调用就是用户传出参数让函数进行处理，或让函数执行某个动作
+如以下操作就是调用，用户需要传入函数要求的参数，函数会返回一个传入参数中的最大值&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">mymax&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="c1">// 定义函数
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="n">a&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">b&lt;/span> &lt;span class="o">?&lt;/span> &lt;span class="nl">a&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">a&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">10&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">b&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">20&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">mymax&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">);&lt;/span> &lt;span class="c1">// 调用函数
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="22-回调">&lt;a href="#22-%e5%9b%9e%e8%b0%83" class="header-anchor">&lt;/a>2.2 回调
+&lt;/h3>&lt;h4 id="221-注册回调函数">&lt;a href="#221-%e6%b3%a8%e5%86%8c%e5%9b%9e%e8%b0%83%e5%87%bd%e6%95%b0" class="header-anchor">&lt;/a>2.2.1 注册回调函数
+&lt;/h4>&lt;p>回调就是用户编写函数对系统传入的参数进行处理，或在系统发出信号时执行某个操作，如：&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> &lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">mymax&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="c1">// 定义回调函数
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="n">a&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">b&lt;/span> &lt;span class="o">?&lt;/span> &lt;span class="nl">a&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">system_operation&lt;/span> &lt;span class="n">sysop&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sysop&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">max&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">mymax&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// 注册回调函数
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>此时mymax并未由用户传入参数，而是等待系统传入。&lt;/p>
+&lt;p>上述代码中&lt;code>system_operation&lt;/code>为虚构的结构体，结构体内声明了一个空的max函数，如果系统直接调用max函数不会执行任何内容。&lt;/p>
+&lt;p>需要用户将自己编写的函数注册到max函数上&lt;code>sysop.max = mymax;&lt;/code>，注册成功后系统在调用到max函数时，就相当于调用了用户的mymax函数。注册回调意思就是把用户函数关联到系统函数&lt;/p>
+&lt;h4 id="222-回调函数作为参数">&lt;a href="#222-%e5%9b%9e%e8%b0%83%e5%87%bd%e6%95%b0%e4%bd%9c%e4%b8%ba%e5%8f%82%e6%95%b0" class="header-anchor">&lt;/a>2.2.2 回调函数作为参数
+&lt;/h4>&lt;p>还有另一种形式的回调，是回调函数作为参数，如：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;#34;otherfunc.h&amp;#34;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">static&lt;/span> &lt;span class="n">size_t&lt;/span> &lt;span class="nf">mymax_callback&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">max&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">max&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">a&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">b&lt;/span> &lt;span class="o">?&lt;/span> &lt;span class="nl">a&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// 我就是要返回最小值给你
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//函数原型 int othfunc_max(void* callbackfunction);
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">othfunc_max&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">mymax_callback&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>此时a, b, &amp;amp;max都是系统传入的参数，至于传的是什么此时并不需要关心，只需要关心怎么处理a, b, &amp;amp;max这三个参数就行，一般来说回调函数需要哪些参数，参数的作用等都会在系统的说明文档或头文件注释中给出，写回调时候根据文档写出符合需求的回调函数就行了。（当然只要你开心，只要把格式写对，功能不符合需求也行，手动狗头）&lt;/p>
+&lt;p>用户在调用othfunc_max时，只需传入对应的回调函数名称，系统会将a, b, &amp;amp;max传给mymax_callback函数，函数只给&amp;amp;max赋上a和b的最大值（其实是最小值），并未将max值返回（即使返回也不是返回给用户，用户能收到的仅仅是othfunc_max()的返回值）。&lt;sup id="fnref:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup> &lt;sup id="fnref:4">&lt;a href="#fn:4" class="footnote-ref" role="doc-noteref">4&lt;/a>&lt;/sup>&lt;/p>
+&lt;h2 id="3-参考">&lt;a href="#3-%e5%8f%82%e8%80%83" class="header-anchor">&lt;/a>3. 参考
+&lt;/h2>&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/bzhxuexi/article/details/11767979" target="_blank" rel="noopener"
+>C++中回调函数(CallBack)的使用&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/clirus/article/details/50350519" target="_blank" rel="noopener"
+>C++ 回调函数理解 - clirus&lt;/a>&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:3">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/jackystudio/article/details/11720325" target="_blank" rel="noopener"
+>【C++基础之八】函数指针和回调函数 - 偶尔e网事&lt;/a>&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:4">
+&lt;p>&lt;a class="link" href="https://cnodejs.org/topic/58205fc7be0a73ad05489563" target="_blank" rel="noopener"
+>回调函数中的参数列表是规定好的么 - TianYongwei&lt;/a>&amp;#160;&lt;a href="#fnref:4" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item></channel></rss>

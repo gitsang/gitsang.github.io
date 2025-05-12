@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Docker Desktop on Sang's Blog</title><link>https://gitsang.github.io/tags/docker-desktop/</link><description>Recent content in Docker Desktop on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 May 2025 10:49:50 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/docker-desktop/index.xml" rel="self" type="application/rss+xml"/><item><title>WSL With Docker Could Not Be Found</title><link>https://gitsang.github.io/p/wsl-with-docker-could-not-be-found/</link><pubDate>Fri, 24 Sep 2021 14:21:20 +0800</pubDate><guid>https://gitsang.github.io/p/wsl-with-docker-could-not-be-found/</guid><description>&lt;!-- markdown-front-matter -->
+&lt;h2 id="1-problem">&lt;a href="#1-problem" class="header-anchor">&lt;/a>1. Problem
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-powershell" data-lang="powershell">&lt;span class="line">&lt;span class="cl">&lt;span class="p">$&lt;/span> &lt;span class="n">docker&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">The&lt;/span> &lt;span class="n">command&lt;/span> &lt;span class="p">$&lt;/span> &lt;span class="n">docker&lt;/span> &lt;span class="n">could&lt;/span> &lt;span class="n">not&lt;/span> &lt;span class="n">be&lt;/span> &lt;span class="n">found&lt;/span> &lt;span class="k">in&lt;/span> &lt;span class="n">this&lt;/span> &lt;span class="n">WSL&lt;/span> &lt;span class="mf">1&lt;/span> &lt;span class="n">distro&lt;/span>&lt;span class="p">.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">We&lt;/span> &lt;span class="n">recommend&lt;/span> &lt;span class="n">to&lt;/span> &lt;span class="n">convert&lt;/span> &lt;span class="n">this&lt;/span> &lt;span class="n">distro&lt;/span> &lt;span class="n">to&lt;/span> &lt;span class="n">WSL&lt;/span> &lt;span class="mf">2&lt;/span> &lt;span class="n">and&lt;/span> &lt;span class="n">activate&lt;/span> &lt;span class="n">the&lt;/span> &lt;span class="n">WSL&lt;/span> &lt;span class="n">integration&lt;/span> &lt;span class="k">in&lt;/span> &lt;span class="n">Docker&lt;/span> &lt;span class="n">Desktop&lt;/span> &lt;span class="n">settings&lt;/span>&lt;span class="p">.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">See&lt;/span> &lt;span class="n">https&lt;/span>&lt;span class="err">:&lt;/span>&lt;span class="p">//&lt;/span>&lt;span class="n">docs&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">docker&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">com&lt;/span>&lt;span class="p">/&lt;/span>&lt;span class="nb">docker-for&lt;/span>&lt;span class="n">-windows&lt;/span>&lt;span class="p">/&lt;/span>&lt;span class="n">wsl&lt;/span>&lt;span class="p">/&lt;/span> &lt;span class="k">for&lt;/span> &lt;span class="n">details&lt;/span>&lt;span class="p">.&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="2-solution">&lt;a href="#2-solution" class="header-anchor">&lt;/a>2. Solution
+&lt;/h2>&lt;p>Run in &lt;code>cmd.exe&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-powershell" data-lang="powershell">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="n">wsl&lt;/span> &lt;span class="p">-&lt;/span>&lt;span class="n">-list&lt;/span> &lt;span class="p">-&lt;/span>&lt;span class="n">-verbose&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">NAME&lt;/span> &lt;span class="n">STATE&lt;/span> &lt;span class="n">VERSION&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Ubuntu&lt;/span> &lt;span class="n">Running&lt;/span> &lt;span class="mf">1&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Then to switch it with &lt;code>wsl --set-version &amp;lt;your proc&amp;gt; 2&lt;/code>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-powershell" data-lang="powershell">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="n">wsl&lt;/span> &lt;span class="p">-&lt;/span>&lt;span class="n">-set-version&lt;/span> &lt;span class="n">Ubuntu&lt;/span> &lt;span class="mf">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Conversion&lt;/span> &lt;span class="k">in&lt;/span> &lt;span class="n">progress&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">this&lt;/span> &lt;span class="n">may&lt;/span> &lt;span class="n">take&lt;/span> &lt;span class="n">a&lt;/span> &lt;span class="n">few&lt;/span> &lt;span class="n">minutes&lt;/span>&lt;span class="p">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">For&lt;/span> &lt;span class="n">information&lt;/span> &lt;span class="n">on&lt;/span> &lt;span class="n">key&lt;/span> &lt;span class="n">differences&lt;/span> &lt;span class="n">with&lt;/span> &lt;span class="n">WSL&lt;/span> &lt;span class="mf">2&lt;/span> &lt;span class="n">please&lt;/span> &lt;span class="n">visit&lt;/span> &lt;span class="n">https&lt;/span>&lt;span class="err">:&lt;/span>&lt;span class="p">//&lt;/span>&lt;span class="n">aka&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">ms&lt;/span>&lt;span class="p">/&lt;/span>&lt;span class="n">wsl2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Conversion&lt;/span> &lt;span class="n">complete&lt;/span>&lt;span class="p">.&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Also you need to go to the docker desktop settings, and enable integration with your distro in &amp;ldquo;Resources -&amp;gt; WSL Integration&amp;rdquo;.&lt;/p>
+&lt;h2 id="3-reference">&lt;a href="#3-reference" class="header-anchor">&lt;/a>3. Reference
+&lt;/h2>&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a class="link" href="https://stackoverflow.com/questions/63497928/ubuntu-wsl-with-docker-could-not-be-found" target="_blank" rel="noopener"
+>Ubuntu WSL with docker could not be found - Stack Overflow&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item></channel></rss>

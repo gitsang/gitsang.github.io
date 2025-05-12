@@ -1,0 +1,230 @@
+<!doctype html><html lang=zh-cn dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="RocketMQ 的安装和快速入门可以参考官方文档： http://rocketmq.apache.org/docs/quick-start/\n主要步骤为\nunzip -> mvn build -> Start Name Server -> Start Broker -> Send & Receive Message -> Shutdown Servers\n1. build 根据官方文档解压并 build\n1 2 3 4 > unzip rocketmq-all-4.6.1-source-release.zip > cd rocketmq-all-4.6.1/ > mvn -Prelease-all -DskipTests clean install -U > cd distribution/target/apache-rocketmq 如果安装其他版本的 RocketMQ 失败建议尝试使用官方最新版的进行安装部署\n"><title>RocketMQ 快速入门</title>
+<link rel=canonical href=https://gitsang.github.io/p/rocketmq-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/><link rel=stylesheet href=/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css><meta property='og:title' content="RocketMQ 快速入门"><meta property='og:description' content="RocketMQ 的安装和快速入门可以参考官方文档： http://rocketmq.apache.org/docs/quick-start/\n主要步骤为\nunzip -> mvn build -> Start Name Server -> Start Broker -> Send & Receive Message -> Shutdown Servers\n1. build 根据官方文档解压并 build\n1 2 3 4 > unzip rocketmq-all-4.6.1-source-release.zip > cd rocketmq-all-4.6.1/ > mvn -Prelease-all -DskipTests clean install -U > cd distribution/target/apache-rocketmq 如果安装其他版本的 RocketMQ 失败建议尝试使用官方最新版的进行安装部署\n"><meta property='og:url' content='https://gitsang.github.io/p/rocketmq-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/'><meta property='og:site_name' content="Sang's Blog"><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:published_time' content='2020-05-14T14:53:28+08:00'><meta property='article:modified_time' content='2020-05-14T14:53:28+08:00'><meta name=twitter:title content="RocketMQ 快速入门"><meta name=twitter:description content="RocketMQ 的安装和快速入门可以参考官方文档： http://rocketmq.apache.org/docs/quick-start/\n主要步骤为\nunzip -> mvn build -> Start Name Server -> Start Broker -> Send & Receive Message -> Shutdown Servers\n1. build 根据官方文档解压并 build\n1 2 3 4 > unzip rocketmq-all-4.6.1-source-release.zip > cd rocketmq-all-4.6.1/ > mvn -Prelease-all -DskipTests clean install -U > cd distribution/target/apache-rocketmq 如果安装其他版本的 RocketMQ 失败建议尝试使用官方最新版的进行安装部署\n"><link rel="shortcut icon" href=/favicon.png></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切换菜单>
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_c28b5601fb7aa64d.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>Sang's Blog</a></h1><h2 class=site-description>Every ordinary day we experience is continuous miracles.</h2></div></header><ol class=menu-social><li><a href=https://github.com/gitsang target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://twitter.com target=_blank title=Twitter rel=me><svg class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/links/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>暗色模式</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目录</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#1-build>1. build</a></li><li><a href=#2-start>2. Start</a><ol><li><a href=#21-start-name-server>2.1 Start Name Server</a></li><li><a href=#22-start-broker>2.2 Start Broker</a></li></ol></li><li><a href=#3-send--receive-messages>3. Send & Receive Messages</a></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><div class=article-title-wrapper><h2 class=article-title><a href=/p/rocketmq-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/>RocketMQ 快速入门</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>2020-05-14</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>阅读时长: 3 分钟</time></div></footer></div></header><section class=article-content><p>RocketMQ 的安装和快速入门可以参考官方文档：
+<a class=link href=http://rocketmq.apache.org/docs/quick-start/ target=_blank rel=noopener>http://rocketmq.apache.org/docs/quick-start/</a></p><p>主要步骤为</p><p>unzip -> mvn build -> Start Name Server -> Start Broker -> Send & Receive Message -> Shutdown Servers</p><h2 id=1-build><a href=#1-build class=header-anchor></a>1. build</h2><p>根据官方文档解压并 build</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl> &gt; unzip rocketmq-all-4.6.1-source-release.zip
+</span></span><span class=line><span class=cl> &gt; cd rocketmq-all-4.6.1/
+</span></span><span class=line><span class=cl> &gt; mvn -Prelease-all -DskipTests clean install -U
+</span></span><span class=line><span class=cl> &gt; cd distribution/target/apache-rocketmq
+</span></span></code></pre></td></tr></table></div></div><p>如果安装其他版本的 RocketMQ 失败建议尝试使用官方最新版的进行安装部署</p><ul><li>比如按照其他教程安装 rocketmq-all-4.2.0-bin-release 版本时出现 Build 错误，如果不是必须使用该版本可以使用官方最新版重新安装</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> Error stacktraces are turned on.
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> Scanning <span class=k>for</span> projects...
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> ------------------------------------------------------------------------
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> BUILD FAILURE
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> ------------------------------------------------------------------------
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> Total time: 0.109s
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> Finished at: Tue Feb <span class=m>25</span> 10:35:49 CST <span class=m>2020</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> Final Memory: 10M/483M
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> ------------------------------------------------------------------------
+</span></span><span class=line><span class=cl><span class=o>[</span>WARNING<span class=o>]</span> The requested profile <span class=s2>&#34;release-all&#34;</span> could not be activated because it does not exist.
+</span></span><span class=line><span class=cl><span class=o>[</span>ERROR<span class=o>]</span> The goal you specified requires a project to execute but there is no POM in this directory <span class=o>(</span>/root/project/rocketmq-all-4.2.0-bin-release<span class=o>)</span>. Please verify you invoked Maven from the correct directory. -&gt; <span class=o>[</span>Help 1<span class=o>]</span>
+</span></span><span class=line><span class=cl>org.apache.maven.lifecycle.MissingProjectException: The goal you specified requires a project to execute but there is no POM in this directory <span class=o>(</span>/root/project/rocketmq-all-4.2.0-bin-release<span class=o>)</span>. Please verify you invoked Maven from the correct directory.
+</span></span><span class=line><span class=cl>        at org.apache.maven.lifecycle.internal.LifecycleStarter.execute<span class=o>(</span>LifecycleStarter.java:89<span class=o>)</span>
+</span></span><span class=line><span class=cl>        at org.apache.maven.DefaultMaven.doExecute<span class=o>(</span>DefaultMaven.java:320<span class=o>)</span>
+</span></span><span class=line><span class=cl>        at org.apache.maven.DefaultMaven.execute<span class=o>(</span>DefaultMaven.java:156<span class=o>)</span>
+</span></span><span class=line><span class=cl>        at org.apache.maven.cli.MavenCli.execute<span class=o>(</span>MavenCli.java:537<span class=o>)</span>
+</span></span><span class=line><span class=cl>        at org.apache.maven.cli.MavenCli.doMain<span class=o>(</span>MavenCli.java:196<span class=o>)</span>
+</span></span><span class=line><span class=cl>        at org.apache.maven.cli.MavenCli.main<span class=o>(</span>MavenCli.java:141<span class=o>)</span>
+</span></span><span class=line><span class=cl>        at sun.reflect.NativeMethodAccessorImpl.invoke0<span class=o>(</span>Native Method<span class=o>)</span>
+</span></span><span class=line><span class=cl>        at sun.reflect.NativeMethodAccessorImpl.invoke<span class=o>(</span>NativeMethodAccessorImpl.java:62<span class=o>)</span>
+</span></span><span class=line><span class=cl>        at sun.reflect.DelegatingMethodAccessorImpl.invoke<span class=o>(</span>DelegatingMethodAccessorImpl.java:43<span class=o>)</span>
+</span></span><span class=line><span class=cl>        at java.lang.reflect.Method.invoke<span class=o>(</span>Method.java:498<span class=o>)</span>
+</span></span><span class=line><span class=cl>        at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced<span class=o>(</span>Launcher.java:290<span class=o>)</span>
+</span></span><span class=line><span class=cl>        at org.codehaus.plexus.classworlds.launcher.Launcher.launch<span class=o>(</span>Launcher.java:230<span class=o>)</span>
+</span></span><span class=line><span class=cl>        at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode<span class=o>(</span>Launcher.java:414<span class=o>)</span>
+</span></span><span class=line><span class=cl>        at org.codehaus.plexus.classworlds.launcher.Launcher.main<span class=o>(</span>Launcher.java:357<span class=o>)</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>ERROR<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>ERROR<span class=o>]</span> Re-run Maven using the -X switch to <span class=nb>enable</span> full debug logging.
+</span></span><span class=line><span class=cl><span class=o>[</span>ERROR<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>ERROR<span class=o>]</span> For more information about the errors and possible solutions, please <span class=nb>read</span> the following articles:
+</span></span><span class=line><span class=cl><span class=o>[</span>ERROR<span class=o>]</span> <span class=o>[</span>Help 1<span class=o>]</span> http://cwiki.apache.org/confluence/display/MAVEN/MissingProjectException
+</span></span></code></pre></td></tr></table></div></div><ul><li>如果 mvn 成功，应该会显式如下信息</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> Reactor Summary:
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> Apache RocketMQ 4.6.1 ............................. SUCCESS <span class=o>[</span>27.086s<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> rocketmq-logging 4.6.1 ............................ SUCCESS <span class=o>[</span>6.473s<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> rocketmq-remoting 4.6.1 ........................... SUCCESS <span class=o>[</span>14.091s<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> rocketmq-common 4.6.1 ............................. SUCCESS <span class=o>[</span>10.506s<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> rocketmq-client 4.6.1 ............................. SUCCESS <span class=o>[</span>10.648s<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> rocketmq-store 4.6.1 .............................. SUCCESS <span class=o>[</span>7.832s<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> rocketmq-srvutil 4.6.1 ............................ SUCCESS <span class=o>[</span>0.474s<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> rocketmq-filter 4.6.1 ............................. SUCCESS <span class=o>[</span>2.033s<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> rocketmq-acl 4.6.1 ................................ SUCCESS <span class=o>[</span>3.983s<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> rocketmq-broker 4.6.1 ............................. SUCCESS <span class=o>[</span>3.226s<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> rocketmq-tools 4.6.1 .............................. SUCCESS <span class=o>[</span>1.945s<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> rocketmq-namesrv 4.6.1 ............................ SUCCESS <span class=o>[</span>0.925s<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> rocketmq-logappender 4.6.1 ........................ SUCCESS <span class=o>[</span>2.969s<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> rocketmq-openmessaging 4.6.1 ...................... SUCCESS <span class=o>[</span>2.127s<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> rocketmq-example 4.6.1 ............................ SUCCESS <span class=o>[</span>1.074s<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> rocketmq-test 4.6.1 ............................... SUCCESS <span class=o>[</span>5.010s<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> rocketmq-distribution 4.6.1 ....................... SUCCESS <span class=o>[</span>2:16.341s<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> ------------------------------------------------------------------------
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> BUILD SUCCESS
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> ------------------------------------------------------------------------
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> Total time: 3:57.044s
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> Finished at: Tue Feb <span class=m>25</span> 10:44:18 CST <span class=m>2020</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> Final Memory: 71M/1632M
+</span></span><span class=line><span class=cl><span class=o>[</span>INFO<span class=o>]</span> ------------------------------------------------------------------------
+</span></span></code></pre></td></tr></table></div></div><h2 id=2-start><a href=#2-start class=header-anchor></a>2. Start</h2><p>根据官方文档，需要进入 rocketmq 的 bin 目录下后台运行 mqnamesrv 和 mqbroker</p><p>但是上一步的 <code>cd distribution/target/apache-rocketmq</code> 可能由于目录结构变化，rocketmq 路径会有所不同</p><p>2020.02.25 时从官网下载的 4.6.1 版本具体路径应该为 <code>/path/to/rocketmq-all-4.6.1-source-release/distribution/target/rocketmq-4.6.1/rocketmq-4.6.1/</code> 根据不同版本可能也会有不同的路径</p><h3 id=21-start-name-server><a href=#21-start-name-server class=header-anchor></a>2.1 Start Name Server</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>&gt; nohup sh bin/mqnamesrv <span class=p>&amp;</span>
+</span></span><span class=line><span class=cl>&gt; tail -f ~/logs/rocketmqlogs/namesrv.log
+</span></span><span class=line><span class=cl>The Name Server boot success...
+</span></span></code></pre></td></tr></table></div></div><p>根据官方文档直接运行 <code>nohup sh bin/mqnamesrv &</code> 可能会在 nohup.out 或输出中出现如下错误</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>sh: /usr/local/rocketmq/bin/runserver.sh: No such file or directory
+</span></span></code></pre></td></tr></table></div></div><p>这明显是由于环境变量配置错误导致的，runserver.sh 应该在当前目录下的 bin 里面，即本文的 <code>/path/to/rocketmq-all-4.6.1-source-release/distribution/target/rocketmq-4.6.1/rocketmq-4.6.1/bin</code> 目录下</p><p>因此要为 RocketMQ 添加环境变量</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>vim /etc/profile
+</span></span></code></pre></td></tr></table></div></div><p>打开 profile 文件新增 ROCKETMQ_HOME 和 PATH 环境变量</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl><span class=c1># ROCKETMQ_HOME 填自己的 rocketmq 路径，本文配置如下</span>
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>ROCKETMQ_HOME</span><span class=o>=</span>/root/project/rocketmq-all-4.6.1-source-release/distribution/target/rocketmq-4.6.1/rocketmq-4.6.1
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>PATH</span><span class=o>=</span><span class=nv>$ROCKETMQ_HOME</span>/bin:<span class=nv>$PATH</span>
+</span></span></code></pre></td></tr></table></div></div><p>配置完成后使用 <code>source /etc/profile</code> 重新加载 profile 文件，然后再重新执行之前的步骤即可</p><p>运行成功后，打开当前目录下的 <code>nohup.out</code> 能看到如下信息：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>Java HotSpot<span class=o>(</span>TM<span class=o>)</span> 64-Bit Server VM warning: Using the DefNew young collector with the CMS collector is deprecated and will likely be removed in a future release
+</span></span><span class=line><span class=cl>Java HotSpot<span class=o>(</span>TM<span class=o>)</span> 64-Bit Server VM warning: UseCMSCompactAtFullCollection is deprecated and will likely be removed in a future release.
+</span></span><span class=line><span class=cl>The Name Server boot success. <span class=nv>serializeType</span><span class=o>=</span>JSON
+</span></span></code></pre></td></tr></table></div></div><p>并且默认情况下会在 <code>~/logs/rocketmqlogs/</code> 目录下创建 <code>namesrv.log</code> 文件，根据官方文档 <code>tailf</code> 这个文件可以看到如下类似的信息：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>2020-02-25 11:16:01 INFO main - tls.client.authServer <span class=o>=</span> <span class=nb>false</span>
+</span></span><span class=line><span class=cl>2020-02-25 11:16:01 INFO main - tls.client.trustCertPath <span class=o>=</span> null
+</span></span><span class=line><span class=cl>2020-02-25 11:16:01 INFO main - Using OpenSSL provider
+</span></span><span class=line><span class=cl>2020-02-25 11:16:02 INFO main - SSLContext created <span class=k>for</span> server
+</span></span><span class=line><span class=cl>2020-02-25 11:16:02 INFO main - Try to start service thread:FileWatchService started:false lastThread:null
+</span></span><span class=line><span class=cl>2020-02-25 11:16:02 INFO NettyEventExecutor - NettyEventExecutor service started
+</span></span><span class=line><span class=cl>2020-02-25 11:16:02 INFO FileWatchService - FileWatchService service started
+</span></span><span class=line><span class=cl>2020-02-25 11:16:02 INFO main - The Name Server boot success. <span class=nv>serializeType</span><span class=o>=</span>JSON
+</span></span><span class=line><span class=cl>2020-02-25 11:17:02 INFO NSScheduledThread1 - --------------------------------------------------------
+</span></span><span class=line><span class=cl>2020-02-25 11:17:02 INFO NSScheduledThread1 - configTable SIZE: <span class=m>0</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=22-start-broker><a href=#22-start-broker class=header-anchor></a>2.2 Start Broker</h3><p>根据官方文档启动 Broker 服务</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>&gt; nohup sh bin/mqbroker -n localhost:9876 <span class=p>&amp;</span>
+</span></span><span class=line><span class=cl>&gt; tail -f ~/logs/rocketmqlogs/broker.log
+</span></span><span class=line><span class=cl>The broker<span class=o>[</span>%s, 172.30.30.233:10911<span class=o>]</span> boot success...
+</span></span></code></pre></td></tr></table></div></div><p>与启动 Name Server 相同，运行成功后在 <code>nohup.out</code> 中能看到如下信息</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>The broker<span class=o>[</span>tb.novalocal, 172.17.0.1:10911<span class=o>]</span> boot success. <span class=nv>serializeType</span><span class=o>=</span>JSON and name server is localhost:9876
+</span></span></code></pre></td></tr></table></div></div><p>broker 的启动相对较慢，可耐心等待一段时间，启动成功后 <code>tail -f ~/logs/rocketmqlogs/broker.log</code> 可以看到如下类似的信息</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>2020-02-25 11:28:22 INFO main - The broker<span class=o>[</span>tb.novalocal, 172.17.0.1:10911<span class=o>]</span> boot success. <span class=nv>serializeType</span><span class=o>=</span>JSON and name server is localhost:9876
+</span></span><span class=line><span class=cl>2020-02-25 11:28:31 INFO BrokerControllerScheduledThread1 - dispatch behind commit log <span class=m>0</span> bytes
+</span></span><span class=line><span class=cl>2020-02-25 11:28:31 INFO BrokerControllerScheduledThread1 - Slave fall behind master: <span class=m>0</span> bytes
+</span></span><span class=line><span class=cl>2020-02-25 11:28:32 INFO brokerOutApi_thread_2 - register broker<span class=o>[</span>0<span class=o>]</span>to name server localhost:9876 OK
+</span></span><span class=line><span class=cl>2020-02-25 11:29:02 INFO brokerOutApi_thread_3 - register broker<span class=o>[</span>0<span class=o>]</span>to name server localhost:9876 OK
+</span></span><span class=line><span class=cl>2020-02-25 11:29:21 INFO TransactionalMessageCheckService - create new topic TopicConfig <span class=o>[</span><span class=nv>topicName</span><span class=o>=</span>RMQ_SYS_TRANS_HALF_TOPIC, <span class=nv>readQueueNums</span><span class=o>=</span>1, <span class=nv>writeQueueNums</span><span class=o>=</span>1, <span class=nv>perm</span><span class=o>=</span>RW-, <span class=nv>topicFilterType</span><span class=o>=</span>SINGLE_TAG, <span class=nv>topicSysFlag</span><span class=o>=</span>0, <span class=nv>order</span><span class=o>=</span>false<span class=o>]</span>
+</span></span><span class=line><span class=cl>2020-02-25 11:29:21 INFO brokerOutApi_thread_4 - register broker<span class=o>[</span>0<span class=o>]</span>to name server localhost:9876 OK
+</span></span><span class=line><span class=cl>2020-02-25 11:29:31 INFO BrokerControllerScheduledThread1 - dispatch behind commit log <span class=m>0</span> bytes
+</span></span><span class=line><span class=cl>2020-02-25 11:29:31 INFO BrokerControllerScheduledThread1 - Slave fall behind master: <span class=m>0</span> bytes
+</span></span><span class=line><span class=cl>2020-02-25 11:29:32 INFO brokerOutApi_thread_1 - register broker<span class=o>[</span>0<span class=o>]</span>to name server localhost:9876 OK
+</span></span></code></pre></td></tr></table></div></div><h2 id=3-send--receive-messages><a href=#3-send--receive-messages class=header-anchor></a>3. Send & Receive Messages</h2><p>根据官方文档说明，在收发信息之前，我们需要告诉 clients 配置的 name servers 地址</p><p>我们可以用官网推荐的配置环境变量来完成 name servers 地址的配置</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>&gt; <span class=nb>export</span> <span class=nv>NAMESRV_ADDR</span><span class=o>=</span>localhost:9876
+</span></span></code></pre></td></tr></table></div></div><p>接着使用 <code>tools.sh</code> 进行消息的收发</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>&gt; sh bin/tools.sh org.apache.rocketmq.example.quickstart.Producer
+</span></span><span class=line><span class=cl>SendResult <span class=o>[</span><span class=nv>sendStatus</span><span class=o>=</span>SEND_OK, <span class=nv>msgId</span><span class=o>=</span> ...
+</span></span><span class=line><span class=cl>&gt; sh bin/tools.sh org.apache.rocketmq.example.quickstart.Consumer
+</span></span><span class=line><span class=cl>ConsumeMessageThread_%d Receive New Messages: <span class=o>[</span>MessageExt...
+</span></span></code></pre></td></tr></table></div></div><p><code>sh bin/tools.sh org.apache.rocketmq.example.quickstart.Producer</code> 运行后出现大量</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>SendResult [sendStatus=SEND_OK, msgId= ...
+</span></span></code></pre></td></tr></table></div></div><p>类似的信息且没有报错说明成功</p><p><code>sh bin/tools.sh org.apache.rocketmq.example.quickstart.Consumer</code> 运行后出现大量</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>11:42:05.200 [main] DEBUG i.n.u.i.l.InternalLoggerFactory - Using SLF4J as the default logging framework
+</span></span><span class=line><span class=cl>Consumer Started.
+</span></span><span class=line><span class=cl>ConsumeMessageThread_1 Receive New Messages:
+</span></span></code></pre></td></tr></table></div></div><p>类似的信息且没有报错说明成功</p><p>不同的版本和系统等可能输出信息会有所不同，但一般来说能收到消息就可以了，不放心可以对比一下收发的 msgId</p></section><footer class=article-footer><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css integrity=sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js integrity=sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8 crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js integrity=sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05 crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{const e=document.querySelector(".main-article");renderMathInElement(e,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}],ignoredClasses:["gist"]})})</script></article><script src=https://utteranc.es/client.js repo=gitsang/gitsang.github.io issue-term=pathname label=utterances crossorigin=anonymous async></script><style>.utterances{max-width:unset}</style><script>let utterancesLoaded=!1;function setUtterancesTheme(e){let t=document.querySelector(".utterances iframe");t&&t.contentWindow.postMessage({type:"set-theme",theme:`github-${e}`},"https://utteranc.es")}addEventListener("message",e=>{if(e.origin!=="https://utteranc.es")return;utterancesLoaded=!0,setUtterancesTheme(document.documentElement.dataset.scheme)}),window.addEventListener("onColorSchemeChange",e=>{if(!utterancesLoaded)return;setUtterancesTheme(e.detail)})</script><footer class=site-footer><section class=copyright>&copy;
+2018 -
+2025 Sang's Blog</section><section class=powerby>使用 <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> 构建<br>主题 <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.30.0>Stack</a></b> 由 <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a> 设计</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

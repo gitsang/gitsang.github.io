@@ -1,0 +1,1429 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cpp on Sang's Blog</title><link>https://gitsang.github.io/categories/cpp/</link><description>Recent content in Cpp on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 May 2025 10:41:37 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/categories/cpp/index.xml" rel="self" type="application/rss+xml"/><item><title>C++ 面向对象中的虚（Virtual）</title><link>https://gitsang.github.io/p/virtual-on-cpp-object-oriented/</link><pubDate>Wed, 09 Oct 2019 14:53:28 +0800</pubDate><guid>https://gitsang.github.io/p/virtual-on-cpp-object-oriented/</guid><description>&lt;!-- markdown-front-matter -->
+&lt;h2 id="1-虚函数">&lt;a href="#1-%e8%99%9a%e5%87%bd%e6%95%b0" class="header-anchor">&lt;/a>1. 虚函数
+&lt;/h2>&lt;h3 id="11-简述">&lt;a href="#11-%e7%ae%80%e8%bf%b0" class="header-anchor">&lt;/a>1.1 简述
+&lt;/h3>&lt;p>所谓虚函数是指：在类中希望被重写(override)的虚构的函数。也就是说 C++ 可以在派生类(derived class)中通过重写基类(based class)的虚函数来实现对基类虚函数的覆盖(override)&lt;/p>
+&lt;h3 id="12-常见用法">&lt;a href="#12-%e5%b8%b8%e8%a7%81%e7%94%a8%e6%b3%95" class="header-anchor">&lt;/a>1.2 常见用法
+&lt;/h3>&lt;p>最常见的用法就是：声明基类的指针，指向任意一个子类对象，调用相应虚函数，就调用了子类重写的函数。由于编写基类时候并不能确定将被调用的是那个派生类的函数，因此被称为“虚”函数。&lt;/p>
+&lt;p>如果不使用虚函数，则使用基类指针时，将总是被限制在基类函数本身，无论如何都无法调用到子类重写的函数。&lt;/p>
+&lt;h3 id="13-代码示例">&lt;a href="#13-%e4%bb%a3%e7%a0%81%e7%a4%ba%e4%be%8b" class="header-anchor">&lt;/a>1.3 代码示例
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">Base&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">public&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Base&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">public&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">void&lt;/span> &lt;span class="n">print&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;Base&amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">virtual&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">vprint&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;vBase&amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">};&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">Derived&lt;/span> &lt;span class="o">:&lt;/span> &lt;span class="k">public&lt;/span> &lt;span class="n">Base&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">public&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Derived&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">public&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">void&lt;/span> &lt;span class="n">print&lt;/span>&lt;span class="p">(){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;Derived&amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">void&lt;/span> &lt;span class="nf">vprint&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;vDerived&amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">};&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Base&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">p1&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">Base&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">p1&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">print&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">p1&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">vprint&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Derived&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">p2&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">Derived&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">p2&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">print&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">p2&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">vprint&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Base&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">p3&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">Derived&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">p3&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">print&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">p3&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">vprint&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>代码中定义了一个基类 Base，并定义了一个函数 print() 和一个虚函数 vprint()，派生类 Derived 继承自 Base，并重写了 print 和 vprint 两个函数。&lt;/p>
+&lt;p>main 中分别 new 了 Base 和 Derived 对象，并调用自身的函数，这结果是很好预知的，一定是&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">Base
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">vBase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Derived
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">vDerived
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>之后定义了 基类指针 p3 并将其指向派生类，输出结果是：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">Base
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">vDerived
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这里就可以注意到基类指针调用函数 print() 时，实际上调用的是基类自身的 print()，即使这个指针已经指向了其派生类 Derived。&lt;/p>
+&lt;h3 id="14-结果解释">&lt;a href="#14-%e7%bb%93%e6%9e%9c%e8%a7%a3%e9%87%8a" class="header-anchor">&lt;/a>1.4 结果解释
+&lt;/h3>&lt;p>这是由于 C++ 在编译时，内部成员函数一般都是静态加载的，编译器对于非虚函数他的调用地址是写死的，会将其定义类的函数地址写到调用语句上，这就是静态联编。只有在编译器遇到虚函数时才会将调用修改为寄存器间接寻址，即为动态联编。&lt;/p>
+&lt;p>因此，p3 虽然指向了派生类，但编译时仍然会给调用写上一个 Base::print() 的地址，即使编译器此时知道 p3 指向的并不是 Base，这是由编译逻辑决定的。&lt;/p>
+&lt;p>虽然你也可以不用虚函数，而是直接定义一个派生类的对象来调用派生类的方法，但这样就已经不是一个接口了，这就不是多态了。&lt;/p>
+&lt;h3 id="15-总结">&lt;a href="#15-%e6%80%bb%e7%bb%93" class="header-anchor">&lt;/a>1.5 总结
+&lt;/h3>&lt;p>其实你也不必知道这么多的细节，你只要知道如果你想要仅仅暴露一个基类接口来实现多态，那么只需要为基类函数加上 virtual 标识符，然后用派生类重写该函数，最后将基类指针指向派生类就可以了。&lt;/p>
+&lt;h3 id="16-附录">&lt;a href="#16-%e9%99%84%e5%bd%95" class="header-anchor">&lt;/a>1.6 附录
+&lt;/h3>&lt;ul>
+&lt;li>使用 g++ 生成汇编代码&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">g++ -S -fverbose-asm -g t_virtual.cpp -o t_virtual.s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">as -alhnd t_virtual.s &amp;gt; t_virtual.as
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>&lt;code>p3-&amp;gt;print()&lt;/code> 的汇编&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-as" data-lang="as">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">movq&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">40&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="nx">rbp&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="o">%&lt;/span>&lt;span class="nx">rax&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">movq&lt;/span> &lt;span class="o">%&lt;/span>&lt;span class="nx">rax&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="o">%&lt;/span>&lt;span class="nx">rdi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">call&lt;/span> &lt;span class="nx">_ZN4Base5printEv&lt;/span> &lt;span class="err">#&lt;/span> &lt;span class="err">地址标号直接寻址，跳转到&lt;/span> &lt;span class="nx">Base&lt;/span> &lt;span class="err">类的&lt;/span> &lt;span class="nx">print&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>&lt;code>p3-&amp;gt;vprint()&lt;/code> 的汇编&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-as" data-lang="as">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">movq&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">40&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="nx">rbp&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="o">%&lt;/span>&lt;span class="nx">rax&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">movq&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="nx">rax&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="o">%&lt;/span>&lt;span class="nx">rax&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">movq&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="nx">rax&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="o">%&lt;/span>&lt;span class="nx">rax&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">movq&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">40&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="nx">rbp&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="o">%&lt;/span>&lt;span class="nx">rdx&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">movq&lt;/span> &lt;span class="o">%&lt;/span>&lt;span class="nx">rdx&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="o">%&lt;/span>&lt;span class="nx">rdi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">call&lt;/span> &lt;span class="o">*%&lt;/span>&lt;span class="nx">rax&lt;/span> &lt;span class="err">#&lt;/span> &lt;span class="err">间接寻址&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="2-参考">&lt;a href="#2-%e5%8f%82%e8%80%83" class="header-anchor">&lt;/a>2. 参考
+&lt;/h2>&lt;p>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>&lt;sup id="fnref:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup>&lt;sup id="fnref:4">&lt;a href="#fn:4" class="footnote-ref" role="doc-noteref">4&lt;/a>&lt;/sup>&lt;sup id="fnref:5">&lt;a href="#fn:5" class="footnote-ref" role="doc-noteref">5&lt;/a>&lt;/sup>&lt;sup id="fnref:6">&lt;a href="#fn:6" class="footnote-ref" role="doc-noteref">6&lt;/a>&lt;/sup>&lt;sup id="fnref:7">&lt;a href="#fn:7" class="footnote-ref" role="doc-noteref">7&lt;/a>&lt;/sup>&lt;sup id="fnref:8">&lt;a href="#fn:8" class="footnote-ref" role="doc-noteref">8&lt;/a>&lt;/sup>&lt;/p>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a class="link" href="http://codemacro.com/2014/09/06/necessary-dtor/" target="_blank" rel="noopener"
+>C++构造/析构函数中的多态(二)&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/Hackbuteer1/article/details/7475622" target="_blank" rel="noopener"
+>浅谈 C++多态性&lt;/a>&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:3">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/i_chaoren/article/details/77281785" target="_blank" rel="noopener"
+>C++多态&amp;ndash;虚函数 virtual 及 override&lt;/a>&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:4">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/qq_29924041/article/details/73522256" target="_blank" rel="noopener"
+>C++学习:虚函数,纯虚函数,虚继承,虚析构函数&lt;/a>&amp;#160;&lt;a href="#fnref:4" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:5">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/ring0hx/article/details/1605254" target="_blank" rel="noopener"
+>C++ Virtual 详解&lt;/a>&amp;#160;&lt;a href="#fnref:5" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:6">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/foreverhuylee/article/details/34107615" target="_blank" rel="noopener"
+>C++中 virtual（虚函数）的用法&lt;/a>&amp;#160;&lt;a href="#fnref:6" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:7">
+&lt;p>&lt;a class="link" href="https://www.cnblogs.com/zsq1993/p/5804332.html" target="_blank" rel="noopener"
+>虚函数的深入理解&lt;/a>&amp;#160;&lt;a href="#fnref:7" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:8">
+&lt;p>&lt;a class="link" href="https://bbs.csdn.net/topics/391846458" target="_blank" rel="noopener"
+>为什么不直接用子类引用指向子类对象，而用父类引用指向子类对象&lt;/a>&amp;#160;&lt;a href="#fnref:8" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>Googletest Quick Start</title><link>https://gitsang.github.io/p/googletest-quick-start/</link><pubDate>Sun, 15 Dec 2019 14:53:28 +0800</pubDate><guid>https://gitsang.github.io/p/googletest-quick-start/</guid><description>&lt;!-- markdown-front-matter -->
+&lt;h2 id="1-install">&lt;a href="#1-install" class="header-anchor">&lt;/a>1. Install
+&lt;/h2>&lt;h3 id="11-get-package">&lt;a href="#11-get-package" class="header-anchor">&lt;/a>1.1 Get package
+&lt;/h3>&lt;p>Using git clone.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">git clone https://github.com/google/googletest.git
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Using wget to achieve tar package, you can find newest tar address at &lt;code>README.md&lt;/code>.&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> &lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">wget https://github.com/google/googletest/archive/release-1.10.0.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tar -zxvf release-1.10.0.tar.gz
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="12-make--install">&lt;a href="#12-make--install" class="header-anchor">&lt;/a>1.2 Make &amp;amp; Install
+&lt;/h3>&lt;p>Both &lt;code>cmake&lt;/code> or &lt;code>cmake3&lt;/code> is ok.&lt;/p>
+&lt;p>Read &lt;code>googletest/googletest/README.md&lt;/code> for more infomation.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ cd googletest
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ mkdir build
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ cd build
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ cmake ..
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ make
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ sudo make install
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="13-attention-when-cmake-processing">&lt;a href="#13-attention-when-cmake-processing" class="header-anchor">&lt;/a>1.3 Attention when cmake processing
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">-- The C compiler identification is GNU 4.8.5
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- The CXX compiler identification is GNU 4.8.5
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Check for working C compiler: /usr/bin/cc
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Check for working C compiler: /usr/bin/cc -- works
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Detecting C compiler ABI info
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Detecting C compiler ABI info - done
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Detecting C compile features
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Detecting C compile features - done
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Check for working CXX compiler: /usr/bin/c++
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Check for working CXX compiler: /usr/bin/c++ -- works
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Detecting CXX compiler ABI info
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Detecting CXX compiler ABI info - done
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Detecting CXX compile features
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Detecting CXX compile features - done
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Found PythonInterp: /usr/bin/python (found version &amp;#34;2.7.5&amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Looking for pthread.h
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Looking for pthread.h - found
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Looking for pthread_create
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Looking for pthread_create - not found
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Looking for pthread_create in pthreads
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Looking for pthread_create in pthreads - not found
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Looking for pthread_create in pthread
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Looking for pthread_create in pthread - found
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Found Threads: TRUE
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Configuring done
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Generating done
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- Build files have been written to: /root/project/googletest-release-1.10.0/build
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>In the above log, pthread_create is finally found in pthread, so it is not found on the way, but it should be fine.&lt;/p>
+&lt;h2 id="2-simple-test">&lt;a href="#2-simple-test" class="header-anchor">&lt;/a>2. Simple Test
+&lt;/h2>&lt;h3 id="21-testing-code">&lt;a href="#21-testing-code" class="header-anchor">&lt;/a>2.1 Testing code
+&lt;/h3>&lt;ul>
+&lt;li>&lt;code>add.cc&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">add&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>&lt;code>testAdd.cpp&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;gtest/gtest.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">extern&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="nf">add&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">TEST&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">testCase&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">test0&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">EXPECT_EQ&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">3&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="mi">5&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">argc&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">char&lt;/span> &lt;span class="o">**&lt;/span>&lt;span class="n">argv&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">testing&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">InitGoogleTest&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">argc&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">argv&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">RUN_ALL_TESTS&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="22-compile-and-run">&lt;a href="#22-compile-and-run" class="header-anchor">&lt;/a>2.2 Compile and Run
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">$ g++ add.cpp testAdd.cpp -lgtest -lpthread
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ ./a.out
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[==========]&lt;/span> Running &lt;span class="m">1&lt;/span> &lt;span class="nb">test&lt;/span> from &lt;span class="m">1&lt;/span> &lt;span class="nb">test&lt;/span> &lt;span class="k">case&lt;/span>.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>----------&lt;span class="o">]&lt;/span> Global &lt;span class="nb">test&lt;/span> environment set-up.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>----------&lt;span class="o">]&lt;/span> &lt;span class="m">1&lt;/span> &lt;span class="nb">test&lt;/span> from testCase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span> RUN &lt;span class="o">]&lt;/span> testCase.test0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span> OK &lt;span class="o">]&lt;/span> testCase.test0 &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> ms&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>----------&lt;span class="o">]&lt;/span> &lt;span class="m">1&lt;/span> &lt;span class="nb">test&lt;/span> from testCase &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> ms total&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>----------&lt;span class="o">]&lt;/span> Global &lt;span class="nb">test&lt;/span> environment tear-down
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[==========]&lt;/span> &lt;span class="m">1&lt;/span> &lt;span class="nb">test&lt;/span> from &lt;span class="m">1&lt;/span> &lt;span class="nb">test&lt;/span> &lt;span class="k">case&lt;/span> ran. &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> ms total&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span> PASSED &lt;span class="o">]&lt;/span> &lt;span class="m">1&lt;/span> test.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;code>-lgtest&lt;/code> is used for linking &lt;code>libgtest.a&lt;/code>&lt;/p>
+&lt;p>If using &lt;code>-lgtest_main&lt;/code>, you can coding without main() function&lt;sup id="fnref:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup>&lt;/p>
+&lt;hr>
+&lt;h2 id="3-q--a">&lt;a href="#3-q--a" class="header-anchor">&lt;/a>3. Q &amp;amp; A
+&lt;/h2>&lt;h3 id="31-q1-undefined-reference-when-linking-with-googletest">&lt;a href="#31-q1-undefined-reference-when-linking-with-googletest" class="header-anchor">&lt;/a>3.1 Q1: Undefined reference when linking with googletest
+&lt;/h3>&lt;h4 id="311-a">&lt;a href="#311-a" class="header-anchor">&lt;/a>3.1.1 A:
+&lt;/h4>&lt;p>If you downloaded the gtest source directly and used the make install from the downloaded gtest repository it may have installed header files under &lt;code>/usr/local/include/gtest&lt;/code>.&lt;/p>
+&lt;p>If you later use apt-get (yum install) to install the gtest, it installs the header files under &lt;code>/usr/include/gtest&lt;/code>.&lt;/p>
+&lt;p>If the version installed from the debian package is newer, your Makefile can pick up the older header files from &lt;code>/usr/include&lt;/code> and give you link errors even though you are correctly linking the new &lt;code>libgtest.a&lt;/code> archive.&lt;/p>
+&lt;p>The solution is to look for &lt;code>/usr/local/include/gtest&lt;/code> and &lt;code>/usr/include/gtest&lt;/code> to see if they both exist. If they do then delete the older directory.&lt;/p>
+&lt;p>If &lt;code>/usr/include/gtest&lt;/code> is the older directory, you may want to remove it by uninstalling the &lt;code>libgtest-dev&lt;/code> package.&lt;sup id="fnref:4">&lt;a href="#fn:4" class="footnote-ref" role="doc-noteref">4&lt;/a>&lt;/sup>&lt;/p>
+&lt;h3 id="32-q2-could-not-find-cmake_root">&lt;a href="#32-q2-could-not-find-cmake_root" class="header-anchor">&lt;/a>3.2 Q2: Could not find CMAKE_ROOT
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">CMake Error: Could not find CMAKE_ROOT !!!
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">CMake has most likely not been installed correctly.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Modules directory not found in
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/usr/local/share/cmake-3.11
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cmake version 3.11.0-rc4
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">CMake suite maintained and supported by Kitware (kitware.com/cmake).
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="321-a">&lt;a href="#321-a" class="header-anchor">&lt;/a>3.2.1 A:
+&lt;/h4>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">$ wget https://cmake.org/files/v3.12/cmake-3.12.0-rc1.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ tar -zxvf cmake-3.12.0-rc1.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ &lt;span class="nb">cd&lt;/span> cmake-3.12.0-rc1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ ./bootstrap
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ gmake
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ gmake install
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="33-q3-compile-error">&lt;a href="#33-q3-compile-error" class="header-anchor">&lt;/a>3.3 Q3: Compile error
+&lt;/h3>&lt;h4 id="331-a">&lt;a href="#331-a" class="header-anchor">&lt;/a>3.3.1 A:
+&lt;/h4>&lt;p>add &lt;code>-std=c++11&lt;/code> when compile&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ g++ *.cpp -lgtest -lpthread -std=c++11
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="4-reference">&lt;a href="#4-reference" class="header-anchor">&lt;/a>4. Reference
+&lt;/h2>&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a class="link" href="https://qiita.com/shohirose/items/30e39949d8bf990b0462" target="_blank" rel="noopener"
+>Google Testの使い方 - Qiita&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>&lt;a class="link" href="http://senlinzhan.github.io/2017/10/08/gtest/" target="_blank" rel="noopener"
+>使用 Google Test 测试框架 - Senlin&amp;rsquo;s Blog&lt;/a>&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:3">
+&lt;p>&lt;a class="link" href="http://www.manongjc.com/article/68895.html" target="_blank" rel="noopener"
+>第一个gtest程序 - 码农教程&lt;/a>&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:4">
+&lt;p>&lt;a class="link" href="https://stackoverflow.com/questions/39207940/undefined-reference-when-linking-with-googletest" target="_blank" rel="noopener"
+>Undefined reference when linking with googletest - Stack Overflow&lt;/a>&amp;#160;&lt;a href="#fnref:4" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>Curl 和 libcurl 快速入门</title><link>https://gitsang.github.io/p/curl-quick-start/</link><pubDate>Tue, 15 Oct 2019 14:53:28 +0800</pubDate><guid>https://gitsang.github.io/p/curl-quick-start/</guid><description>&lt;!-- markdown-front-matter -->
+&lt;h2 id="1-安装-curl-和-libcurl">&lt;a href="#1-%e5%ae%89%e8%a3%85-curl-%e5%92%8c-libcurl" class="header-anchor">&lt;/a>1. 安装 curl 和 libcurl
+&lt;/h2>&lt;h3 id="11-使用包管理工具安装">&lt;a href="#11-%e4%bd%bf%e7%94%a8%e5%8c%85%e7%ae%a1%e7%90%86%e5%b7%a5%e5%85%b7%e5%ae%89%e8%a3%85" class="header-anchor">&lt;/a>1.1 使用包管理工具安装
+&lt;/h3>&lt;p>linux 机器一般自带 curl 工具，如果没有可以通过 &lt;code>apt/yum/pkg install curl&lt;/code> 的方式安装&lt;/p>
+&lt;p>同样的，可以通过 &lt;code>apt/yum/pkg install libcurl&lt;/code> 的方式安装 curl 库&lt;/p>
+&lt;p>这种方式安装的好处是简单且稳定，缺点则是其版本可能较低&lt;/p>
+&lt;h3 id="12-源码编译方式">&lt;a href="#12-%e6%ba%90%e7%a0%81%e7%bc%96%e8%af%91%e6%96%b9%e5%bc%8f" class="header-anchor">&lt;/a>1.2 源码编译方式
+&lt;/h3>&lt;p>官网: &lt;a class="link" href="http://curl.haxx.se/" target="_blank" rel="noopener"
+>http://curl.haxx.se/&lt;/a>&lt;/p>
+&lt;p>如需最新版可到官网获取下载地址&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> &lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>&lt;/p>
+&lt;ol>
+&lt;li>下载源码&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="n">wget&lt;/span> &lt;span class="n">http&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">//&lt;/span>&lt;span class="n">curl&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">haxx&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">se&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">download&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">curl&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mf">7.65&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">1.&lt;/span>&lt;span class="n">tar&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">gz&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">tar&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">zxf&lt;/span> &lt;span class="n">curl&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mf">7.65&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">1.&lt;/span>&lt;span class="n">tar&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">gz&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">cd&lt;/span> &lt;span class="n">curl&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mf">7.65&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="2">
+&lt;li>初始化配置&lt;/li>
+&lt;/ol>
+&lt;p>一般无需设置直接使用默认配置即可，&lt;strong>建议不要修改安装路径&lt;/strong>，否则后续还需自行添加 include 路径，若需指定安装路径，使用 &lt;code>--prefix&lt;/code> 参数&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">./configure --prefix=/usr/local/curl
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>其余的配置的使用可通过 &lt;code>./configure --help&lt;/code> 查看&lt;/p>
+&lt;p>建议安装之前先查看当前目录下的 &lt;code>README&lt;/code>、&lt;code>GIT-INFO&lt;/code>、&lt;code>INSTALL&lt;/code> 文件，许多问题都能在此找到答案&lt;/p>
+&lt;ol start="3">
+&lt;li>编译安装&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">make
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">make install
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="4">
+&lt;li>检查版本&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">curl --version
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>版本信息与安装版本相符则到此步骤已经安装成功&lt;/p>
+&lt;ol start="5">
+&lt;li>将 curl 命令加入环境变量（如果按照默认路径安装则无需执行此步骤）&lt;/li>
+&lt;/ol>
+&lt;p>仅对本会话起作用，若需永久生效需要在 &lt;code>.bash_profile&lt;/code>、&lt;code>.bashrc&lt;/code> 等文件里添加&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">PATH&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="n">PATH&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">curl&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="6">
+&lt;li>可能还需要将 include 目录复制到 &lt;code>/usr/include&lt;/code> 下（如果按照默认路径安装则无需执行此步骤）&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">cp -r /usr/local/curl/include/curl /usr/include
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>当然也可以用软链接，或编译时指定 include 路径&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">ln -s /usr/local/curl/include/curl /usr/include/curl
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="2-c--c-调用-libcurl">&lt;a href="#2-c--c-%e8%b0%83%e7%94%a8-libcurl" class="header-anchor">&lt;/a>2. C / C++ 调用 libcurl
+&lt;/h2>&lt;p>到 &lt;code>/usr/local/lib/&lt;/code> 或指定的安装路径，即可查看到安装好的库文件&lt;/p>
+&lt;p>若要include库文件可如下编写&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;curl/curl.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>可根据&lt;a class="link" href="https://blog.csdn.net/qianghaohao/article/details/51684862" target="_blank" rel="noopener"
+>参考2&lt;/a>中代码测试 libcurl&lt;/p>
+&lt;p>在编译时要加入 &lt;code>-lcurl&lt;/code> 参数，如 &lt;code>g++ main.cpp -o main -lcurl&lt;/code>&lt;/p>
+&lt;h2 id="3-curl-命令">&lt;a href="#3-curl-%e5%91%bd%e4%bb%a4" class="header-anchor">&lt;/a>3. curl 命令
+&lt;/h2>&lt;p>以下命令为 curl 与 localhost 通讯进行上传和下载文件&lt;sup id="fnref:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"># curl -v -X PUT http://localhost/doc/1.txt -T 2.txt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># curl -v -X GET http://localhost/doc/1.txt -o 2.txt
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>选项 &lt;code>-v&lt;/code> 或 &lt;code>--verbose&lt;/code> 为显示详细操作信息，建议刚开始使用时加上，能为调试提供很大帮助。&lt;/p>
+&lt;p>其余选项的使用可以使用 &lt;code>curl --help&lt;/code> 或 &lt;code>man curl&lt;/code> 查看帮助信息，每个选项都有详细的说明。（&lt;a class="link" href="http://man.linuxde.net/curl" target="_blank" rel="noopener"
+>中文翻译&lt;/a>）&lt;/p>
+&lt;p>curl命令能为之后curl库的使用提供参考基础，建议在进行curl代码编写前先使用curl命令实现，有些时候的bug不是代码造成的，有可能本身curl就无法建立连接。&lt;/p>
+&lt;h2 id="4-curl-库的调用流程">&lt;a href="#4-curl-%e5%ba%93%e7%9a%84%e8%b0%83%e7%94%a8%e6%b5%81%e7%a8%8b" class="header-anchor">&lt;/a>4. curl 库的调用流程
+&lt;/h2>&lt;p>libcurl主要提供了两种发送http请求的方式，分别是Easy interface方式和multi interface方式，前者是采用阻塞的方式发送单条数据，后者采用组合的方式可以一次性发送多条数据&lt;/p>
+&lt;p>libcurl传输任务流程如下（其中最重要的是3和4步）：&lt;sup id="fnref:4">&lt;a href="#fn:4" class="footnote-ref" role="doc-noteref">4&lt;/a>&lt;/sup>&lt;/p>
+&lt;ul>
+&lt;li>1 调用&lt;code>curl_global_init()&lt;/code>初始化libcurl&lt;/li>
+&lt;li>2 调用&lt;code>curl_easy_init()&lt;/code>得到easy interface型指针（句柄）&lt;/li>
+&lt;li>&lt;strong>3 调用&lt;code>curl_easy_setopt()&lt;/code>设置传输选项&lt;/strong>&lt;/li>
+&lt;li>&lt;strong>4 根据&lt;code>curl_easy_setopt()&lt;/code>实现回调函数&lt;/strong>&lt;/li>
+&lt;li>5 调用&lt;code>curl_easy_perform()&lt;/code>传输数据&lt;/li>
+&lt;li>6 调用&lt;code>curl_easy_cleanup()&lt;/code>清空句柄&lt;/li>
+&lt;li>7 调用&lt;code>curl_global_cleanup()&lt;/code>释放内存&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt"> 10
+&lt;/span>&lt;span class="lnt"> 11
+&lt;/span>&lt;span class="lnt"> 12
+&lt;/span>&lt;span class="lnt"> 13
+&lt;/span>&lt;span class="lnt"> 14
+&lt;/span>&lt;span class="lnt"> 15
+&lt;/span>&lt;span class="lnt"> 16
+&lt;/span>&lt;span class="lnt"> 17
+&lt;/span>&lt;span class="lnt"> 18
+&lt;/span>&lt;span class="lnt"> 19
+&lt;/span>&lt;span class="lnt"> 20
+&lt;/span>&lt;span class="lnt"> 21
+&lt;/span>&lt;span class="lnt"> 22
+&lt;/span>&lt;span class="lnt"> 23
+&lt;/span>&lt;span class="lnt"> 24
+&lt;/span>&lt;span class="lnt"> 25
+&lt;/span>&lt;span class="lnt"> 26
+&lt;/span>&lt;span class="lnt"> 27
+&lt;/span>&lt;span class="lnt"> 28
+&lt;/span>&lt;span class="lnt"> 29
+&lt;/span>&lt;span class="lnt"> 30
+&lt;/span>&lt;span class="lnt"> 31
+&lt;/span>&lt;span class="lnt"> 32
+&lt;/span>&lt;span class="lnt"> 33
+&lt;/span>&lt;span class="lnt"> 34
+&lt;/span>&lt;span class="lnt"> 35
+&lt;/span>&lt;span class="lnt"> 36
+&lt;/span>&lt;span class="lnt"> 37
+&lt;/span>&lt;span class="lnt"> 38
+&lt;/span>&lt;span class="lnt"> 39
+&lt;/span>&lt;span class="lnt"> 40
+&lt;/span>&lt;span class="lnt"> 41
+&lt;/span>&lt;span class="lnt"> 42
+&lt;/span>&lt;span class="lnt"> 43
+&lt;/span>&lt;span class="lnt"> 44
+&lt;/span>&lt;span class="lnt"> 45
+&lt;/span>&lt;span class="lnt"> 46
+&lt;/span>&lt;span class="lnt"> 47
+&lt;/span>&lt;span class="lnt"> 48
+&lt;/span>&lt;span class="lnt"> 49
+&lt;/span>&lt;span class="lnt"> 50
+&lt;/span>&lt;span class="lnt"> 51
+&lt;/span>&lt;span class="lnt"> 52
+&lt;/span>&lt;span class="lnt"> 53
+&lt;/span>&lt;span class="lnt"> 54
+&lt;/span>&lt;span class="lnt"> 55
+&lt;/span>&lt;span class="lnt"> 56
+&lt;/span>&lt;span class="lnt"> 57
+&lt;/span>&lt;span class="lnt"> 58
+&lt;/span>&lt;span class="lnt"> 59
+&lt;/span>&lt;span class="lnt"> 60
+&lt;/span>&lt;span class="lnt"> 61
+&lt;/span>&lt;span class="lnt"> 62
+&lt;/span>&lt;span class="lnt"> 63
+&lt;/span>&lt;span class="lnt"> 64
+&lt;/span>&lt;span class="lnt"> 65
+&lt;/span>&lt;span class="lnt"> 66
+&lt;/span>&lt;span class="lnt"> 67
+&lt;/span>&lt;span class="lnt"> 68
+&lt;/span>&lt;span class="lnt"> 69
+&lt;/span>&lt;span class="lnt"> 70
+&lt;/span>&lt;span class="lnt"> 71
+&lt;/span>&lt;span class="lnt"> 72
+&lt;/span>&lt;span class="lnt"> 73
+&lt;/span>&lt;span class="lnt"> 74
+&lt;/span>&lt;span class="lnt"> 75
+&lt;/span>&lt;span class="lnt"> 76
+&lt;/span>&lt;span class="lnt"> 77
+&lt;/span>&lt;span class="lnt"> 78
+&lt;/span>&lt;span class="lnt"> 79
+&lt;/span>&lt;span class="lnt"> 80
+&lt;/span>&lt;span class="lnt"> 81
+&lt;/span>&lt;span class="lnt"> 82
+&lt;/span>&lt;span class="lnt"> 83
+&lt;/span>&lt;span class="lnt"> 84
+&lt;/span>&lt;span class="lnt"> 85
+&lt;/span>&lt;span class="lnt"> 86
+&lt;/span>&lt;span class="lnt"> 87
+&lt;/span>&lt;span class="lnt"> 88
+&lt;/span>&lt;span class="lnt"> 89
+&lt;/span>&lt;span class="lnt"> 90
+&lt;/span>&lt;span class="lnt"> 91
+&lt;/span>&lt;span class="lnt"> 92
+&lt;/span>&lt;span class="lnt"> 93
+&lt;/span>&lt;span class="lnt"> 94
+&lt;/span>&lt;span class="lnt"> 95
+&lt;/span>&lt;span class="lnt"> 96
+&lt;/span>&lt;span class="lnt"> 97
+&lt;/span>&lt;span class="lnt"> 98
+&lt;/span>&lt;span class="lnt"> 99
+&lt;/span>&lt;span class="lnt">100
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;curl/curl.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;string&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="n">using&lt;/span> &lt;span class="n">namespace&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">httpPutFile&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CURL&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">curl&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">NULL&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CURLcode&lt;/span> &lt;span class="n">result&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">CURLE_OK&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">string&lt;/span> &lt;span class="n">url&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">&amp;#34;http://10.200.100.50:8080&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">FILE&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">inputFile&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nf">fopen&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;./put.txt&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;rb&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">string&lt;/span> &lt;span class="n">outputFilename&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">&amp;#34;/1.txt&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">url&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">outputFilename&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//HttpHead
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">struct&lt;/span> &lt;span class="n">curl_slist&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">headers&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">NULL&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">headers&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nf">curl_slist_append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">headers&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;endPoint:http://10.200.100.50:8080&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">headers&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nf">curl_slist_append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">headers&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;accessKeyId:id123&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">headers&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nf">curl_slist_append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">headers&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;secretAccessKey:key123&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">headers&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nf">curl_slist_append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">headers&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;Authorization:auth123&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//Init
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="nf">curl_global_init&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">CURL_GLOBAL_ALL&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">curl&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nf">curl_easy_init&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//Option
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="nf">curl_easy_setopt&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">curl&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">CURLOPT_URL&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">url&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">c_str&lt;/span>&lt;span class="p">());&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">curl_easy_setopt&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">curl&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">CURLOPT_VERBOSE&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">curl_easy_setopt&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">curl&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">CURLOPT_TIMEOUT&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">curl_easy_setopt&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">curl&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">CURLOPT_HTTPHEADER&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">headers&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">curl_easy_setopt&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">curl&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">CURLOPT_INFILE&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">inputFile&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//curl_easy_setopt(curl, CURLOPT_INFILESIZE, 87);
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="nf">curl_easy_setopt&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">curl&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">CURLOPT_PUT&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, &amp;#34;PUT&amp;#34;);
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//Perform
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">result&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nf">curl_easy_perform&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">curl&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//Clean
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="nf">curl_slist_free_all&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">headers&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">curl_easy_cleanup&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">curl&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">curl_global_cleanup&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">httpGetFile&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CURL&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">curl&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">NULL&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CURLcode&lt;/span> &lt;span class="n">result&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">CURLE_OK&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">string&lt;/span> &lt;span class="n">url&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">&amp;#34;http://10.200.100.50:8080&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">FILE&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">outputFile&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nf">fopen&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;./get.txt&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;wb&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">string&lt;/span> &lt;span class="n">inputFilename&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">&amp;#34;/1.txt&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">url&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">inputFilename&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//HttpHead
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">struct&lt;/span> &lt;span class="n">curl_slist&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">headers&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">NULL&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">headers&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nf">curl_slist_append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">headers&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;endPoint:http://10.200.100.50:8080&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">headers&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nf">curl_slist_append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">headers&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;accessKeyId:id123&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">headers&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nf">curl_slist_append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">headers&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;secretAccessKey:key123&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">headers&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nf">curl_slist_append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">headers&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;Authorization:auth123&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//Init
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="nf">curl_global_init&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">CURL_GLOBAL_ALL&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">curl&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nf">curl_easy_init&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//Option
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="nf">curl_easy_setopt&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">curl&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">CURLOPT_URL&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">url&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">c_str&lt;/span>&lt;span class="p">());&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">curl_easy_setopt&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">curl&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">CURLOPT_VERBOSE&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">curl_easy_setopt&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">curl&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">CURLOPT_TIMEOUT&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">curl_easy_setopt&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">curl&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">CURLOPT_HTTPHEADER&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">headers&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">curl_easy_setopt&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">curl&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">CURLOPT_WRITEDATA&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="n">outputFile&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//Perform
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">result&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nf">curl_easy_perform&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">curl&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//Clean
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="nf">curl_slist_free_all&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">headers&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">curl_easy_cleanup&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">curl&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">curl_global_cleanup&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">argc&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">char&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">argv&lt;/span>&lt;span class="p">[])&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">string&lt;/span> &lt;span class="n">method&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">argv&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">method&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s">&amp;#34;PUT&amp;#34;&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="n">method&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s">&amp;#34;put&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">httpPutFile&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>&lt;span class="k">else&lt;/span> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">method&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s">&amp;#34;GET&amp;#34;&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="n">method&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s">&amp;#34;get&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">httpGetFile&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>&lt;span class="k">else&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;Method error, please input &lt;/span>&lt;span class="se">\&amp;#34;&lt;/span>&lt;span class="s">PUT&lt;/span>&lt;span class="se">\&amp;#34;&lt;/span>&lt;span class="s"> or &lt;/span>&lt;span class="se">\&amp;#34;&lt;/span>&lt;span class="s">GET&lt;/span>&lt;span class="se">\&amp;#34;&lt;/span>&lt;span class="s">.&amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="5-参考">&lt;a href="#5-%e5%8f%82%e8%80%83" class="header-anchor">&lt;/a>5. 参考
+&lt;/h2>&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/lifan5/article/details/7350154" target="_blank" rel="noopener"
+>Linux CURL的安装和使用&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/qianghaohao/article/details/51684862" target="_blank" rel="noopener"
+>linux下编译安装libcurl(附使用示例)&lt;/a>&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:3">
+&lt;p>&lt;a class="link" href="https://www.cnblogs.com/moodlxs/archive/2012/10/15/2724318.html" target="_blank" rel="noopener"
+>C++ 用libcurl库进行http通讯网络编程&lt;/a>&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:4">
+&lt;p>&lt;a class="link" href="https://www.cnblogs.com/lidabo/p/4583067.html" target="_blank" rel="noopener"
+>curl_easy_setopt-curl库的关键函数之一&lt;/a>&amp;#160;&lt;a href="#fnref:4" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>GDB 快速入门</title><link>https://gitsang.github.io/p/gdb-quick-start/</link><pubDate>Wed, 09 Oct 2019 14:53:28 +0800</pubDate><guid>https://gitsang.github.io/p/gdb-quick-start/</guid><description>&lt;!-- markdown-front-matter -->
+&lt;p>GDB是一个由GNU开源组织发布的、UNIX/LINUX操作系统下的、基于命令行的、功能强大的程序调试工具。 对于一名Linux下工作的c++程序员，gdb是必不可少的工具；&lt;/p>
+&lt;h2 id="1-启动gdb">&lt;a href="#1-%e5%90%af%e5%8a%a8gdb" class="header-anchor">&lt;/a>1. 启动gdb
+&lt;/h2>&lt;ul>
+&lt;li>&lt;strong>对C/C++程序的调试，需要在编译前就加上-g选项:&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">g++ -g hello.cpp -o hello
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>&lt;strong>调试可执行文件:&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">gdb &amp;lt;program&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>program也就是你的执行文件，一般在当前目录下。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>调试core文件(core是程序非法执行后core dump后产生的文件):&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">gdb &amp;lt;program&amp;gt; &amp;lt;core dump file&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gdb program core.11127
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>&lt;strong>调试服务程序:&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">gdb &amp;lt;program&amp;gt; &amp;lt;PID&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gdb hello &lt;span class="m">11127&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>如果你的程序是一个服务程序，那么你可以指定这个服务程序运行时的进程ID。gdb会自动attach上去，并调试他。program应该在PATH环境变量中搜索得到。&lt;/p>
+&lt;h2 id="2-gdb交互命令">&lt;a href="#2-gdb%e4%ba%a4%e4%ba%92%e5%91%bd%e4%bb%a4" class="header-anchor">&lt;/a>2. gdb交互命令
+&lt;/h2>&lt;p>启动gdb后，进入到交互模式，通过以下命令完成对程序的调试；注意高频使用的命令一般都会有缩写，熟练使用这些缩写命令能提高调试的效率；&lt;/p>
+&lt;h3 id="21-运行">&lt;a href="#21-%e8%bf%90%e8%a1%8c" class="header-anchor">&lt;/a>2.1 运行
+&lt;/h3>&lt;ul>
+&lt;li>run：简记为 r ，其作用是运行程序，当遇到断点后，程序会在断点处停止运行，等待用户输入下一步的命令。&lt;/li>
+&lt;li>continue （简写c ）：继续执行，到下一个断点处（或运行结束）&lt;/li>
+&lt;li>next：（简写 n），单步跟踪程序，当遇到函数调用时，也不进入此函数体；此命令同 step 的主要区别是，step 遇到用户自定义的函数，将步进到函数中去运行，而 next 则直接调用函数，不会进入到函数体内。&lt;/li>
+&lt;li>step （简写s）：单步调试如果有函数调用，则进入函数；与命令n不同，n是不进入调用的函数的&lt;/li>
+&lt;li>until：当你厌倦了在一个循环体内单步跟踪时，这个命令可以运行程序直到退出循环体。&lt;/li>
+&lt;li>until+行号： 运行至某行，不仅仅用来跳出循环&lt;/li>
+&lt;li>finish： 运行程序，直到当前函数完成返回，并打印函数返回时的堆栈地址和返回值及参数值等信息。&lt;/li>
+&lt;li>call 函数(参数)：调用程序中可见的函数，并传递“参数”，如：call gdb_test(55)&lt;/li>
+&lt;li>quit：简记为 q ，退出gdb&lt;/li>
+&lt;/ul>
+&lt;h3 id="22-设置断点">&lt;a href="#22-%e8%ae%be%e7%bd%ae%e6%96%ad%e7%82%b9" class="header-anchor">&lt;/a>2.2 设置断点
+&lt;/h3>&lt;ul>
+&lt;li>break n （简写b n）:在第n行处设置断点
+&lt;ul>
+&lt;li>（可以带上代码路径和代码名称： b OAGUPDATE.cpp:578）&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>b fn1 if a＞b：条件断点设置&lt;/li>
+&lt;li>break func（break缩写为b）：在函数func()的入口处设置断点，如：break cb_button&lt;/li>
+&lt;li>delete 断点号n：删除第n个断点&lt;/li>
+&lt;li>disable 断点号n：暂停第n个断点&lt;/li>
+&lt;li>enable 断点号n：开启第n个断点&lt;/li>
+&lt;li>clear 行号n：清除第n行的断点&lt;/li>
+&lt;li>info b （info breakpoints） ：显示当前程序的断点设置情况&lt;/li>
+&lt;li>delete breakpoints：清除所有断点：&lt;/li>
+&lt;/ul>
+&lt;h3 id="23-查看源代码">&lt;a href="#23-%e6%9f%a5%e7%9c%8b%e6%ba%90%e4%bb%a3%e7%a0%81" class="header-anchor">&lt;/a>2.3 查看源代码
+&lt;/h3>&lt;ul>
+&lt;li>list ：简记为 l ，其作用就是列出程序的源代码，默认每次显示10行。&lt;/li>
+&lt;li>list 行号：将显示当前文件以“行号”为中心的前后10行代码，如：list 12&lt;/li>
+&lt;li>list 函数名：将显示“函数名”所在函数的源代码，如：list main&lt;/li>
+&lt;li>list ：不带参数，将接着上一次 list 命令的，输出下边的内容。&lt;/li>
+&lt;/ul>
+&lt;h3 id="24-打印表达式">&lt;a href="#24-%e6%89%93%e5%8d%b0%e8%a1%a8%e8%be%be%e5%bc%8f" class="header-anchor">&lt;/a>2.4 打印表达式
+&lt;/h3>&lt;ul>
+&lt;li>print 表达式：简记为 p ，其中“表达式”可以是任何当前正在被测试程序的有效表达式，比如当前正在调试C语言的程序，那么“表达式”可以是任何C语言的有效表达式，包括数字，变量甚至是函数调用。&lt;/li>
+&lt;li>print a：将显示整数 a 的值&lt;/li>
+&lt;li>print ++a：将把 a 中的值加1,并显示出来&lt;/li>
+&lt;li>print name：将显示字符串 name 的值&lt;/li>
+&lt;li>print gdb_test(22)：将以整数22作为参数调用 gdb_test() 函数&lt;/li>
+&lt;li>print gdb_test(a)：将以变量 a 作为参数调用 gdb_test() 函数&lt;/li>
+&lt;li>display 表达式：在单步运行时将非常有用，使用display命令设置一个表达式后，它将在每次单步进行指令后，紧接着输出被设置的表达式及值。如： display a&lt;/li>
+&lt;li>watch 表达式：设置一个监视点，一旦被监视的“表达式”的值改变，gdb将强行终止正在被调试的程序。如： watch a&lt;/li>
+&lt;li>whatis ：查询变量或函数&lt;/li>
+&lt;li>info function： 查询函数&lt;/li>
+&lt;li>扩展info locals： 显示当前堆栈页的所有变量&lt;/li>
+&lt;/ul>
+&lt;h3 id="25-查询运行信息">&lt;a href="#25-%e6%9f%a5%e8%af%a2%e8%bf%90%e8%a1%8c%e4%bf%a1%e6%81%af" class="header-anchor">&lt;/a>2.5 查询运行信息
+&lt;/h3>&lt;ul>
+&lt;li>where/bt ：当前运行的堆栈列表；&lt;/li>
+&lt;li>bt backtrace 显示当前调用堆栈&lt;/li>
+&lt;li>up/down 改变堆栈显示的深度&lt;/li>
+&lt;li>set args 参数:指定运行时的参数&lt;/li>
+&lt;li>show args：查看设置好的参数&lt;/li>
+&lt;li>info program： 来查看程序的是否在运行，进程号，被暂停的原因。&lt;/li>
+&lt;/ul>
+&lt;h3 id="26-分割窗口">&lt;a href="#26-%e5%88%86%e5%89%b2%e7%aa%97%e5%8f%a3" class="header-anchor">&lt;/a>2.6 分割窗口
+&lt;/h3>&lt;ul>
+&lt;li>layout：用于分割窗口，可以一边查看代码，一边测试：&lt;/li>
+&lt;li>layout src：显示源代码窗口&lt;/li>
+&lt;li>layout asm：显示反汇编窗口&lt;/li>
+&lt;li>layout regs：显示源代码/反汇编和CPU寄存器窗口&lt;/li>
+&lt;li>layout split：显示源代码和反汇编窗口&lt;/li>
+&lt;li>Ctrl + L：刷新窗口&lt;/li>
+&lt;/ul>
+&lt;h3 id="27-注解">&lt;a href="#27-%e6%b3%a8%e8%a7%a3" class="header-anchor">&lt;/a>2.7 注解
+&lt;/h3>&lt;ul>
+&lt;li>交互模式下直接回车的作用是重复上一指令，对于单步调试非常方便；&lt;/li>
+&lt;/ul>
+&lt;h2 id="3-更强大的工具cgdb">&lt;a href="#3-%e6%9b%b4%e5%bc%ba%e5%a4%a7%e7%9a%84%e5%b7%a5%e5%85%b7cgdb" class="header-anchor">&lt;/a>3. 更强大的工具cgdb
+&lt;/h2>&lt;p>cgdb可以看作gdb的界面增强版,用来替代gdb的 gdb -tui。cgdb主要功能是在调试时进行代码的同步显示，这无疑增加了调试的方便性，提高了调试效率。界面类似vi，符合unix/linux下开发人员习惯;如果熟悉gdb和vi，几乎可以立即使用cgdb。&lt;/p>
+&lt;h2 id="4-参考">&lt;a href="#4-%e5%8f%82%e8%80%83" class="header-anchor">&lt;/a>4. 参考
+&lt;/h2></description></item><item><title>调用和回调函数</title><link>https://gitsang.github.io/p/call-and-callback/</link><pubDate>Wed, 09 Oct 2019 14:53:28 +0800</pubDate><guid>https://gitsang.github.io/p/call-and-callback/</guid><description>&lt;!-- markdown-front-matter -->
+&lt;h2 id="1-回调函数简介">&lt;a href="#1-%e5%9b%9e%e8%b0%83%e5%87%bd%e6%95%b0%e7%ae%80%e4%bb%8b" class="header-anchor">&lt;/a>1. 回调函数简介
+&lt;/h2>&lt;p>回调函数就是那些自己写的，但是不是自己来调，而是给别人来调用的函数。&lt;/p>
+&lt;p>消息响应函数就可以看成是回调函数，因为是让系统在合适的时候去调用。这不过消息响应函数就是为了处理消息的，所以就拿出来单做一类了。其实本质上就是回调函数。&lt;/p>
+&lt;p>比如按键事件，其实是个消息，你的函数比按键事件更早存在，所以你要将这个函数做为回调函数提交给系统， 然后系统在接收到按键事件后，再调用你的函数&lt;/p>
+&lt;p>但是回调函数不是只有消息响应函数一种，比如在内核编程中，驱动程序就要提供一些回调函数，当一个设备的数据读写完成后，让系统调用这些回调函数来执行一些后续工作。回调函数赋予程序员这样一种能力，让自己编写的代码能够跳出正常的程序控制流，适应具体的运行环境在正确的时间执行。&lt;/p>
+&lt;h2 id="2-回调和调用的关系">&lt;a href="#2-%e5%9b%9e%e8%b0%83%e5%92%8c%e8%b0%83%e7%94%a8%e7%9a%84%e5%85%b3%e7%b3%bb" class="header-anchor">&lt;/a>2. 回调和调用的关系
+&lt;/h2>&lt;h3 id="21-调用">&lt;a href="#21-%e8%b0%83%e7%94%a8" class="header-anchor">&lt;/a>2.1 调用
+&lt;/h3>&lt;p>调用就是用户传出参数让函数进行处理，或让函数执行某个动作
+如以下操作就是调用，用户需要传入函数要求的参数，函数会返回一个传入参数中的最大值&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">mymax&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="c1">// 定义函数
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="n">a&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">b&lt;/span> &lt;span class="o">?&lt;/span> &lt;span class="nl">a&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">a&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">10&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">b&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">20&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">mymax&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">);&lt;/span> &lt;span class="c1">// 调用函数
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="22-回调">&lt;a href="#22-%e5%9b%9e%e8%b0%83" class="header-anchor">&lt;/a>2.2 回调
+&lt;/h3>&lt;h4 id="221-注册回调函数">&lt;a href="#221-%e6%b3%a8%e5%86%8c%e5%9b%9e%e8%b0%83%e5%87%bd%e6%95%b0" class="header-anchor">&lt;/a>2.2.1 注册回调函数
+&lt;/h4>&lt;p>回调就是用户编写函数对系统传入的参数进行处理，或在系统发出信号时执行某个操作，如：&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> &lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">mymax&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="c1">// 定义回调函数
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="n">a&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">b&lt;/span> &lt;span class="o">?&lt;/span> &lt;span class="nl">a&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">system_operation&lt;/span> &lt;span class="n">sysop&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sysop&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">max&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">mymax&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// 注册回调函数
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>此时mymax并未由用户传入参数，而是等待系统传入。&lt;/p>
+&lt;p>上述代码中&lt;code>system_operation&lt;/code>为虚构的结构体，结构体内声明了一个空的max函数，如果系统直接调用max函数不会执行任何内容。&lt;/p>
+&lt;p>需要用户将自己编写的函数注册到max函数上&lt;code>sysop.max = mymax;&lt;/code>，注册成功后系统在调用到max函数时，就相当于调用了用户的mymax函数。注册回调意思就是把用户函数关联到系统函数&lt;/p>
+&lt;h4 id="222-回调函数作为参数">&lt;a href="#222-%e5%9b%9e%e8%b0%83%e5%87%bd%e6%95%b0%e4%bd%9c%e4%b8%ba%e5%8f%82%e6%95%b0" class="header-anchor">&lt;/a>2.2.2 回调函数作为参数
+&lt;/h4>&lt;p>还有另一种形式的回调，是回调函数作为参数，如：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;#34;otherfunc.h&amp;#34;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">static&lt;/span> &lt;span class="n">size_t&lt;/span> &lt;span class="nf">mymax_callback&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">max&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">max&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">a&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">b&lt;/span> &lt;span class="o">?&lt;/span> &lt;span class="nl">a&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// 我就是要返回最小值给你
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//函数原型 int othfunc_max(void* callbackfunction);
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">othfunc_max&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">mymax_callback&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>此时a, b, &amp;amp;max都是系统传入的参数，至于传的是什么此时并不需要关心，只需要关心怎么处理a, b, &amp;amp;max这三个参数就行，一般来说回调函数需要哪些参数，参数的作用等都会在系统的说明文档或头文件注释中给出，写回调时候根据文档写出符合需求的回调函数就行了。（当然只要你开心，只要把格式写对，功能不符合需求也行，手动狗头）&lt;/p>
+&lt;p>用户在调用othfunc_max时，只需传入对应的回调函数名称，系统会将a, b, &amp;amp;max传给mymax_callback函数，函数只给&amp;amp;max赋上a和b的最大值（其实是最小值），并未将max值返回（即使返回也不是返回给用户，用户能收到的仅仅是othfunc_max()的返回值）。&lt;sup id="fnref:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup> &lt;sup id="fnref:4">&lt;a href="#fn:4" class="footnote-ref" role="doc-noteref">4&lt;/a>&lt;/sup>&lt;/p>
+&lt;h2 id="3-参考">&lt;a href="#3-%e5%8f%82%e8%80%83" class="header-anchor">&lt;/a>3. 参考
+&lt;/h2>&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/bzhxuexi/article/details/11767979" target="_blank" rel="noopener"
+>C++中回调函数(CallBack)的使用&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/clirus/article/details/50350519" target="_blank" rel="noopener"
+>C++ 回调函数理解 - clirus&lt;/a>&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:3">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/jackystudio/article/details/11720325" target="_blank" rel="noopener"
+>【C++基础之八】函数指针和回调函数 - 偶尔e网事&lt;/a>&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:4">
+&lt;p>&lt;a class="link" href="https://cnodejs.org/topic/58205fc7be0a73ad05489563" target="_blank" rel="noopener"
+>回调函数中的参数列表是规定好的么 - TianYongwei&lt;/a>&amp;#160;&lt;a href="#fnref:4" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>结构体的定义方式</title><link>https://gitsang.github.io/p/struct-define/</link><pubDate>Wed, 09 Oct 2019 14:53:28 +0800</pubDate><guid>https://gitsang.github.io/p/struct-define/</guid><description>&lt;!-- markdown-front-matter -->
+&lt;h2 id="1-使用typedef定义结构体">&lt;a href="#1-%e4%bd%bf%e7%94%a8typedef%e5%ae%9a%e4%b9%89%e7%bb%93%e6%9e%84%e4%bd%93" class="header-anchor">&lt;/a>1. 使用typedef定义结构体
+&lt;/h2>&lt;p>typedef用来定义新的数据类型，通常typedef与结构体的定义配合使用。使用typedef的目的使结构体的表达更加简练（所以说typedef语句并不是必须使用的）。 &lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> &lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup> &lt;sup id="fnref:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup> &lt;sup id="fnref:4">&lt;a href="#fn:4" class="footnote-ref" role="doc-noteref">4&lt;/a>&lt;/sup>&lt;/p>
+&lt;h3 id="11-定义一个名字为treenode的结构体类型现在并没有定义结构体变量并不占用内存空间">&lt;a href="#11-%e5%ae%9a%e4%b9%89%e4%b8%80%e4%b8%aa%e5%90%8d%e5%ad%97%e4%b8%batreenode%e7%9a%84%e7%bb%93%e6%9e%84%e4%bd%93%e7%b1%bb%e5%9e%8b%e7%8e%b0%e5%9c%a8%e5%b9%b6%e6%b2%a1%e6%9c%89%e5%ae%9a%e4%b9%89%e7%bb%93%e6%9e%84%e4%bd%93%e5%8f%98%e9%87%8f%e5%b9%b6%e4%b8%8d%e5%8d%a0%e7%94%a8%e5%86%85%e5%ad%98%e7%a9%ba%e9%97%b4" class="header-anchor">&lt;/a>1.1 定义一个名字为TreeNode的结构体类型（现在并没有定义结构体变量，并不占用内存空间）：
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="k">struct&lt;/span> &lt;span class="nc">TreeNode&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">Element&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">struct&lt;/span> &lt;span class="nc">TreeNode&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">LeftChild&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">struct&lt;/span> &lt;span class="nc">TreeNode&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">RightChild&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">};&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="12-为结构体起一个别名node这时node就等价于struct-treenode">&lt;a href="#12-%e4%b8%ba%e7%bb%93%e6%9e%84%e4%bd%93%e8%b5%b7%e4%b8%80%e4%b8%aa%e5%88%ab%e5%90%8dnode%e8%bf%99%e6%97%b6node%e5%b0%b1%e7%ad%89%e4%bb%b7%e4%ba%8estruct-treenode" class="header-anchor">&lt;/a>1.2 为结构体起一个别名Node，这时Node就等价于struct TreeNode
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="k">typedef&lt;/span> &lt;span class="k">struct&lt;/span> &lt;span class="n">TreeNode&lt;/span> &lt;span class="n">Node&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>结构体的定义和typedef语句可以连在一起写：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="k">typedef&lt;/span> &lt;span class="k">struct&lt;/span> &lt;span class="n">TreeNode&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">Element&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">struct&lt;/span> &lt;span class="n">TreeNode&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">LeftChild&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">struct&lt;/span> &lt;span class="n">TreeNode&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">RightChild&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;span class="n">Node&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>注意不要与“定义结构体类型的同时定义结构体类型变量”混淆：&lt;/p>
+&lt;h3 id="13-使用typedef关键字定义结构体类型定义结构体类型的同时定义结构体类型变量">&lt;a href="#13-%e4%bd%bf%e7%94%a8typedef%e5%85%b3%e9%94%ae%e5%ad%97%e5%ae%9a%e4%b9%89%e7%bb%93%e6%9e%84%e4%bd%93%e7%b1%bb%e5%9e%8b%e5%ae%9a%e4%b9%89%e7%bb%93%e6%9e%84%e4%bd%93%e7%b1%bb%e5%9e%8b%e7%9a%84%e5%90%8c%e6%97%b6%e5%ae%9a%e4%b9%89%e7%bb%93%e6%9e%84%e4%bd%93%e7%b1%bb%e5%9e%8b%e5%8f%98%e9%87%8f" class="header-anchor">&lt;/a>1.3 使用typedef关键字定义结构体类型，定义结构体类型的同时定义结构体类型变量
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="k">typedef&lt;/span> &lt;span class="k">struct&lt;/span> &lt;span class="n">student&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">age&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">height&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;span class="n">std&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">//std相当于struct student
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">struct&lt;/span> &lt;span class="n">student&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">age&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">height&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;span class="n">std1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">std2&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">//定义了student数据类型的结构体和std1、std2结构体变量
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="2-使用typedef定义结构体指针">&lt;a href="#2-%e4%bd%bf%e7%94%a8typedef%e5%ae%9a%e4%b9%89%e7%bb%93%e6%9e%84%e4%bd%93%e6%8c%87%e9%92%88" class="header-anchor">&lt;/a>2. 使用typedef定义结构体指针
+&lt;/h2>&lt;h3 id="21-定义一个名为treenode的结构体和指向该结构体类型的指针ptrtotreenode不使用typedef">&lt;a href="#21-%e5%ae%9a%e4%b9%89%e4%b8%80%e4%b8%aa%e5%90%8d%e4%b8%batreenode%e7%9a%84%e7%bb%93%e6%9e%84%e4%bd%93%e5%92%8c%e6%8c%87%e5%90%91%e8%af%a5%e7%bb%93%e6%9e%84%e4%bd%93%e7%b1%bb%e5%9e%8b%e7%9a%84%e6%8c%87%e9%92%88ptrtotreenode%e4%b8%8d%e4%bd%bf%e7%94%a8typedef" class="header-anchor">&lt;/a>2.1 定义一个名为TreeNode的结构体，和指向该结构体类型的指针PtrToTreeNode（不使用typedef）：
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="k">struct&lt;/span> &lt;span class="n">TreeNode&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">Element&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">struct&lt;/span> &lt;span class="n">TreeNode&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">LeftChild&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">struct&lt;/span> &lt;span class="n">TreeNode&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">RightChild&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">};&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">struct&lt;/span> &lt;span class="n">TreeNode&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">PtrToTreeNode&lt;/span>&lt;span class="err">；&lt;/span> &lt;span class="c1">//定义指针
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="22-使用typedef关键字用一个单词node代替struct-treenode并定义指向该结构体类型的指针ptrtotreenode">&lt;a href="#22-%e4%bd%bf%e7%94%a8typedef%e5%85%b3%e9%94%ae%e5%ad%97%e7%94%a8%e4%b8%80%e4%b8%aa%e5%8d%95%e8%af%8dnode%e4%bb%a3%e6%9b%bfstruct-treenode%e5%b9%b6%e5%ae%9a%e4%b9%89%e6%8c%87%e5%90%91%e8%af%a5%e7%bb%93%e6%9e%84%e4%bd%93%e7%b1%bb%e5%9e%8b%e7%9a%84%e6%8c%87%e9%92%88ptrtotreenode" class="header-anchor">&lt;/a>2.2 使用typedef关键字用一个单词Node代替struct TreeNode，并定义指向该结构体类型的指针PtrToTreeNode：
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="k">struct&lt;/span> &lt;span class="n">TreeNode&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">Element&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">struct&lt;/span> &lt;span class="n">TreeNode&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">LeftChild&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">struct&lt;/span> &lt;span class="n">TreeNode&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">RightChild&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">};&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">typedef&lt;/span> &lt;span class="k">struct&lt;/span> &lt;span class="n">TreeNode&lt;/span> &lt;span class="n">Node&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">//用Node代替struct TreeNode
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Node&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">PtrToTreeNode&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">//定义指针
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cm">/* 或可不定义别名直接定义结构体指针：
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cm"> * typedef struct TreeNode* PtrToTreeNode
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cm"> * 若使用智能指针：
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cm"> * typedef std::shared_ptr&amp;lt;TreeNode&amp;gt; PtrToTreeNode
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cm"> */&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="23-将结构体的定义和typedef连在一起写再次缩短代码">&lt;a href="#23-%e5%b0%86%e7%bb%93%e6%9e%84%e4%bd%93%e7%9a%84%e5%ae%9a%e4%b9%89%e5%92%8ctypedef%e8%bf%9e%e5%9c%a8%e4%b8%80%e8%b5%b7%e5%86%99%e5%86%8d%e6%ac%a1%e7%bc%a9%e7%9f%ad%e4%bb%a3%e7%a0%81" class="header-anchor">&lt;/a>2.3 将结构体的定义和typedef连在一起写，再次缩短代码：
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="k">typedef&lt;/span> &lt;span class="k">struct&lt;/span> &lt;span class="n">TreeNode&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">Element&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">struct&lt;/span> &lt;span class="n">TreeNode&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">LeftChild&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">struct&lt;/span> &lt;span class="n">TreeNode&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">RightChild&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;span class="n">Node&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">//定义结构体并用Node代替struct TreeNode
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">Node&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">PtrToTreeNode&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">//定义指针
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="24-还可以继续缩短代码直接定义了指向结构体类型的指针但是这种写法没有为结构体起一个别名">&lt;a href="#24-%e8%bf%98%e5%8f%af%e4%bb%a5%e7%bb%a7%e7%bb%ad%e7%bc%a9%e7%9f%ad%e4%bb%a3%e7%a0%81%e7%9b%b4%e6%8e%a5%e5%ae%9a%e4%b9%89%e4%ba%86%e6%8c%87%e5%90%91%e7%bb%93%e6%9e%84%e4%bd%93%e7%b1%bb%e5%9e%8b%e7%9a%84%e6%8c%87%e9%92%88%e4%bd%86%e6%98%af%e8%bf%99%e7%a7%8d%e5%86%99%e6%b3%95%e6%b2%a1%e6%9c%89%e4%b8%ba%e7%bb%93%e6%9e%84%e4%bd%93%e8%b5%b7%e4%b8%80%e4%b8%aa%e5%88%ab%e5%90%8d" class="header-anchor">&lt;/a>2.4 还可以继续缩短代码，直接定义了指向结构体类型的指针，但是这种写法没有为结构体起一个别名。
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="k">typedef&lt;/span> &lt;span class="k">struct&lt;/span> &lt;span class="n">TreeNode&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">Element&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">struct&lt;/span> &lt;span class="n">TreeNode&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">LeftChild&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">struct&lt;/span> &lt;span class="n">TreeNode&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">RightChild&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">PtrToTreeNode&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">//直接定义指针
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>在定义结构体时，省略struct后面的结构体名也是可以的，但是由于没有名字，操作（如定义结构体变量）只能在定义的同时进行&lt;/p>
+&lt;h2 id="3-参考">&lt;a href="#3-%e5%8f%82%e8%80%83" class="header-anchor">&lt;/a>3. 参考
+&lt;/h2>&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/u013632190/article/details/47720703" target="_blank" rel="noopener"
+>typedef关键字与结构体、结构体指针的定义 - 一路洒满阳光XD&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/u013814701/article/details/52996544" target="_blank" rel="noopener"
+>typedef struct和指针 - CN_L4EX&lt;/a>&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:3">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/qll125596718/article/details/6891881" target="_blank" rel="noopener"
+>typedef函数指针用法 - qll125596718&lt;/a>&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:4">
+&lt;p>&lt;a class="link" href="https://www.cnblogs.com/csyisong/archive/2009/01/09/1372363.html" target="_blank" rel="noopener"
+>关于typedef的用法总结 - csyisong&lt;/a>&amp;#160;&lt;a href="#fnref:4" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>指针、值和引用</title><link>https://gitsang.github.io/p/pointer-value-quote/</link><pubDate>Wed, 09 Oct 2019 14:53:28 +0800</pubDate><guid>https://gitsang.github.io/p/pointer-value-quote/</guid><description>&lt;!-- markdown-front-matter -->
+&lt;h2 id="1-指针和引用">&lt;a href="#1-%e6%8c%87%e9%92%88%e5%92%8c%e5%bc%95%e7%94%a8" class="header-anchor">&lt;/a>1. 指针和引用
+&lt;/h2>&lt;h3 id="11-指针和引用概述">&lt;a href="#11-%e6%8c%87%e9%92%88%e5%92%8c%e5%bc%95%e7%94%a8%e6%a6%82%e8%bf%b0" class="header-anchor">&lt;/a>1.1 指针和引用概述
+&lt;/h3>&lt;h4 id="111-指针">&lt;a href="#111-%e6%8c%87%e9%92%88" class="header-anchor">&lt;/a>1.1.1 指针
+&lt;/h4>&lt;p>对于char* ptr，ptr为指向char的指针，即char*类型的变量ptr保存的是一个char对象的地址，而char可加限定c词const、volatile等。（char可换为其他类型）&lt;/p>
+&lt;p>如下所示，p中存储的是c的地址，c中存储的是‘A&amp;rsquo;字符&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">char&lt;/span> &lt;span class="n">c&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="sc">&amp;#39;A&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">char&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">p&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">c&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>通过*可取p所指向的内容，通过&amp;amp;可取p的地址，即：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>*p == c的内容 == 'A'&lt;/code>&lt;/li>
+&lt;li>&lt;code>p == c的地址 == &amp;amp;c&lt;/code>&lt;/li>
+&lt;li>&lt;code>&amp;amp;p == p的地址&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h4 id="112-引用">&lt;a href="#112-%e5%bc%95%e7%94%a8" class="header-anchor">&lt;/a>1.1.2 引用
+&lt;/h4>&lt;p>引用相当于一个对象的别名，主要用于函数参数和返回值类型。int&amp;amp;表示对int类型的引用（int可换为其他类型）&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span>&lt;span class="o">&amp;amp;&lt;/span> &lt;span class="n">r&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">i&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// r指向了i的空间，此时对i和r的操作将是相同的
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">r&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// 输出 2
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">r&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">3&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// 输出 3
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>可以认为引用就是将 i 和 r 相关联（绑定）了，使得 i 和 r 代表了相同的一块空间&lt;/p>
+&lt;h4 id="113-引用与指针的区别">&lt;a href="#113-%e5%bc%95%e7%94%a8%e4%b8%8e%e6%8c%87%e9%92%88%e7%9a%84%e5%8c%ba%e5%88%ab" class="header-anchor">&lt;/a>1.1.3 引用与指针的区别
+&lt;/h4>&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>引用一旦指向某一对象就不可更改：&lt;/strong>
+如上面程序，引用后的 r 就和普通的整形变量没有什么区别（若不考虑 i 的存在，完全可以把&lt;code>int i = 1; int&amp;amp; r = i;&lt;/code>当成&lt;code>int r = 1;&lt;/code>来看待）。引用即是将两个变量进行了绑定，而指针仅仅是存储了指向内存的地址，所以通过引用名（如&lt;code>r&lt;/code>）可以直接访问指向的内存，而通过指针名（如&lt;code>p&lt;/code>）却只能访问到地址，要通过（如&lt;code>*p&lt;/code>）才能访问到地址所指的内存&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>对引用的操作将与所指对象同步，而不是像操作指针一样会改变指针的指向：&lt;/strong>&lt;/p>
+&lt;p>如引用的++操作将直接使得指向内容+1，而指针的++会让指针指向下一个地址。如&lt;code>int i = 1; int&amp;amp; r = i; int* p = &amp;amp;r;&lt;/code>此时 r 和 p 都指向了 i 所在的空间，但其意义是完全不同的，p是开辟了一个内存来存储 i 的地址，而 r 就是 i&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>引用不可以为空，但指针可以为空：&lt;/strong>
+正因如此指针在使用前都需要进行判空操作，而引用变量若不进行初始化甚至无法通过编译&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;p>虽说引用和指针有许多区别，但两者在本质上是相同的，可以根据汇编代码看出：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">//引用int&amp;amp; ref = i;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">8048727: 8d 44 24 1c lea 0x1c(%esp), %eax // esp寄存器里的变量i的地址传给eax
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">804872b: 89 44 24 18 mov %eax, 0x18(%esp) // 将寄存器eax中的内容（i的地址）传给寄存器中的变量ref
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">//指针int* p = &amp;amp;i;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">8048777: 8d 44 24 1c lea 0x1c(%esp), %eax // esp寄存器里的变量i的地址传给eax
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">804877b: 89 44 24 10 mov %eax, 0x10(%esp) // 将寄存器eax中的内容（i的地址）传给寄存器中的变量p
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>引用和指针在汇编上的实现是完全相同的，即是说引用的本质其实就是指针，只是比指针更加安全。&lt;/p>
+&lt;h4 id="114-const关键字">&lt;a href="#114-const%e5%85%b3%e9%94%ae%e5%ad%97" class="header-anchor">&lt;/a>1.1.4 const关键字
+&lt;/h4>&lt;p>引用和const指针是不是几乎是相同的呢？引用的本质其实就是指针，只是在指针上增加了一些规则，使得它更加安全。实际上，若不考虑赋空值，那么：&lt;/p>
+&lt;ul>
+&lt;li>引用 &lt;code>type&amp;amp; x&lt;/code> 等于 const指针 &lt;code>const type* x&lt;/code>&lt;/li>
+&lt;li>const引用 &lt;code>const type&amp;amp; x&lt;/code> 等于 指向const的const指针 &lt;code>const type* const x&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h3 id="12-值传递指针传递引用传递">&lt;a href="#12-%e5%80%bc%e4%bc%a0%e9%80%92%e6%8c%87%e9%92%88%e4%bc%a0%e9%80%92%e5%bc%95%e7%94%a8%e4%bc%a0%e9%80%92" class="header-anchor">&lt;/a>1.2 值传递、指针传递、引用传递
+&lt;/h3>&lt;h4 id="121-值传递">&lt;a href="#121-%e5%80%bc%e4%bc%a0%e9%80%92" class="header-anchor">&lt;/a>1.2.1 值传递
+&lt;/h4>&lt;p>值传递是形参对实参的拷贝，即将实参赋值到了形参上，改变形参的值并不会影响外部实参的值。从被调用函数的角度来说，值传递是单向的，参数的值只能传入，不能传出。当函数内部需要修改参数，并且不希望这个改变影响调用者时，采用值传递。&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>&lt;/p>
+&lt;h4 id="122-指针传递">&lt;a href="#122-%e6%8c%87%e9%92%88%e4%bc%a0%e9%80%92" class="header-anchor">&lt;/a>1.2.2 指针传递
+&lt;/h4>&lt;p>形参为指向实参地址的指针，当对形参的指向操作时，就相当于对实参本身进行的操作，但对于形参的操作并不会改变实参的值（改变形参存储的地址不会改变实参的指向），因为指针传递的本质也是值的传递（将指针变量存储的地址复制给形参的变量）&lt;/p>
+&lt;h4 id="123-引用传递">&lt;a href="#123-%e5%bc%95%e7%94%a8%e4%bc%a0%e9%80%92" class="header-anchor">&lt;/a>1.2.3 引用传递
+&lt;/h4>&lt;p>形参相当于是实参的“别名”，对形参的操作其实就是对实参的操作，在引用传递过程中，被调函数的形式参数虽然也作为局部变量在栈中开辟了内存空间，但是这时存放的是由主调函数放进来的实参变量的地址。被调函数对形参的任何操作都被处理成间接寻址，即通过栈中存放的地址访问主调函数中的实参变量。正因为如此，被调函数对形参做的任何操作都影响了主调函数中的实参变量。&lt;/p>
+&lt;h2 id="2-参考">&lt;a href="#2-%e5%8f%82%e8%80%83" class="header-anchor">&lt;/a>2. 参考
+&lt;/h2>&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/listening_music/article/details/6921608" target="_blank" rel="noopener"
+>C++中引用和指针的区别&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>&lt;a class="link" href="https://www.cnblogs.com/yanlingyin/archive/2011/12/07/2278961.html" target="_blank" rel="noopener"
+>C++ 值传递、指针传递、引用传递详解 - Geek_Ling&lt;/a>&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item></channel></rss>

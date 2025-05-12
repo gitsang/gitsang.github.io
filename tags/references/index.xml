@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>References on Sang's Blog</title><link>https://gitsang.github.io/tags/references/</link><description>Recent content in References on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 May 2025 10:41:25 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/references/index.xml" rel="self" type="application/rss+xml"/><item><title>指针、值和引用</title><link>https://gitsang.github.io/p/pointer-value-quote/</link><pubDate>Wed, 09 Oct 2019 14:53:28 +0800</pubDate><guid>https://gitsang.github.io/p/pointer-value-quote/</guid><description>&lt;!-- markdown-front-matter -->
+&lt;h2 id="1-指针和引用">&lt;a href="#1-%e6%8c%87%e9%92%88%e5%92%8c%e5%bc%95%e7%94%a8" class="header-anchor">&lt;/a>1. 指针和引用
+&lt;/h2>&lt;h3 id="11-指针和引用概述">&lt;a href="#11-%e6%8c%87%e9%92%88%e5%92%8c%e5%bc%95%e7%94%a8%e6%a6%82%e8%bf%b0" class="header-anchor">&lt;/a>1.1 指针和引用概述
+&lt;/h3>&lt;h4 id="111-指针">&lt;a href="#111-%e6%8c%87%e9%92%88" class="header-anchor">&lt;/a>1.1.1 指针
+&lt;/h4>&lt;p>对于char* ptr，ptr为指向char的指针，即char*类型的变量ptr保存的是一个char对象的地址，而char可加限定c词const、volatile等。（char可换为其他类型）&lt;/p>
+&lt;p>如下所示，p中存储的是c的地址，c中存储的是‘A&amp;rsquo;字符&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">char&lt;/span> &lt;span class="n">c&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="sc">&amp;#39;A&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">char&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">p&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">c&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>通过*可取p所指向的内容，通过&amp;amp;可取p的地址，即：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>*p == c的内容 == 'A'&lt;/code>&lt;/li>
+&lt;li>&lt;code>p == c的地址 == &amp;amp;c&lt;/code>&lt;/li>
+&lt;li>&lt;code>&amp;amp;p == p的地址&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h4 id="112-引用">&lt;a href="#112-%e5%bc%95%e7%94%a8" class="header-anchor">&lt;/a>1.1.2 引用
+&lt;/h4>&lt;p>引用相当于一个对象的别名，主要用于函数参数和返回值类型。int&amp;amp;表示对int类型的引用（int可换为其他类型）&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span>&lt;span class="o">&amp;amp;&lt;/span> &lt;span class="n">r&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">i&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// r指向了i的空间，此时对i和r的操作将是相同的
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">r&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// 输出 2
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">r&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">3&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// 输出 3
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>可以认为引用就是将 i 和 r 相关联（绑定）了，使得 i 和 r 代表了相同的一块空间&lt;/p>
+&lt;h4 id="113-引用与指针的区别">&lt;a href="#113-%e5%bc%95%e7%94%a8%e4%b8%8e%e6%8c%87%e9%92%88%e7%9a%84%e5%8c%ba%e5%88%ab" class="header-anchor">&lt;/a>1.1.3 引用与指针的区别
+&lt;/h4>&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>引用一旦指向某一对象就不可更改：&lt;/strong>
+如上面程序，引用后的 r 就和普通的整形变量没有什么区别（若不考虑 i 的存在，完全可以把&lt;code>int i = 1; int&amp;amp; r = i;&lt;/code>当成&lt;code>int r = 1;&lt;/code>来看待）。引用即是将两个变量进行了绑定，而指针仅仅是存储了指向内存的地址，所以通过引用名（如&lt;code>r&lt;/code>）可以直接访问指向的内存，而通过指针名（如&lt;code>p&lt;/code>）却只能访问到地址，要通过（如&lt;code>*p&lt;/code>）才能访问到地址所指的内存&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>对引用的操作将与所指对象同步，而不是像操作指针一样会改变指针的指向：&lt;/strong>&lt;/p>
+&lt;p>如引用的++操作将直接使得指向内容+1，而指针的++会让指针指向下一个地址。如&lt;code>int i = 1; int&amp;amp; r = i; int* p = &amp;amp;r;&lt;/code>此时 r 和 p 都指向了 i 所在的空间，但其意义是完全不同的，p是开辟了一个内存来存储 i 的地址，而 r 就是 i&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>引用不可以为空，但指针可以为空：&lt;/strong>
+正因如此指针在使用前都需要进行判空操作，而引用变量若不进行初始化甚至无法通过编译&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;p>虽说引用和指针有许多区别，但两者在本质上是相同的，可以根据汇编代码看出：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">//引用int&amp;amp; ref = i;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">8048727: 8d 44 24 1c lea 0x1c(%esp), %eax // esp寄存器里的变量i的地址传给eax
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">804872b: 89 44 24 18 mov %eax, 0x18(%esp) // 将寄存器eax中的内容（i的地址）传给寄存器中的变量ref
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">//指针int* p = &amp;amp;i;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">8048777: 8d 44 24 1c lea 0x1c(%esp), %eax // esp寄存器里的变量i的地址传给eax
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">804877b: 89 44 24 10 mov %eax, 0x10(%esp) // 将寄存器eax中的内容（i的地址）传给寄存器中的变量p
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>引用和指针在汇编上的实现是完全相同的，即是说引用的本质其实就是指针，只是比指针更加安全。&lt;/p>
+&lt;h4 id="114-const关键字">&lt;a href="#114-const%e5%85%b3%e9%94%ae%e5%ad%97" class="header-anchor">&lt;/a>1.1.4 const关键字
+&lt;/h4>&lt;p>引用和const指针是不是几乎是相同的呢？引用的本质其实就是指针，只是在指针上增加了一些规则，使得它更加安全。实际上，若不考虑赋空值，那么：&lt;/p>
+&lt;ul>
+&lt;li>引用 &lt;code>type&amp;amp; x&lt;/code> 等于 const指针 &lt;code>const type* x&lt;/code>&lt;/li>
+&lt;li>const引用 &lt;code>const type&amp;amp; x&lt;/code> 等于 指向const的const指针 &lt;code>const type* const x&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h3 id="12-值传递指针传递引用传递">&lt;a href="#12-%e5%80%bc%e4%bc%a0%e9%80%92%e6%8c%87%e9%92%88%e4%bc%a0%e9%80%92%e5%bc%95%e7%94%a8%e4%bc%a0%e9%80%92" class="header-anchor">&lt;/a>1.2 值传递、指针传递、引用传递
+&lt;/h3>&lt;h4 id="121-值传递">&lt;a href="#121-%e5%80%bc%e4%bc%a0%e9%80%92" class="header-anchor">&lt;/a>1.2.1 值传递
+&lt;/h4>&lt;p>值传递是形参对实参的拷贝，即将实参赋值到了形参上，改变形参的值并不会影响外部实参的值。从被调用函数的角度来说，值传递是单向的，参数的值只能传入，不能传出。当函数内部需要修改参数，并且不希望这个改变影响调用者时，采用值传递。&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>&lt;/p>
+&lt;h4 id="122-指针传递">&lt;a href="#122-%e6%8c%87%e9%92%88%e4%bc%a0%e9%80%92" class="header-anchor">&lt;/a>1.2.2 指针传递
+&lt;/h4>&lt;p>形参为指向实参地址的指针，当对形参的指向操作时，就相当于对实参本身进行的操作，但对于形参的操作并不会改变实参的值（改变形参存储的地址不会改变实参的指向），因为指针传递的本质也是值的传递（将指针变量存储的地址复制给形参的变量）&lt;/p>
+&lt;h4 id="123-引用传递">&lt;a href="#123-%e5%bc%95%e7%94%a8%e4%bc%a0%e9%80%92" class="header-anchor">&lt;/a>1.2.3 引用传递
+&lt;/h4>&lt;p>形参相当于是实参的“别名”，对形参的操作其实就是对实参的操作，在引用传递过程中，被调函数的形式参数虽然也作为局部变量在栈中开辟了内存空间，但是这时存放的是由主调函数放进来的实参变量的地址。被调函数对形参的任何操作都被处理成间接寻址，即通过栈中存放的地址访问主调函数中的实参变量。正因为如此，被调函数对形参做的任何操作都影响了主调函数中的实参变量。&lt;/p>
+&lt;h2 id="2-参考">&lt;a href="#2-%e5%8f%82%e8%80%83" class="header-anchor">&lt;/a>2. 参考
+&lt;/h2>&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a class="link" href="https://blog.csdn.net/listening_music/article/details/6921608" target="_blank" rel="noopener"
+>C++中引用和指针的区别&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>&lt;a class="link" href="https://www.cnblogs.com/yanlingyin/archive/2011/12/07/2278961.html" target="_blank" rel="noopener"
+>C++ 值传递、指针传递、引用传递详解 - Geek_Ling&lt;/a>&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item></channel></rss>

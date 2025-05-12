@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Recording Macros on Sang's Blog</title><link>https://gitsang.github.io/tags/recording-macros/</link><description>Recent content in Recording Macros on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 May 2025 10:45:17 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/recording-macros/index.xml" rel="self" type="application/rss+xml"/><item><title>Delete Space Overline Using Vim Record</title><link>https://gitsang.github.io/p/delete-space-over-line-using-vim-record/</link><pubDate>Thu, 07 May 2020 20:45:49 +0800</pubDate><guid>https://gitsang.github.io/p/delete-space-over-line-using-vim-record/</guid><description>&lt;!-- markdown-front-matter -->
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-vim" data-lang="vim">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">qd&lt;/span>$&lt;span class="nx">a&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nx">space&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nx">space&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nx">esc&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="nx">g_ldwjq&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">gg10000&lt;/span>@&lt;span class="nx">d&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="1-说明">&lt;a href="#1-%e8%af%b4%e6%98%8e" class="header-anchor">&lt;/a>1. 说明
+&lt;/h2>&lt;ol>
+&lt;li>使用 vim 自带 record 功能
+&lt;ul>
+&lt;li>&lt;code>q&amp;lt;?&amp;gt;&lt;/code> 启动录制，保存在 &lt;code>&amp;lt;?&amp;gt;&lt;/code> 键&lt;/li>
+&lt;li>&lt;code>q&lt;/code> 结束录制&lt;/li>
+&lt;li>&lt;code>@&amp;lt;?&amp;gt;&lt;/code> 调用 &lt;code>&amp;lt;?&amp;gt;&lt;/code> 键录制结果&lt;/li>
+&lt;li>&lt;code>num@&amp;lt;?&amp;gt;&lt;/code> 调用 num 次 &lt;code>&amp;lt;?&amp;gt;&lt;/code> 键录制结果&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>在末尾 &lt;code>dw&lt;/code> 删除空格&lt;/li>
+&lt;li>&lt;code>$a&amp;lt;space&amp;gt;&lt;/code> 添加空格防止末尾无空格情况删除掉最后一个字符&lt;/li>
+&lt;li>&lt;code>$a&amp;lt;space&amp;gt;&amp;lt;space&amp;gt;&lt;/code> 添加两个空格防止空行情况下出现错误&lt;/li>
+&lt;li>&lt;code>g_&lt;/code> 移动到最后一个非空字符，有些人会使用 &lt;code>$be&lt;/code> &lt;code>$ge&lt;/code> 等方式移动到最后一个非空字符，但大部分方式是有问题的，详见 &lt;a class="link" href="https://www.zhihu.com/question/26221661" target="_blank" rel="noopener"
+>vim如何移动到光标所在行最后一个非空字符，而不是末尾？&lt;/a>&lt;/li>
+&lt;li>最后按 &lt;code>j&lt;/code> 自动下一行&lt;/li>
+&lt;/ol></description></item></channel></rss>

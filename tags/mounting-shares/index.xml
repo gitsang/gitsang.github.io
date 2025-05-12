@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Mounting Shares on Sang's Blog</title><link>https://gitsang.github.io/tags/mounting-shares/</link><description>Recent content in Mounting Shares on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 May 2025 10:47:41 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/mounting-shares/index.xml" rel="self" type="application/rss+xml"/><item><title>Mount Windows Network Disk to WSL</title><link>https://gitsang.github.io/p/mount-windows-network-disk-to-wsl/</link><pubDate>Fri, 24 Sep 2021 14:21:20 +0800</pubDate><guid>https://gitsang.github.io/p/mount-windows-network-disk-to-wsl/</guid><description>&lt;!-- markdown-front-matter -->
+&lt;h2 id="1-backgroud">&lt;a href="#1-backgroud" class="header-anchor">&lt;/a>1. Backgroud
+&lt;/h2>&lt;p>Mount samba directly in wsl like linux is difficult&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">Password for root@//filesystem.domain/root:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">mount error: cifs filesystem not supported by the system
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">mount error(19): No such device
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Refer to the mount.cifs(8) manual page (e.g. man mount.cifs)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="2-solution">&lt;a href="#2-solution" class="header-anchor">&lt;/a>2. Solution
+&lt;/h2>&lt;p>But is easily mount net disk in windows file manager. So if your windows share is already mapped to a drive in the Windows host, it can be even simpler.&lt;/p>
+&lt;p>Suppose you already mounted the share on Z:. In that case the following will work:&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">sudo mkdir /mnt/z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo mount -t drvfs &amp;#39;Z:&amp;#39; /mnt/z
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="3-reference">&lt;a href="#3-reference" class="header-anchor">&lt;/a>3. Reference
+&lt;/h2>&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a class="link" href="https://stackoverflow.com/questions/45244306/mounting-a-windows-share-in-windows-subsystem-for-linux/46968030" target="_blank" rel="noopener"
+>Mounting a windows share in Windows Subsystem for Linux - Stack Overflow&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item></channel></rss>

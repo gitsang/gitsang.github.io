@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Frp on Sang's Blog</title><link>https://gitsang.github.io/tags/frp/</link><description>Recent content in Frp on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 May 2025 10:40:23 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/frp/index.xml" rel="self" type="application/rss+xml"/><item><title>Enhancing Security with Fail2ban for FRP Servers</title><link>https://gitsang.github.io/p/fail2ban-frp/</link><pubDate>Fri, 09 May 2025 19:16:59 +0800</pubDate><guid>https://gitsang.github.io/p/fail2ban-frp/</guid><description>&lt;!-- markdown-front-matter -->
+&lt;h2 id="1-背景">&lt;a href="#1-%e8%83%8c%e6%99%af" class="header-anchor">&lt;/a>1. 背景
+&lt;/h2>&lt;p>我们一般会使用 fail2ban 来保护暴露到公网的提供密码登录的 ssh 连接等。&lt;/p>
+&lt;p>但使用 frp 穿透后所有的从外网访问都会变成 127.0.0.1 进入的，原本能用 fail2ban 保护的如 ssh 服务将无法使用。&lt;/p>
+&lt;p>因此 fail2ban 应该放到 frps 服务器上。但 frps 的日志并不会对失败进行辨别，无论你访问哪个服务，frp 日志只会有连接和断开两种日志。&lt;/p>
+&lt;h3 id="11-不完美的解决途径">&lt;a href="#11-%e4%b8%8d%e5%ae%8c%e7%be%8e%e7%9a%84%e8%a7%a3%e5%86%b3%e9%80%94%e5%be%84" class="header-anchor">&lt;/a>1.1 不完美的解决途径
+&lt;/h3>&lt;p>正常情况下，我们不会频繁地连接和断开，只有被扫描时才容易出现。&lt;/p>
+&lt;p>因此添加自定义 filter，并设置一段时间内连接超过阈值后进入监狱。&lt;/p>
+&lt;p>编写文件 &lt;code>/etc/fail2ban/filter.d/frps.conf&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[Definition]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">failregex = ^.*get a user connection \[&amp;lt;HOST&amp;gt;:[0-9]*\]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ^.*get a new work connection: \[&amp;lt;HOST&amp;gt;:[0-9]*\]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ignoreregex =
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>编写文件 &lt;code>/etc/fail2ban/jail.local&lt;/code> 添加&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[frp]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">enabled = true
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">findtime = 10m
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">maxretry = 100
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">bantime = 1d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">filter = frps
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">logpath = /data/frp/log/frps.log
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">protocol = all
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chain = all
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">port = all
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">action = iptables-allports[name=frp,protocol=tcp]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>记得 &lt;code>fail2ban-client reload&lt;/code> 重载服务和 &lt;code>fail2ban-client status frp&lt;/code> 确认服务状态。&lt;/p>
+&lt;p>如果你要添加自己的过滤规则可以使用 &lt;code>fail2ban-regex &amp;lt;LOG&amp;gt; &amp;lt;REGEX&amp;gt; [IGNOREREGEX]&lt;/code> 进行验证，比如 &lt;code>fail2ban-regex /data/frp/log/frps.log /etc/fail2ban/filter.d/frps.conf&lt;/code> （记得要用绝对路径）&lt;/p>
+&lt;p>然后你可以把阈值改小一点，用多次 telnet 来验证是否能过成功封锁。 然后用 &lt;code>fail2ban-client set frp unbanip 12.36.14.241&lt;/code> 来解除封锁。&lt;/p>
+&lt;h2 id="2-outlook">&lt;a href="#2-outlook" class="header-anchor">&lt;/a>2. Outlook
+&lt;/h2>&lt;p>不是很完美的方案，比如如果是 http 连接，很可能超过限制，实际使用需要做一些排除的匹配。&lt;/p>
+&lt;p>也许能通过 tcpdump 抓包日志来进行过滤，或编写程序输出一个更清晰的日志。&lt;/p></description></item></channel></rss>

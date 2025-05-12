@@ -1,0 +1,717 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux Permissions on Sang's Blog</title><link>https://gitsang.github.io/tags/linux-permissions/</link><description>Recent content in Linux Permissions on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 May 2025 10:47:28 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/linux-permissions/index.xml" rel="self" type="application/rss+xml"/><item><title>Linux Command Quick Search</title><link>https://gitsang.github.io/p/linux-command-quick-search/</link><pubDate>Thu, 14 May 2020 14:53:28 +0800</pubDate><guid>https://gitsang.github.io/p/linux-command-quick-search/</guid><description>&lt;!-- markdown-front-matter -->
+&lt;h2 id="1-linux常用命令">&lt;a href="#1-linux%e5%b8%b8%e7%94%a8%e5%91%bd%e4%bb%a4" class="header-anchor">&lt;/a>1. Linux常用命令
+&lt;/h2>&lt;h3 id="11-终端命令格式">&lt;a href="#11-%e7%bb%88%e7%ab%af%e5%91%bd%e4%bb%a4%e6%a0%bc%e5%bc%8f" class="header-anchor">&lt;/a>1.1 终端命令格式
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">command [-option] [parameter]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>&lt;code>command&lt;/code> 命令名&lt;/li>
+&lt;li>&lt;code>[-option]&lt;/code> 选项，用于控制命令，可省略&lt;/li>
+&lt;li>&lt;code>[patameter]&lt;/code> 参数，可以是零到多个&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>终端常用快捷键&lt;/p>
+&lt;ol>
+&lt;li>&lt;code>'ctrl' + '+'&lt;/code> 放大终端字体&lt;/li>
+&lt;li>&lt;code>'ctrl' + '-'&lt;/code> 缩小终端字体&lt;/li>
+&lt;li>&lt;code>tab&lt;/code> 可自动补全指令&lt;/li>
+&lt;li>&lt;code>上/下&lt;/code>光标可切换历史命令&lt;/li>
+&lt;li>&lt;code>ctrl + c&lt;/code> 退出选择&lt;/li>
+&lt;/ol>&lt;/blockquote>
+&lt;h3 id="12-常用终端命令及常用选项">&lt;a href="#12-%e5%b8%b8%e7%94%a8%e7%bb%88%e7%ab%af%e5%91%bd%e4%bb%a4%e5%8f%8a%e5%b8%b8%e7%94%a8%e9%80%89%e9%a1%b9" class="header-anchor">&lt;/a>1.2 常用终端命令及常用选项
+&lt;/h3>&lt;h4 id="121-文件和目录命令">&lt;a href="#121-%e6%96%87%e4%bb%b6%e5%92%8c%e7%9b%ae%e5%bd%95%e5%91%bd%e4%bb%a4" class="header-anchor">&lt;/a>1.2.1 文件和目录命令
+&lt;/h4>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>命令语法&lt;/th>
+&lt;th>作用&lt;/th>
+&lt;th>选项&lt;/th>
+&lt;th>解释&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>clear&lt;/code>&lt;/td>
+&lt;td>清屏&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>清屏&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ls [-opt]&lt;/code>&lt;/td>
+&lt;td>查看当前文件夹内容&lt;/td>
+&lt;td>&lt;code>-a&lt;/code>&lt;/td>
+&lt;td>显示所有文件及目录 (包括开头为.的隐藏档)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;code>-l&lt;/code>&lt;/td>
+&lt;td>以列表方式显示文件详细信息&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;code>-h&lt;/code>&lt;/td>
+&lt;td>配合-l使用，以人性化方式显示文件大小&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;code>-R&lt;/code>&lt;/td>
+&lt;td>若目录下有文件，则以下之文件亦皆依序列出&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>pwd&lt;/code>&lt;/td>
+&lt;td>显示工作目录路径&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>cd [dirName]&lt;/code>&lt;/td>
+&lt;td>切换目录&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>touch [-opt] name&lt;/code>&lt;/td>
+&lt;td>触摸（创建）文件&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>mkdir [-opt] dirName&lt;/code>&lt;/td>
+&lt;td>创建目录&lt;/td>
+&lt;td>&lt;code>-p&lt;/code>&lt;/td>
+&lt;td>递归创建目录&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>tree [-opt] [dirName]&lt;/code>&lt;/td>
+&lt;td>显示目录树状图结构&lt;/td>
+&lt;td>&lt;code>-d&lt;/code>&lt;/td>
+&lt;td>只显示目录&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>cd name&lt;/code>&lt;/td>
+&lt;td>切换目录&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>&lt;strong>cd 命令参数&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>cd&lt;/code> 切换到当前用户的主目录(/home/user)&lt;/li>
+&lt;li>&lt;code>cd ~&lt;/code> 切换到当前用户的主目录(/home/user)&lt;/li>
+&lt;li>&lt;code>cd .&lt;/code> 当前目录&lt;/li>
+&lt;li>&lt;code>cd ..&lt;/code> 上级目录&lt;/li>
+&lt;li>&lt;code>cd -&lt;/code> 在最近两次工作目录来回切换&lt;/li>
+&lt;/ul>
+&lt;h4 id="122-拷贝移动删除命令">&lt;a href="#122-%e6%8b%b7%e8%b4%9d%e7%a7%bb%e5%8a%a8%e5%88%a0%e9%99%a4%e5%91%bd%e4%bb%a4" class="header-anchor">&lt;/a>1.2.2 拷贝、移动、删除命令
+&lt;/h4>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>命令语法&lt;/th>
+&lt;th>作用&lt;/th>
+&lt;th>选项&lt;/th>
+&lt;th>解释&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>rm [-opt] name&lt;/code>&lt;/td>
+&lt;td>删除文件&lt;/td>
+&lt;td>&lt;code>-f&lt;/code>&lt;/td>
+&lt;td>强制删除，忽视不存在文件&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;code>-r&lt;/code>&lt;/td>
+&lt;td>递归删除目录&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>mv [-opt] source dest&lt;/code>&lt;/td>
+&lt;td>移动（重命名）文件/目录&lt;/td>
+&lt;td>&lt;code>-i&lt;/code>&lt;/td>
+&lt;td>覆盖文件前提示&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>cp [-opt] source dest&lt;/code>&lt;/td>
+&lt;td>复制文件&lt;/td>
+&lt;td>&lt;code>-f&lt;/code>&lt;/td>
+&lt;td>直接覆盖文件&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;code>-i&lt;/code>&lt;/td>
+&lt;td>覆盖文件前提示&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;code>-r&lt;/code>&lt;/td>
+&lt;td>递归复制目录及所有子目录/文件&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h4 id="123-文件内容命令">&lt;a href="#123-%e6%96%87%e4%bb%b6%e5%86%85%e5%ae%b9%e5%91%bd%e4%bb%a4" class="header-anchor">&lt;/a>1.2.3 文件内容命令
+&lt;/h4>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>命令语法&lt;/th>
+&lt;th>作用&lt;/th>
+&lt;th>选项&lt;/th>
+&lt;th>解释&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>cat fileName&lt;/code>&lt;/td>
+&lt;td>查看文件内容&lt;/td>
+&lt;td>&lt;code>-b&lt;/code>&lt;/td>
+&lt;td>对非空行标号&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;code>-n&lt;/code>&lt;/td>
+&lt;td>对所有行标号&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>more fileName&lt;/code>&lt;/td>
+&lt;td>分屏显示文件内容&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>grep [-opt] [param]&lt;/code>&lt;/td>
+&lt;td>文本搜索工具&lt;/td>
+&lt;td>&lt;code>-n&lt;/code>&lt;/td>
+&lt;td>显示匹配行及行号&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>echo param&lt;/code>&lt;/td>
+&lt;td>终端显参数指定文字&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>&amp;gt; 和 &amp;gt;&amp;gt;&lt;/code>&lt;/td>
+&lt;td>重定向&lt;/td>
+&lt;td>&lt;code>&amp;gt;&lt;/code>&lt;/td>
+&lt;td>输出（覆盖所有内容）&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;code>&amp;gt;&amp;gt;&lt;/code>&lt;/td>
+&lt;td>追加（追加到文件末尾）&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h4 id="124-文件名通配符">&lt;a href="#124-%e6%96%87%e4%bb%b6%e5%90%8d%e9%80%9a%e9%85%8d%e7%ac%a6" class="header-anchor">&lt;/a>1.2.4 文件名通配符
+&lt;/h4>&lt;ul>
+&lt;li>&lt;code>*&lt;/code> 任意个数个字符&lt;/li>
+&lt;li>&lt;code>?&lt;/code> 任意一个字符&lt;/li>
+&lt;li>&lt;code>[]&lt;/code> 可匹配字符组中的一个&lt;/li>
+&lt;li>&lt;code>[abc]&lt;/code> 匹配a、b、c中的任意一个&lt;/li>
+&lt;li>&lt;code>[a-f]&lt;/code> 匹配 a 到 f 范围内的任意一个&lt;/li>
+&lt;/ul>
+&lt;h3 id="13-查阅帮助">&lt;a href="#13-%e6%9f%a5%e9%98%85%e5%b8%ae%e5%8a%a9" class="header-anchor">&lt;/a>1.3 查阅帮助
+&lt;/h3>&lt;p>命令的查阅一般有以下两种方式&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">command --help
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">man command
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;code>man&lt;/code>是 manual 的缩写，为Linux提供的内置手册&lt;/p>
+&lt;p>&lt;code>man&lt;/code>操作键及功能说明：&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>操作键&lt;/th>
+&lt;th>功能&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Space&lt;/td>
+&lt;td>显示下一屏&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Enter&lt;/td>
+&lt;td>滚动一行&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>b&lt;/td>
+&lt;td>回滚一屏&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>f&lt;/td>
+&lt;td>显示下一屏&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>q&lt;/td>
+&lt;td>退出&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>/word&lt;/td>
+&lt;td>搜索word字符串&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="2-linux文件权限与目录配置">&lt;a href="#2-linux%e6%96%87%e4%bb%b6%e6%9d%83%e9%99%90%e4%b8%8e%e7%9b%ae%e5%bd%95%e9%85%8d%e7%bd%ae" class="header-anchor">&lt;/a>2. Linux文件权限与目录配置
+&lt;/h2>&lt;p>输入&lt;code>ls -al&lt;/code>命令列出所有的文件详细权限与属性，显示如下&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">dr-xr-x---. 7 root root 264 Jul 2 18:49 .
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">dr-xr-xr-x. 18 root root 237 May 16 17:35 ..
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x 3 root root 15 Jul 2 18:47 a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwx------ 3 root root 17 Mar 15 16:08 .ansible
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw------- 1 root root 18390 Sep 19 2018 .bash_history
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="3-vim文本编辑器">&lt;a href="#3-vim%e6%96%87%e6%9c%ac%e7%bc%96%e8%be%91%e5%99%a8" class="header-anchor">&lt;/a>3. vim文本编辑器
+&lt;/h2>&lt;h3 id="31-vim的三种模式">&lt;a href="#31-vim%e7%9a%84%e4%b8%89%e7%a7%8d%e6%a8%a1%e5%bc%8f" class="header-anchor">&lt;/a>3.1 vim的三种模式
+&lt;/h3>&lt;p>命令模式：不能直接编辑文件，可输入快捷键操作（删除行、复制行、移动光标等）
+编辑模式：可用于编辑文本
+末行模式：在末行输入命令进行操作（搜索、替换、保存、退出、高亮）&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>vim打开文件命令&lt;/th>
+&lt;th>作用&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>vim filename&lt;/code>&lt;/td>
+&lt;td>打开指定文件&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>vim +num filename&lt;/code>&lt;/td>
+&lt;td>打开指定文件，将光标移到指定行&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>vim +/keyword filename&lt;/code>&lt;/td>
+&lt;td>打开指定文件，高亮显示关键词&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>vim filename1 filename2 filename3&lt;/code>&lt;/td>
+&lt;td>同时打开多个文件&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h3 id="32-vim编辑器常用操作">&lt;a href="#32-vim%e7%bc%96%e8%be%91%e5%99%a8%e5%b8%b8%e7%94%a8%e6%93%8d%e4%bd%9c" class="header-anchor">&lt;/a>3.2 vim编辑器常用操作
+&lt;/h3>&lt;p>以下命令或操作中&lt;code>n&lt;/code>代表具体数字，如&lt;code>nG&lt;/code>代表&lt;code>1G&lt;/code>、&lt;code>2G&lt;/code>、&lt;code>36G&lt;/code>等。&lt;/p>
+&lt;p>1、光标移动命令&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>操作&lt;/th>
+&lt;th>作用&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>H J K L&lt;/code>&lt;/td>
+&lt;td>前 下 上 后&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>0&lt;/code> / &lt;code>^&lt;/code>&lt;/td>
+&lt;td>移动到行首&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>$&lt;/code>&lt;/td>
+&lt;td>移动到行尾&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>gg&lt;/code>&lt;/td>
+&lt;td>移动到文件开始位置&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>G&lt;/code>&lt;/td>
+&lt;td>移动到文件末尾&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>nG&lt;/code>&lt;/td>
+&lt;td>移动到指定行&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>n↑&lt;/code> / &lt;code>n↓&lt;/code>&lt;/td>
+&lt;td>光标上下移n行&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>n←&lt;/code> / &lt;code>n→&lt;/code>&lt;/td>
+&lt;td>光标左右移n列&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>:n&lt;/code>&lt;/td>
+&lt;td>移动到n行&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>2、复制 / 粘贴 / 删除 / 撤销操作&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>操作&lt;/th>
+&lt;th>作用&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>yy&lt;/code>&lt;/td>
+&lt;td>复制&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>nyy&lt;/code>&lt;/td>
+&lt;td>复制n行&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>p&lt;/code>&lt;/td>
+&lt;td>粘贴到光标所在行的下一行&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>P&lt;/code>&lt;/td>
+&lt;td>粘贴到光标所在行&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>x&lt;/code>&lt;/td>
+&lt;td>删除（剪切）光标后字符&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>x&lt;/code>&lt;/td>
+&lt;td>删除（剪切）光标后字符&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>X&lt;/code>&lt;/td>
+&lt;td>删除（剪切）光标前字符&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>dw&lt;/code>&lt;/td>
+&lt;td>删除（剪切）光标后单词（delete word）&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>d0&lt;/code> / &lt;code>d^&lt;/code>&lt;/td>
+&lt;td>删除（剪切）光标前整行（delete to 0）&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>d$&lt;/code> / &lt;code>D&lt;/code>&lt;/td>
+&lt;td>删除（剪切）光标后整行（delete to $）&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>dd&lt;/code>&lt;/td>
+&lt;td>删除（剪切）当前行&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ndd&lt;/code>&lt;/td>
+&lt;td>删除（剪切）当前行开始往下n行&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>u&lt;/code>&lt;/td>
+&lt;td>撤销&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl + r&lt;/code>&lt;/td>
+&lt;td>重做&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h3 id="33-vim末行模式-或--进入">&lt;a href="#33-vim%e6%9c%ab%e8%a1%8c%e6%a8%a1%e5%bc%8f-%e6%88%96--%e8%bf%9b%e5%85%a5" class="header-anchor">&lt;/a>3.3 vim末行模式（: 或 / 进入）
+&lt;/h3>&lt;p>基本操作&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>基本操作&lt;/th>
+&lt;th>作用&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>:w&lt;/code>&lt;/td>
+&lt;td>保存文件&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>:w filename&lt;/code>&lt;/td>
+&lt;td>另存文件&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>:q&lt;/code>&lt;/td>
+&lt;td>退出&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>!&lt;/code>&lt;/td>
+&lt;td>强制操作（一般跟在其他命令末尾输入）&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>:!外部命令&lt;/code>&lt;/td>
+&lt;td>调用外部命令(如 &lt;code>:!ls&lt;/code>)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>set nu&lt;/code> / &lt;code>set nonu&lt;/code>&lt;/td>
+&lt;td>显示 / 不显示行号&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>查找 / 替换&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>查找 / 替换&lt;/th>
+&lt;th>作用&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>/keyword&lt;/code>&lt;/td>
+&lt;td>查找关键词&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>N&lt;/code> / &lt;code>n&lt;/code>&lt;/td>
+&lt;td>切换查找结果(上一个/下一个)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>:nohl&lt;/code>&lt;/td>
+&lt;td>取消高亮&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>:s/查找的关键词/替换的关键词&lt;/code>&lt;/td>
+&lt;td>替换本行第一处&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>:s/查找的关键词/替换的关键词/g&lt;/code>&lt;/td>
+&lt;td>替换本行全部内容&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>:%s/查找的关键词/替换的关键词&lt;/code>&lt;/td>
+&lt;td>替换整个文档中每一行的第一处&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>:%s/查找的关键词/替换的关键词/g&lt;/code>&lt;/td>
+&lt;td>替换整个文档&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>多文件操作&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>多文件操作&lt;/th>
+&lt;th>作用&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>vim file1 [file2 ...]&lt;/code>&lt;/td>
+&lt;td>同时打开多个文件 &lt;strong>#外部命令#&lt;/strong>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>:files&lt;/code>&lt;/td>
+&lt;td>查看当前已打开文件&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>&lt;code>%a&lt;/code> active表示正打开的文件&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>&lt;code>#&lt;/code> 表示上一个打开的文件&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>:open filename&lt;/code>&lt;/td>
+&lt;td>切换打开的文件&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>:bn&lt;/code>&lt;/td>
+&lt;td>切换到下一个文件next&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>:bp&lt;/code>&lt;/td>
+&lt;td>切换到上一个文件prev&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h3 id="34-vim分屏操作">&lt;a href="#34-vim%e5%88%86%e5%b1%8f%e6%93%8d%e4%bd%9c" class="header-anchor">&lt;/a>3.4 vim分屏操作
+&lt;/h3>&lt;p>1、打开文件并且分屏&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>vim建立和关闭分屏&lt;/th>
+&lt;th>作用&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>vim -O[n] file1 [file2 ...]&lt;/code>&lt;/td>
+&lt;td>垂直分n屏 &lt;strong>#外部命令#&lt;/strong>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>vim -o[n] file1 [file2 ...]&lt;/code>&lt;/td>
+&lt;td>水平分n屏 &lt;strong>#外部命令#&lt;/strong>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>:vs [file2]&lt;/code> / &lt;code>:vsp&lt;/code> / &lt;code>:vsplit&lt;/code>&lt;/td>
+&lt;td>垂直分屏，不加文件名则将当前文件分屏&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>:sv [file2]&lt;/code> / &lt;code>:sp&lt;/code> / &lt;code>:split&lt;/code>&lt;/td>
+&lt;td>水平分屏，不加文件名则将当前文件分屏&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>:new [newfile]&lt;/code>&lt;/td>
+&lt;td>新建水平分屏&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>:only&lt;/code>&lt;/td>
+&lt;td>关闭除当前分屏外的其他分屏&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>:qa&lt;/code>&lt;/td>
+&lt;td>关闭所有分屏&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>v&lt;/code>&lt;/td>
+&lt;td>垂直分屏 &lt;strong>&amp;lt;快捷键&amp;gt;&lt;/strong>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>s&lt;/code>&lt;/td>
+&lt;td>水平分屏 &lt;strong>&amp;lt;快捷键&amp;gt;&lt;/strong>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>n&lt;/code>&lt;/td>
+&lt;td>新建水平分屏 &lt;strong>&amp;lt;快捷键&amp;gt;&lt;/strong>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>o&lt;/code>&lt;/td>
+&lt;td>关闭除当前分屏外的其他分屏 &lt;strong>&amp;lt;快捷键&amp;gt;&lt;/strong>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>c&lt;/code>&lt;/td>
+&lt;td>关闭当前分屏 &lt;strong>&amp;lt;快捷键&amp;gt;&lt;/strong>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>vim分屏窗口调整&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>vim分屏窗口调整&lt;/th>
+&lt;th>作用 &lt;strong>&amp;lt;快捷键&amp;gt;&lt;/strong>&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>l&lt;/code>&lt;/td>
+&lt;td>把光标移到右边的屏中&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>h&lt;/code>&lt;/td>
+&lt;td>把光标移到左边的屏中&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>k&lt;/code>&lt;/td>
+&lt;td>把光标移到上边的屏中&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>j&lt;/code>&lt;/td>
+&lt;td>把光标移到下边的屏中&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>w&lt;/code>&lt;/td>
+&lt;td>把光标移到下一个屏中&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>p&lt;/code>&lt;/td>
+&lt;td>把光标移到上一个屏中&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>L&lt;/code>&lt;/td>
+&lt;td>向右移动分屏&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>H&lt;/code>&lt;/td>
+&lt;td>向左移动分屏&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>J&lt;/code>&lt;/td>
+&lt;td>向上移动分屏&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>K&lt;/code>&lt;/td>
+&lt;td>向下移动分屏&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>r&lt;/code>&lt;/td>
+&lt;td>向下旋转窗口&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>R&lt;/code>&lt;/td>
+&lt;td>向上旋转窗口&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>x&lt;/code>&lt;/td>
+&lt;td>当前窗口与下一个窗口对调&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>-&lt;/code>&lt;/td>
+&lt;td>减少当前窗口高度&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>+&lt;/code>&lt;/td>
+&lt;td>增加当前窗口高度&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>&amp;lt;&lt;/code>&lt;/td>
+&lt;td>增加当前窗口宽度&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>&amp;gt;&lt;/code>&lt;/td>
+&lt;td>减少当前窗口宽度&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ctrl+w&lt;/code> + &lt;code>=&lt;/code>&lt;/td>
+&lt;td>使所有窗口恢复均等&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h2 id="4-参考">&lt;a href="#4-%e5%8f%82%e8%80%83" class="header-anchor">&lt;/a>4. 参考
+&lt;/h2>&lt;p>vim分屏
+&lt;a class="link" href="https://coolshell.cn/articles/1679.html" target="_blank" rel="noopener"
+>https://coolshell.cn/articles/1679.html&lt;/a>
+&lt;a class="link" href="https://www.jianshu.com/p/52949caa7e93" target="_blank" rel="noopener"
+>https://www.jianshu.com/p/52949caa7e93&lt;/a>&lt;/p>
+&lt;p>gdb调试
+&lt;a class="link" href="https://www.ibm.com/developerworks/cn/linux/sdk/gdb/index.html" target="_blank" rel="noopener"
+>https://www.ibm.com/developerworks/cn/linux/sdk/gdb/index.html&lt;/a>&lt;/p>
+&lt;p>linux 下 JDK
+&lt;a class="link" href="https://www.yiibai.com/java/how-to-install-java-on-ubuntu.html" target="_blank" rel="noopener"
+>https://www.yiibai.com/java/how-to-install-java-on-ubuntu.html&lt;/a>&lt;/p>
+&lt;p>windows 下 JDK
+&lt;a class="link" href="https://www.runoob.com/java/java-environment-setup.html#linux-install" target="_blank" rel="noopener"
+>https://www.runoob.com/java/java-environment-setup.html#linux-install&lt;/a>&lt;/p></description></item></channel></rss>
