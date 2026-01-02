@@ -1,5 +1,5 @@
 ---
-title: Enhancing Security with Fail2ban for FRP Servers
+title: 使用 fail2ban 保护通过 frp 穿透的服务
 slug: fail2ban-frp
 description: This content discusses configuring Fail2ban to protect services accessed via FRP by detecting excessive connection attempts through custom filters. It outlines solution limitations and suggests improvements.
 date: "2025-05-09T19:16:59+08:00"

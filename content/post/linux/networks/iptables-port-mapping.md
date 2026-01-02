@@ -1,6 +1,6 @@
 ---
-title: Using Iptables
-slug: using-iptables
+title: 实用 iptables 进行端口映射
+slug: iptables-port-mapping
 description: This guide outlines how to enable port mapping using iptables, including methods to allow packet forwarding and setting up DNAT and SNAT mappings.
 date: "2020-03-14T14:53:28+08:00"
 lastmod: "2025-05-12T10:48:37+08:00"
