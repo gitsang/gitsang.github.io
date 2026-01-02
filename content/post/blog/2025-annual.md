@@ -1,6 +1,6 @@
 ---
 title: 2025 年终总结.md
-slug: 2025-anual-summary
+slug: 2025-anual
 description:
 date: "2025-12-28T17:14:00+08:00"
 lastmod: "2025-12-28T17:14:00+08:00"
