@@ -6,7 +6,8 @@ date: "2025-05-09T19:17:31+08:00"
 lastmod: "2025-05-12T10:40:43+08:00"
 weight: 1
 categories:
-  - "cnblog"
+  - "linux"
+  - "server"
 tags:
   - "Aliyun DNS"
   - "subdomains"

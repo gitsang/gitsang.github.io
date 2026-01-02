@@ -1,19 +1,20 @@
 ---
-title: 'Curl 输出格式'
-description: ''
+title: Curl 格式化输出
+description: ""
 slug: curl-write-out-format
 date: 2019-10-09T14:53:28+08:00
 lastmod: 2020-05-28T15:22:06+08:00
 weight: 1
 image: cover.jpg
 categories:
-  - linux
+  - "linux"
+  - "server"
 tags:
   - linux
   - curl
 ---
 
-## 操作方法
+## 1. 操作方法
 
 默认情况下，curl 不会输出耗时信息，状态码等，若需要输出，需要使用 `-w, --write-out FORMAT` 选项配置 Write Out 格式。
 

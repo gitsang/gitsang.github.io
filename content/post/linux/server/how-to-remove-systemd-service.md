@@ -7,6 +7,7 @@ lastmod: "2025-05-12T10:36:53+08:00"
 weight: 1
 categories:
   - "linux"
+  - "server"
 tags:
   - "systemd"
   - "service removal"

@@ -1,12 +1,13 @@
 ---
-title: Dynamic Partition Expansion Without LVM
+title: 非 LVM 分区动态扩容
 slug: lvm
 description: Guide on expanding system partitions without formatting or remounting disks. Example using /dev/sda2 to increase size on a system with sufficient space or virtualized capacity increases.
 date: "2025-05-09T19:17:37+08:00"
 lastmod: "2025-05-12T10:40:51+08:00"
 weight: 1
 categories:
-  - "cnblog"
+  - "linux"
+  - "server"
 tags:
   - "dynamic partition expansion"
   - "non-LVM"

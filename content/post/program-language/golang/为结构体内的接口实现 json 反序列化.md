@@ -1,11 +1,12 @@
 ---
-title: interface struct 的 json 反序列化
-slug: deserialization-of-interface-struct
-description: 通过创建临时结构体实现 struct 内 interface struct 的 json 反序列化
+title: 为结构体内的接口实现 json 反序列化
+slug: deserialization-of-interface
+description: 通过创建临时结构体实现 struct 内 interface 的 json 反序列化
 date: "2021-09-24T13:55:01+08:00"
 lastmod: "2025-05-12T10:42:06+08:00"
 weight: 100
 categories:
+  - "program-language"
   - "golang"
 tags:
   - "Golang"
