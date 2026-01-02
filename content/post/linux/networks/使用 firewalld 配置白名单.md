@@ -1,5 +1,5 @@
 ---
-title: Firewalld 白名单配置方法
+title: 使用 firewalld 配置白名单
 slug: firewalld-white-list-configuration
 description: This guide explains how to configure a firewall to only trust connections from specified IP ranges. It includes steps on adding IP address ranges to the trusted zone, setting the default zone to drop, and assigning network interfaces.
 date: "2024-05-07T11:09:00+08:00"
@@ -7,6 +7,7 @@ lastmod: "2025-05-12T10:46:11+08:00"
 weight: 1
 categories:
   - "linux"
+  - "network"
 tags:
   - "firewall"
   - "whitelist"

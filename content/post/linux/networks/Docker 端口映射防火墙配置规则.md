@@ -6,7 +6,8 @@ date: "2024-05-07T11:09:00+08:00"
 lastmod: "2025-05-12T10:41:45+08:00"
 weight: 1
 categories:
-  - "docker"
+  - "linux"
+  - "network"
 tags:
   - "Docker"
   - "firewalld"

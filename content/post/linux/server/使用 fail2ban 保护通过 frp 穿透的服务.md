@@ -6,7 +6,8 @@ date: "2025-05-09T19:16:59+08:00"
 lastmod: "2025-05-12T10:40:23+08:00"
 weight: 1
 categories:
-  - "cnblog"
+  - "linux"
+  - "server"
 tags:
   - "fail2ban"
   - "frp"

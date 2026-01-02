@@ -7,6 +7,7 @@ lastmod: "2025-05-12T10:47:17+08:00"
 weight: 1
 categories:
   - "linux"
+  - "network"
 tags:
   - "iptables"
   - "firewall rules"
