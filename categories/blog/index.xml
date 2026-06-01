@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog on Sang's Blog</title><link>https://gitsang.github.io/categories/blog/</link><description>Recent content in Blog on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Sun, 28 Dec 2025 17:14:00 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/categories/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>2025 年终总结</title><link>https://gitsang.github.io/p/2025-anual/</link><pubDate>Sun, 28 Dec 2025 17:14:00 +0800</pubDate><guid>https://gitsang.github.io/p/2025-anual/</guid><description>&lt;!-- markdown-front-matter --&gt;
+&lt;p&gt;说来惭愧，大概有三年的时间没有写过年终总结了（事实上除了技术文档之外，文章也很少写了）。
+一方面是工作之后，就越来越没有学生时代那么多空闲的时间可以用来思考和写作了。
+另一方面则是对自己的期望越来越高，觉得流水账一样的总结不太拿得出手，
+以及太久没有写这些东西感觉文笔退化的厉害，反而变得难以落笔了。&lt;/p&gt;
+&lt;p&gt;对我来说 2025 年是变化巨大的一年，仿佛整个世界都发生了翻天覆地的变化，但其实仔细想想，又似乎一切如旧。
+有一些不大不小的伤病，但身体状态还不错，体能还有点老本能吃。
+即使很忙，但仍然能挤出一些时间玩喜欢的游戏，看喜欢的动画，读喜欢的书。
+虽然有压力，有点小痛苦，但还蛮开心。
+我可能正在经历人生中最艰难的一段时光，但可以肯定的是，这绝对也是最具有挑战和机遇的时光。&lt;/p&gt;
+&lt;h2 id="1-旅行的压力"&gt;&lt;a href="#1-%e6%97%85%e8%a1%8c%e7%9a%84%e5%8e%8b%e5%8a%9b" class="header-anchor"&gt;&lt;/a&gt;1. 旅行的压力
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;所有的期待，都暗中标好了价码。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;前段时间刚好和朋友聊天讲到这个话题，仔细一想 2025 应该是我旅行次数最多的一年，甚至对我来说可能有点过量。
+我可能更习惯于延迟满足，旅行更像是对我一年来努力的奖励，或者对压抑情绪的释放。
+太过于频繁的旅行可能反而带来更多的压力。而且还会想着上次的视频还没剪，照片还没修，欠下的债越来越多。&lt;/p&gt;
+&lt;p&gt;另外虽然今年大多数的旅游我对攻略的贡献几乎为 0，但作为一个 J 人，我实际上没办法真正漫无目的的旅行。
+要么是需要拍到好的照片，要么是要尝试新的拍摄风格，要么是需要收集好看的冰箱贴，总之得要有所收获。&lt;/p&gt;
+&lt;h2 id="2-复杂度危机"&gt;&lt;a href="#2-%e5%a4%8d%e6%9d%82%e5%ba%a6%e5%8d%b1%e6%9c%ba" class="header-anchor"&gt;&lt;/a&gt;2. 复杂度危机
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;不要妄想上帝用一句话创造世界。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;说实话 2025 年我最反感，甚至痛恨的一个词就是 Vibe Coding，我觉得这个词多少带点贬义和羞辱。
+但我并非完全反对 Vibe Coding（Vibe 是最好的 QuickStart），而是反感对 Vibe Coding 诈骗式的营销。&lt;/p&gt;
+&lt;p&gt;复杂度危机并不是一个新鲜词，每一代的程序员都经历过复杂度危机，并都在致力于解决复杂度危机。&lt;/p&gt;
+&lt;p&gt;很多人觉得这是编程的&amp;quot;民主化&amp;quot;，让不会写代码的人也能创造软件。但我看到的却是另一番景象：代码质量急剧下降，维护成本指数级上升，技术债像滚雪球一样越滚越大。因为 Vibe Coding 偷偷藏了一个致命的假设——想法本身就是清晰的。&lt;/p&gt;
+&lt;p&gt;而实际上，大多数人的想法都是模糊的、矛盾的、不完整的。编程最大的价值从来不是把想法变成代码，而是在这个过程中发现想法中的漏洞，厘清需求边界，让想法真正可行。这才是编程的本质——思考，而不仅仅是实现。&lt;/p&gt;
+&lt;h2 id="3-正确的事"&gt;&lt;a href="#3-%e6%ad%a3%e7%a1%ae%e7%9a%84%e4%ba%8b" class="header-anchor"&gt;&lt;/a&gt;3. 正确的事
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;正确的事，都有代价。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="4-表达力"&gt;&lt;a href="#4-%e8%a1%a8%e8%be%be%e5%8a%9b" class="header-anchor"&gt;&lt;/a&gt;4. 表达力
+&lt;/h2&gt;&lt;p&gt;不只是我自己，我觉得整个社会的表达能力都正在减弱。我们正在进行一场愉快的退化。
+我们享受着奶头乐带来的简单，快速的快乐，显著降低了大脑活动水平，削弱记忆，甚至造成“认知惯性”&lt;/p&gt;
+&lt;h2 id="5-复杂度危机"&gt;&lt;a href="#5-%e5%a4%8d%e6%9d%82%e5%ba%a6%e5%8d%b1%e6%9c%ba" class="header-anchor"&gt;&lt;/a&gt;5. 复杂度危机
+&lt;/h2&gt;&lt;p&gt;如果要说今年什么东西最火，我觉得一定是 Vibe Coding 了。到处都能听到他的名字，从办公室到朋友圈，从技术论坛到小红书，不管到哪都有人提起。&lt;/p&gt;
+&lt;p&gt;但说实话，我从一开始就不喜欢这个词，不过严格意义上来说，
+我所反感的并不是这个词本身，而是整个互联网对 Vibe Coding 的一种欺诈式的营销和误解。&lt;/p&gt;
+&lt;p&gt;如果要用一句话评价 Loveable，我会说 “生的幽默，死的滑稽”&lt;/p&gt;
+&lt;p&gt;事实上，编码从来都不是障碍，编程早就已经不是需要多大门槛的事情了。
+现在一些代码的可读性甚至你随便找一个英文母语的大妈过来都能读懂。&lt;/p&gt;
+&lt;p&gt;虽然他更加剧了互联网垃圾的生产速度。但他也让真正具备产品思维，真正理解需求的人，不再受制于编程技术。&lt;/p&gt;
+&lt;p&gt;你只需要&amp;quot;描述你的想法&amp;quot;，代码就会自动生成。听起来很美，对吧？但现实是，没有清晰的需求描述，再强大的 AI 也只能产生一堆看起来能运行但本质上是垃圾的代码。&lt;/p&gt;
+&lt;p&gt;很多人觉得这是编程的&amp;quot;民主化&amp;quot;，让不会写代码的人也能创造软件。但我看到的却是另一番景象：代码质量急剧下降，维护成本指数级上升，技术债像滚雪球一样越滚越大。因为 Vibe Coding 偷偷藏了一个致命的假设——想法本身就是清晰的。&lt;/p&gt;
+&lt;p&gt;而实际上，大多数人的想法都是模糊的、矛盾的、不完整的。编程最大的价值从来不是把想法变成代码，而是在这个过程中发现想法中的漏洞，厘清需求边界，让想法真正可行。这才是编程的本质——思考，而不仅仅是实现。&lt;/p&gt;
+&lt;p&gt;说实话，我很讨厌 Vibe Coding 这个词，甚至感到愤怒，通常我很少为一个概念感到愤怒，即使是区块链，我对他的评价也只是“没有意义”，但我要说的是 Vibe Coding 从一开始就是扯淡。我在上半年这个词火爆全网时就说，这些自动化编码工具、平台绝对会后悔自己没在估值最高的时候卖掉它。Loveable 在我看来已经死了，下一个会是谁？&lt;/p&gt;
+&lt;p&gt;看到大家在网络上抱怨，我觉得这真的太蠢了。我才知道竟然会有如此天真且愚蠢的想法&lt;/p&gt;</description></item></channel></rss>

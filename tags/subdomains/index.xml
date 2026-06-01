@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Subdomains on Sang's Blog</title><link>https://gitsang.github.io/tags/subdomains/</link><description>Recent content in Subdomains on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 May 2025 10:40:43 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/subdomains/index.xml" rel="self" type="application/rss+xml"/><item><title>阿里云配置子域名及其 RAM 访问权限</title><link>https://gitsang.github.io/p/ram-permissions-and-subdomain-management-in-alibaba-cloud/</link><pubDate>Fri, 09 May 2025 19:17:31 +0800</pubDate><guid>https://gitsang.github.io/p/ram-permissions-and-subdomain-management-in-alibaba-cloud/</guid><description>&lt;!-- markdown-front-matter --&gt;
+&lt;h2 id="1-背景"&gt;&lt;a href="#1-%e8%83%8c%e6%99%af" class="header-anchor"&gt;&lt;/a&gt;1. 背景
+&lt;/h2&gt;&lt;p&gt;背景：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;假设只有一个二级域名 &lt;code&gt;domain.com&lt;/code&gt;，有多套环境的情况下，可能需要分配不同的三级子域名 &lt;code&gt;sub.domain.com&lt;/code&gt;，每个环境可能需要再配置四级子域名 &lt;code&gt;sub.sub.domain.com&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;如果使用一个 AK 拥有所有域名的 DNS 权限，可能不太安全（即使互相信任，也无法避免误操作导致影响其他环境）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;需求：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;每套环境需要拥有自己的一套 AK，并能自己管理自己的域名，互不冲突&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="2-操作步骤"&gt;&lt;a href="#2-%e6%93%8d%e4%bd%9c%e6%ad%a5%e9%aa%a4" class="header-anchor"&gt;&lt;/a&gt;2. 操作步骤
+&lt;/h2&gt;&lt;h3 id="21-添加子域名"&gt;&lt;a href="#21-%e6%b7%bb%e5%8a%a0%e5%ad%90%e5%9f%9f%e5%90%8d" class="header-anchor"&gt;&lt;/a&gt;2.1 添加子域名
+&lt;/h3&gt;&lt;p&gt;阿里云的 RAM 访问控制中，不允许使用通配等方式配置域名资源（因为操作是针对 AUTHORITY SECTION 的），因此必须先拆分出子域名。&lt;/p&gt;
+&lt;p&gt;首先在 &lt;a class="link" href="https://dns.console.aliyun.com/" target="_blank" rel="noopener"
+&gt;域名解析&lt;/a&gt; 页面添加子域名（本文以 &lt;code&gt;env1.domain.com&lt;/code&gt; 为例）&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://img2023.cnblogs.com/blog/2038910/202305/2038910-20230525094954695-265454889.png"
+loading="lazy"
+alt="image"
+&gt;&lt;/p&gt;
+&lt;p&gt;添加域名需要 TXT 记录验证&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://img2023.cnblogs.com/blog/2038910/202305/2038910-20230525095051168-579963715.png"
+loading="lazy"
+alt="image"
+&gt;&lt;/p&gt;
+&lt;p&gt;按照提示要求在你的主域名添加对应的 TXT 主机记录后点击验证即可添加成功。&lt;/p&gt;
+&lt;h3 id="22-创建子域名的-ram-权限策略"&gt;&lt;a href="#22-%e5%88%9b%e5%bb%ba%e5%ad%90%e5%9f%9f%e5%90%8d%e7%9a%84-ram-%e6%9d%83%e9%99%90%e7%ad%96%e7%95%a5" class="header-anchor"&gt;&lt;/a&gt;2.2 创建子域名的 RAM 权限策略
+&lt;/h3&gt;&lt;p&gt;其策略类似如下（需要把 &lt;code&gt;${your-sub-domain}&lt;/code&gt; 改为刚才创建的子域名，如本文的 &lt;code&gt;env1.domain.com&lt;/code&gt;），此处虽然可以使用通配，但名称必须是域名解析中列出的域名值。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;Version&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;1&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;Statement&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;Action&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;alidns:*&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;Resource&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;acs:alidns:::domain/${your-sub-domain}&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;Effect&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Allow&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;},&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;Action&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;alidns:Describe*&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;Resource&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;acs:alidns:::*&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;Effect&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Allow&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这里配置了两个策略：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;第一个策略是允许 &lt;code&gt;acs:alidns:::domain/${your-sub-domain}&lt;/code&gt; 资源的所有 &lt;code&gt;alidns:*&lt;/code&gt; 操作&lt;/li&gt;
+&lt;li&gt;第二个策略是允许所有 &lt;code&gt;acs:alidns:::*&lt;/code&gt; 资源的 Describe &lt;code&gt;alidns:Describe*&lt;/code&gt; 操作（此处可能还需要 Describe 其他的资源，阿里云文档和客服并没有给出明确的答复）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="23-子账号赋权和-ak-申请"&gt;&lt;a href="#23-%e5%ad%90%e8%b4%a6%e5%8f%b7%e8%b5%8b%e6%9d%83%e5%92%8c-ak-%e7%94%b3%e8%af%b7" class="header-anchor"&gt;&lt;/a&gt;2.3 子账号赋权和 AK 申请
+&lt;/h3&gt;&lt;p&gt;新建一个 RAM 用户，需要勾选 &lt;code&gt;OpenAPI 调用访问&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://img2023.cnblogs.com/blog/2038910/202305/2038910-20230525103254130-608849459.png"
+loading="lazy"
+alt="image"
+&gt;&lt;/p&gt;
+&lt;p&gt;之后进入用户详情创建 AK&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://img2023.cnblogs.com/blog/2038910/202305/2038910-20230525103411240-349407655.png"
+loading="lazy"
+alt="image"
+&gt;&lt;/p&gt;
+&lt;p&gt;进入权限管理为用户赋予刚才创建的策略，或者你也可以为用户组赋权后将用户加入用户组（推荐）&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://img2023.cnblogs.com/blog/2038910/202305/2038910-20230525104202528-918302234.png"
+loading="lazy"
+alt="image"
+&gt;&lt;/p&gt;
+&lt;h3 id="24-使用-ak"&gt;&lt;a href="#24-%e4%bd%bf%e7%94%a8-ak" class="header-anchor"&gt;&lt;/a&gt;2.4 使用 AK
+&lt;/h3&gt;&lt;p&gt;之后根据使用的不同的 ACME 或 DDNS 服务等的文档配置 AK 即可&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Server on Sang's Blog</title><link>https://gitsang.github.io/categories/server/</link><description>Recent content in Server on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 May 2025 10:47:59 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/categories/server/index.xml" rel="self" type="application/rss+xml"/><item><title>Removing Systemd Services Safely</title><link>https://gitsang.github.io/p/how-to-remove-systemd-service/</link><pubDate>Mon, 12 May 2025 10:36:53 +0800</pubDate><guid>https://gitsang.github.io/p/how-to-remove-systemd-service/</guid><description>&lt;!-- markdown-front-matter --&gt;
+&lt;h2 id="1-method"&gt;&lt;a href="#1-method" class="header-anchor"&gt;&lt;/a&gt;1. Method
+&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;systemctl stop &lt;span class="o"&gt;[&lt;/span&gt;servicename&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;systemctl disable &lt;span class="o"&gt;[&lt;/span&gt;servicename&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rm /your/service/locations/&lt;span class="o"&gt;[&lt;/span&gt;servicename&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rm /your/service/locations/&lt;span class="o"&gt;[&lt;/span&gt;servicename&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="c1"&gt;# and symlinks that might be related&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;systemctl daemon-reload
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;systemctl reset-failed
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Systemd uses unit (file to define services) to remove a service the unit have to be removed&amp;hellip; here is a list of unit locations :&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/etc/systemd/system/ &lt;span class="o"&gt;(&lt;/span&gt;and sub directories&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/usr/local/etc/systemd/system/ &lt;span class="o"&gt;(&lt;/span&gt;and sub directories&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;~/.config/systemd/user/ &lt;span class="o"&gt;(&lt;/span&gt;and sub directories&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/usr/lib/systemd/ &lt;span class="o"&gt;(&lt;/span&gt;and sub directories&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/usr/local/lib/systemd/ &lt;span class="o"&gt;(&lt;/span&gt;and sub directories&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/etc/init.d/ &lt;span class="o"&gt;(&lt;/span&gt;Converted old service system&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;You can easily find location in &lt;code&gt;loaded&lt;/code&gt; property using &lt;code&gt;systemctl status [service]&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ systemctl status bluetooth.service
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; bluetooth.service - Bluetooth service
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Loaded: loaded &lt;span class="o"&gt;(&lt;/span&gt;/lib/systemd/system/bluetooth.service&lt;span class="p"&gt;;&lt;/span&gt; disabled&lt;span class="p"&gt;;&lt;/span&gt; vendor preset: enabled&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Active: inactive &lt;span class="o"&gt;(&lt;/span&gt;dead&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Docs: man:bluetoothd&lt;span class="o"&gt;(&lt;/span&gt;8&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Or using &lt;code&gt;systemctl cat [service]&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-systemd" data-lang="systemd"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# systemctl cat frps.service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# /lib/systemd/system/frps.service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Frp Server Service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="na"&gt;After&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;network.target&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;[Service]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="na"&gt;Type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;simple&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="na"&gt;User&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;nobody&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="na"&gt;Restart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;on-failure&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="na"&gt;RestartSec&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;5s&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="na"&gt;ExecStart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/usr/bin/frps -c /etc/frp/frps.ini&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;[Install]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="na"&gt;WantedBy&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;multi-user.target&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="11-about-reset-failed-option"&gt;&lt;a href="#11-about-reset-failed-option" class="header-anchor"&gt;&lt;/a&gt;1.1 About &amp;ldquo;reset-failed&amp;rdquo; Option
+&lt;/h3&gt;&lt;p&gt;From the systemd man page:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;reset-failed [PATTERN&amp;hellip;]&lt;/p&gt;
+&lt;p&gt;Reset the &amp;ldquo;failed&amp;rdquo; state of the specified units, or if no unit name is passed, reset the state of all units. When a unit fails in some way (i.e. process exiting with non-zero error code, terminating abnormally or timing out), it will automatically enter the &amp;ldquo;failed&amp;rdquo; state and its exit code and status is recorded for introspection by the administrator until the service is restarted or reset with this command.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="2-reference"&gt;&lt;a href="#2-reference" class="header-anchor"&gt;&lt;/a&gt;2. Reference
+&lt;/h2&gt;&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;&lt;a class="link" href="https://superuser.com/questions/513159/how-to-remove-systemd-services/1344239#1344239" target="_blank" rel="noopener"
+&gt;How to remove systemd services&lt;/a&gt;&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</description></item><item><title>非 LVM 分区动态扩容</title><link>https://gitsang.github.io/p/lvm/</link><pubDate>Fri, 09 May 2025 19:17:37 +0800</pubDate><guid>https://gitsang.github.io/p/lvm/</guid><description>&lt;!-- markdown-front-matter --&gt;
+&lt;blockquote&gt;
+&lt;p&gt;非 LVM 分区实现动态扩容，适用于系统分区扩容，无需格式化磁盘，无需重新挂载磁盘&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="1-扩容步骤"&gt;&lt;a href="#1-%e6%89%a9%e5%ae%b9%e6%ad%a5%e9%aa%a4" class="header-anchor"&gt;&lt;/a&gt;1. 扩容步骤
+&lt;/h2&gt;&lt;p&gt;以 &lt;code&gt;/dev/sda2&lt;/code&gt; 扩容为例，假设 &lt;code&gt;/dev/sda&lt;/code&gt; 空间足够（或已通过虚拟化管理平台增加容量）&lt;/p&gt;
+&lt;p&gt;使用 &lt;code&gt;fdisk -l&lt;/code&gt; 命令可看到 &lt;code&gt;/dev/sda&lt;/code&gt; 磁盘总容量 200GiB，&lt;code&gt;/dev/sda2&lt;/code&gt; 分区容量 100GiB&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Disk /dev/sda: 200 GiB, 214748364800 bytes, 419430400 sectors
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Disk model: QEMU HARDDISK
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Units: sectors of 1 * 512 = 512 bytes
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Sector size (logical/physical): 512 bytes / 512 bytes
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;I/O size (minimum/optimal): 512 bytes / 512 bytes
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Disklabel type: gpt
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Disk identifier: 1459CE9A-A8E1-4934-8EC6-17C7BA97E9E0
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Device Start End Sectors Size Type
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/dev/sda1 2048 4095 2048 1M BIOS boot
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/dev/sda2 4096 419430366 209711087 100G Linux filesystem
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;现将 &lt;code&gt;/dev/sda2&lt;/code&gt; 分区扩容到 200GiB&lt;/p&gt;
+&lt;h3 id="11-重新分区"&gt;&lt;a href="#11-%e9%87%8d%e6%96%b0%e5%88%86%e5%8c%ba" class="header-anchor"&gt;&lt;/a&gt;1.1 重新分区
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;fdisk /dev/sda
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;输入 &lt;code&gt;p&lt;/code&gt; 查看分区情况，确认 &lt;code&gt;/dev/sda2&lt;/code&gt; 所在的位置和大小。&lt;/li&gt;
+&lt;li&gt;输入 &lt;code&gt;d&lt;/code&gt; 删除分区 &lt;code&gt;/dev/sda2&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;输入 &lt;code&gt;n&lt;/code&gt; 创建一个新的分区。&lt;/li&gt;
+&lt;li&gt;选择主分区或扩展分区（根据你的需要）。&lt;/li&gt;
+&lt;li&gt;按照提示输入分区编号（如果有多个分区）。&lt;/li&gt;
+&lt;li&gt;按照提示输入新的起始扇区（通常是默认值）。&lt;/li&gt;
+&lt;li&gt;按照提示输入新的结束扇区，确保分区大小为200G。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;如果出现提示是否保留文件索引，选择 &lt;code&gt;保留&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;输入 &lt;code&gt;w&lt;/code&gt; 保存更改并退出。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;再次输入 &lt;code&gt;fdisk -l&lt;/code&gt; 应该能看到 &lt;code&gt;/dev/sda2&lt;/code&gt; 已扩容成功&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Disk /dev/sda: 200 GiB, 214748364800 bytes, 419430400 sectors
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Disk model: QEMU HARDDISK
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Units: sectors of 1 * 512 = 512 bytes
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Sector size (logical/physical): 512 bytes / 512 bytes
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;I/O size (minimum/optimal): 512 bytes / 512 bytes
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Disklabel type: gpt
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Disk identifier: 1459CE9A-A8E1-4934-8EC6-17C7BA97E9E0
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Device Start End Sectors Size Type
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/dev/sda1 2048 4095 2048 1M BIOS boot
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/dev/sda2 4096 419430366 419426271 200G Linux filesystem
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="12-扩展文件系统"&gt;&lt;a href="#12-%e6%89%a9%e5%b1%95%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f" class="header-anchor"&gt;&lt;/a&gt;1.2 扩展文件系统
+&lt;/h3&gt;&lt;p&gt;输入 &lt;code&gt;df -h&lt;/code&gt; 命令查看文件系统大小&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Filesystem Size Used Avail Use% Mounted on
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;tmpfs 6.3G 1.6M 6.3G 1% /run
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/dev/sda2 99G 81G 18G 81% /
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;可以看到 &lt;code&gt;/dev/sda2&lt;/code&gt; 文件系统空间仍未改变&lt;/p&gt;
+&lt;p&gt;对于 &lt;code&gt;ext4&lt;/code&gt; 系统，可以使用 &lt;code&gt;resize2fs /dev/sda2&lt;/code&gt; 命令扩展文件系统&lt;/p&gt;
+&lt;p&gt;再次输入 &lt;code&gt;df -h&lt;/code&gt; 命令，可以看到 &lt;code&gt;/dev/sda2&lt;/code&gt; 文件系统空间完成扩容&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Filesystem Size Used Avail Use% Mounted on
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;tmpfs 6.3G 1.6M 6.3G 1% /run
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/dev/sda2 197G 81G 108G 43% /
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;tmpfs 32G 0 32G 0% /dev/shm
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;tmpfs 5.0M 0 5.0M 0% /run/lock
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;tmpfs 6.3G 4.0K 6.3G 1% /run/user/1000
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item><item><title>阿里云配置子域名及其 RAM 访问权限</title><link>https://gitsang.github.io/p/ram-permissions-and-subdomain-management-in-alibaba-cloud/</link><pubDate>Fri, 09 May 2025 19:17:31 +0800</pubDate><guid>https://gitsang.github.io/p/ram-permissions-and-subdomain-management-in-alibaba-cloud/</guid><description>&lt;!-- markdown-front-matter --&gt;
+&lt;h2 id="1-背景"&gt;&lt;a href="#1-%e8%83%8c%e6%99%af" class="header-anchor"&gt;&lt;/a&gt;1. 背景
+&lt;/h2&gt;&lt;p&gt;背景：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;假设只有一个二级域名 &lt;code&gt;domain.com&lt;/code&gt;，有多套环境的情况下，可能需要分配不同的三级子域名 &lt;code&gt;sub.domain.com&lt;/code&gt;，每个环境可能需要再配置四级子域名 &lt;code&gt;sub.sub.domain.com&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;如果使用一个 AK 拥有所有域名的 DNS 权限，可能不太安全（即使互相信任，也无法避免误操作导致影响其他环境）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;需求：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;每套环境需要拥有自己的一套 AK，并能自己管理自己的域名，互不冲突&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="2-操作步骤"&gt;&lt;a href="#2-%e6%93%8d%e4%bd%9c%e6%ad%a5%e9%aa%a4" class="header-anchor"&gt;&lt;/a&gt;2. 操作步骤
+&lt;/h2&gt;&lt;h3 id="21-添加子域名"&gt;&lt;a href="#21-%e6%b7%bb%e5%8a%a0%e5%ad%90%e5%9f%9f%e5%90%8d" class="header-anchor"&gt;&lt;/a&gt;2.1 添加子域名
+&lt;/h3&gt;&lt;p&gt;阿里云的 RAM 访问控制中，不允许使用通配等方式配置域名资源（因为操作是针对 AUTHORITY SECTION 的），因此必须先拆分出子域名。&lt;/p&gt;
+&lt;p&gt;首先在 &lt;a class="link" href="https://dns.console.aliyun.com/" target="_blank" rel="noopener"
+&gt;域名解析&lt;/a&gt; 页面添加子域名（本文以 &lt;code&gt;env1.domain.com&lt;/code&gt; 为例）&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://img2023.cnblogs.com/blog/2038910/202305/2038910-20230525094954695-265454889.png"
+loading="lazy"
+alt="image"
+&gt;&lt;/p&gt;
+&lt;p&gt;添加域名需要 TXT 记录验证&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://img2023.cnblogs.com/blog/2038910/202305/2038910-20230525095051168-579963715.png"
+loading="lazy"
+alt="image"
+&gt;&lt;/p&gt;
+&lt;p&gt;按照提示要求在你的主域名添加对应的 TXT 主机记录后点击验证即可添加成功。&lt;/p&gt;
+&lt;h3 id="22-创建子域名的-ram-权限策略"&gt;&lt;a href="#22-%e5%88%9b%e5%bb%ba%e5%ad%90%e5%9f%9f%e5%90%8d%e7%9a%84-ram-%e6%9d%83%e9%99%90%e7%ad%96%e7%95%a5" class="header-anchor"&gt;&lt;/a&gt;2.2 创建子域名的 RAM 权限策略
+&lt;/h3&gt;&lt;p&gt;其策略类似如下（需要把 &lt;code&gt;${your-sub-domain}&lt;/code&gt; 改为刚才创建的子域名，如本文的 &lt;code&gt;env1.domain.com&lt;/code&gt;），此处虽然可以使用通配，但名称必须是域名解析中列出的域名值。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;Version&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;1&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;Statement&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;Action&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;alidns:*&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;Resource&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;acs:alidns:::domain/${your-sub-domain}&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;Effect&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Allow&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;},&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;Action&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;alidns:Describe*&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;Resource&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;acs:alidns:::*&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;Effect&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Allow&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这里配置了两个策略：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;第一个策略是允许 &lt;code&gt;acs:alidns:::domain/${your-sub-domain}&lt;/code&gt; 资源的所有 &lt;code&gt;alidns:*&lt;/code&gt; 操作&lt;/li&gt;
+&lt;li&gt;第二个策略是允许所有 &lt;code&gt;acs:alidns:::*&lt;/code&gt; 资源的 Describe &lt;code&gt;alidns:Describe*&lt;/code&gt; 操作（此处可能还需要 Describe 其他的资源，阿里云文档和客服并没有给出明确的答复）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="23-子账号赋权和-ak-申请"&gt;&lt;a href="#23-%e5%ad%90%e8%b4%a6%e5%8f%b7%e8%b5%8b%e6%9d%83%e5%92%8c-ak-%e7%94%b3%e8%af%b7" class="header-anchor"&gt;&lt;/a&gt;2.3 子账号赋权和 AK 申请
+&lt;/h3&gt;&lt;p&gt;新建一个 RAM 用户，需要勾选 &lt;code&gt;OpenAPI 调用访问&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://img2023.cnblogs.com/blog/2038910/202305/2038910-20230525103254130-608849459.png"
+loading="lazy"
+alt="image"
+&gt;&lt;/p&gt;
+&lt;p&gt;之后进入用户详情创建 AK&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://img2023.cnblogs.com/blog/2038910/202305/2038910-20230525103411240-349407655.png"
+loading="lazy"
+alt="image"
+&gt;&lt;/p&gt;
+&lt;p&gt;进入权限管理为用户赋予刚才创建的策略，或者你也可以为用户组赋权后将用户加入用户组（推荐）&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://img2023.cnblogs.com/blog/2038910/202305/2038910-20230525104202528-918302234.png"
+loading="lazy"
+alt="image"
+&gt;&lt;/p&gt;
+&lt;h3 id="24-使用-ak"&gt;&lt;a href="#24-%e4%bd%bf%e7%94%a8-ak" class="header-anchor"&gt;&lt;/a&gt;2.4 使用 AK
+&lt;/h3&gt;&lt;p&gt;之后根据使用的不同的 ACME 或 DDNS 服务等的文档配置 AK 即可&lt;/p&gt;</description></item><item><title>使用 fail2ban 保护通过 frp 穿透的服务</title><link>https://gitsang.github.io/p/fail2ban-frp/</link><pubDate>Fri, 09 May 2025 19:16:59 +0800</pubDate><guid>https://gitsang.github.io/p/fail2ban-frp/</guid><description>&lt;!-- markdown-front-matter --&gt;
+&lt;h2 id="1-背景"&gt;&lt;a href="#1-%e8%83%8c%e6%99%af" class="header-anchor"&gt;&lt;/a&gt;1. 背景
+&lt;/h2&gt;&lt;p&gt;我们一般会使用 fail2ban 来保护暴露到公网的提供密码登录的 ssh 连接等。&lt;/p&gt;
+&lt;p&gt;但使用 frp 穿透后所有的从外网访问都会变成 127.0.0.1 进入的，原本能用 fail2ban 保护的如 ssh 服务将无法使用。&lt;/p&gt;
+&lt;p&gt;因此 fail2ban 应该放到 frps 服务器上。但 frps 的日志并不会对失败进行辨别，无论你访问哪个服务，frp 日志只会有连接和断开两种日志。&lt;/p&gt;
+&lt;h3 id="11-不完美的解决途径"&gt;&lt;a href="#11-%e4%b8%8d%e5%ae%8c%e7%be%8e%e7%9a%84%e8%a7%a3%e5%86%b3%e9%80%94%e5%be%84" class="header-anchor"&gt;&lt;/a&gt;1.1 不完美的解决途径
+&lt;/h3&gt;&lt;p&gt;正常情况下，我们不会频繁地连接和断开，只有被扫描时才容易出现。&lt;/p&gt;
+&lt;p&gt;因此添加自定义 filter，并设置一段时间内连接超过阈值后进入监狱。&lt;/p&gt;
+&lt;p&gt;编写文件 &lt;code&gt;/etc/fail2ban/filter.d/frps.conf&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;[Definition]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;failregex = ^.*get a user connection \[&amp;lt;HOST&amp;gt;:[0-9]*\]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; ^.*get a new work connection: \[&amp;lt;HOST&amp;gt;:[0-9]*\]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ignoreregex =
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;编写文件 &lt;code&gt;/etc/fail2ban/jail.local&lt;/code&gt; 添加&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;[frp]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;enabled = true
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;findtime = 10m
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;maxretry = 100
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;bantime = 1d
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;filter = frps
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;logpath = /data/frp/log/frps.log
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;protocol = all
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;chain = all
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;port = all
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;action = iptables-allports[name=frp,protocol=tcp]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;记得 &lt;code&gt;fail2ban-client reload&lt;/code&gt; 重载服务和 &lt;code&gt;fail2ban-client status frp&lt;/code&gt; 确认服务状态。&lt;/p&gt;
+&lt;p&gt;如果你要添加自己的过滤规则可以使用 &lt;code&gt;fail2ban-regex &amp;lt;LOG&amp;gt; &amp;lt;REGEX&amp;gt; [IGNOREREGEX]&lt;/code&gt; 进行验证，比如 &lt;code&gt;fail2ban-regex /data/frp/log/frps.log /etc/fail2ban/filter.d/frps.conf&lt;/code&gt; （记得要用绝对路径）&lt;/p&gt;
+&lt;p&gt;然后你可以把阈值改小一点，用多次 telnet 来验证是否能过成功封锁。 然后用 &lt;code&gt;fail2ban-client set frp unbanip 12.36.14.241&lt;/code&gt; 来解除封锁。&lt;/p&gt;
+&lt;h2 id="2-outlook"&gt;&lt;a href="#2-outlook" class="header-anchor"&gt;&lt;/a&gt;2. Outlook
+&lt;/h2&gt;&lt;p&gt;不是很完美的方案，比如如果是 http 连接，很可能超过限制，实际使用需要做一些排除的匹配。&lt;/p&gt;
+&lt;p&gt;也许能通过 tcpdump 抓包日志来进行过滤，或编写程序输出一个更清晰的日志。&lt;/p&gt;</description></item><item><title>创建和自动挂载 Swap 分区</title><link>https://gitsang.github.io/p/using-swap/</link><pubDate>Tue, 13 Apr 2021 11:38:00 +0800</pubDate><guid>https://gitsang.github.io/p/using-swap/</guid><description>&lt;!-- markdown-front-matter --&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# create swap file&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;dd &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/dev/zero &lt;span class="nv"&gt;of&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/.swap &lt;span class="nv"&gt;bs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1048576&lt;/span&gt; &lt;span class="nv"&gt;count&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;4096&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# format swap&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;mkswap /.swap
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# start swap&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;swapon /.swap
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# check&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;free -h
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# onboot&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;/.swap swap swap defaults 0 0&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; /etc/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item><item><title>How to mount Windows network disk in WSL</title><link>https://gitsang.github.io/p/how-to-mount-windows-network-disk-in-wsl/</link><pubDate>Fri, 19 Mar 2021 11:03:00 +0800</pubDate><guid>https://gitsang.github.io/p/how-to-mount-windows-network-disk-in-wsl/</guid><description>&lt;h2 id="1-backgroud"&gt;&lt;a href="#1-backgroud" class="header-anchor"&gt;&lt;/a&gt;1. Backgroud
+&lt;/h2&gt;&lt;p&gt;Mount samba directly in wsl like linux is difficult&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Password for root@//filesystem.domain/root:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;mount error: cifs filesystem not supported by the system
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;mount error(19): No such device
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Refer to the mount.cifs(8) manual page (e.g. man mount.cifs)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="2-solution"&gt;&lt;a href="#2-solution" class="header-anchor"&gt;&lt;/a&gt;2. Solution
+&lt;/h2&gt;&lt;p&gt;But is easily mount net disk in windows file manager. So if your windows share is already mapped to a drive in the Windows host, it can be even simpler.&lt;/p&gt;
+&lt;p&gt;Suppose you already mounted the share on Z:. In that case the following will work:&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo mkdir /mnt/z
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo mount -t drvfs &amp;#39;Z:&amp;#39; /mnt/z
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="3-reference"&gt;&lt;a href="#3-reference" class="header-anchor"&gt;&lt;/a&gt;3. Reference
+&lt;/h2&gt;&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;&lt;a class="link" href="https://stackoverflow.com/questions/45244306/mounting-a-windows-share-in-windows-subsystem-for-linux/46968030" target="_blank" rel="noopener"
+&gt;Mounting a windows share in Windows Subsystem for Linux - Stack Overflow&lt;/a&gt;&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</description></item><item><title>Curl 格式化输出</title><link>https://gitsang.github.io/p/curl-write-out-format/</link><pubDate>Wed, 09 Oct 2019 14:53:28 +0800</pubDate><guid>https://gitsang.github.io/p/curl-write-out-format/</guid><description>&lt;img src="https://gitsang.github.io/p/curl-write-out-format/cover.jpg" alt="Featured image of post Curl 格式化输出" /&gt;&lt;h2 id="1-操作方法"&gt;&lt;a href="#1-%e6%93%8d%e4%bd%9c%e6%96%b9%e6%b3%95" class="header-anchor"&gt;&lt;/a&gt;1. 操作方法
+&lt;/h2&gt;&lt;p&gt;默认情况下，curl 不会输出耗时信息，状态码等，若需要输出，需要使用 &lt;code&gt;-w, --write-out FORMAT&lt;/code&gt; 选项配置 Write Out 格式。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -w &lt;span class="s2"&gt;&amp;#34;\n\ntime_total: %{time_total}s\n&amp;#34;&lt;/span&gt; https://www.example.com
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Write Out 中支持的变量请参考：&lt;/p&gt;
+&lt;p&gt;&lt;a class="link" href="https://everything.curl.dev/usingcurl/verbose/writeout#available-write-out-variables" target="_blank" rel="noopener"
+&gt;https://everything.curl.dev/usingcurl/verbose/writeout#available-write-out-variables&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;也可以使用文件&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -w &lt;span class="s2"&gt;&amp;#34;@curl-format.txt&amp;#34;&lt;/span&gt; https://www.example.com
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;一个简单的文件格式参考如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;span class="lnt"&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-txt" data-lang="txt"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;time_namelookup: %{time_namelookup}s\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;time_connect: %{time_connect}s\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;time_appconnect: %{time_appconnect}s\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;time_pretransfer: %{time_pretransfer}s\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;time_redirect: %{time_redirect}s\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;time_starttransfer: %{time_starttransfer}s\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;----------\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;time_total: %{time_total}s\n
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;用于 debug 的详细信息格式参考：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;span class="lnt"&gt;17
+&lt;/span&gt;&lt;span class="lnt"&gt;18
+&lt;/span&gt;&lt;span class="lnt"&gt;19
+&lt;/span&gt;&lt;span class="lnt"&gt;20
+&lt;/span&gt;&lt;span class="lnt"&gt;21
+&lt;/span&gt;&lt;span class="lnt"&gt;22
+&lt;/span&gt;&lt;span class="lnt"&gt;23
+&lt;/span&gt;&lt;span class="lnt"&gt;24
+&lt;/span&gt;&lt;span class="lnt"&gt;25
+&lt;/span&gt;&lt;span class="lnt"&gt;26
+&lt;/span&gt;&lt;span class="lnt"&gt;27
+&lt;/span&gt;&lt;span class="lnt"&gt;28
+&lt;/span&gt;&lt;span class="lnt"&gt;29
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-txt" data-lang="txt"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;url_effective: %{url_effective}\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ssl_verify_result: %{ssl_verify_result}\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;content_type: %{content_type}\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;filename_effective: %{filename_effective}\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ftp_entry_path: %{ftp_entry_path}\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;http_code: %{http_code}\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;http_connect: %{http_connect}\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;local_ip: %{local_ip}\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;local_port: %{local_port}\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;num_connects: %{num_connects}\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;num_redirects: %{num_redirects}\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;redirect_url: %{redirect_url}\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;remote_ip: %{remote_ip}\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;remote_port: %{remote_port}\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;response_code: %{response_code}\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;size_download: %{size_download} bytes\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;size_header: %{size_header} bytes\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;size_request: %{size_request} bytes\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;size_upload: %{size_upload} bytes\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;speed_download: %{speed_download} bytes/s\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;speed_upload: %{speed_upload} bytes/s\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;time_appconnect: %{time_appconnect}s\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;time_connect: %{time_connect}s\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;time_namelookup: %{time_namelookup}s\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;time_pretransfer: %{time_pretransfer}s\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;time_redirect: %{time_redirect}s\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;time_starttransfer: %{time_starttransfer}s\n
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;time_total: %{time_total}s\n
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item></channel></rss>

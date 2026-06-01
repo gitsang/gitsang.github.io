@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Firewall Rules on Sang's Blog</title><link>https://gitsang.github.io/tags/firewall-rules/</link><description>Recent content in Firewall Rules on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 May 2025 10:47:17 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/firewall-rules/index.xml" rel="self" type="application/rss+xml"/><item><title>Iptables 本地回环接口容易造成误解的配置</title><link>https://gitsang.github.io/p/iptables-local-loopback-ambiguous-config/</link><pubDate>Tue, 07 May 2024 11:11:00 +0800</pubDate><guid>https://gitsang.github.io/p/iptables-local-loopback-ambiguous-config/</guid><description>&lt;!-- markdown-front-matter --&gt;
+&lt;p&gt;使用 &lt;code&gt;iptables -L&lt;/code&gt; 可能会看到类似如下的配置&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Chain INPUT (policy ACCEPT)
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;target prot opt source destination
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ACCEPT all -- anywhere anywhere ctstate RELATED,ESTABLISHED
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ACCEPT all -- anywhere anywhere
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;第二条规则看上去像是允许了任意来源和目标的流量，但实际验证的效果却是后续的防火墙规则仍然在工作。&lt;/p&gt;
+&lt;p&gt;这是因为，第二条规则实际上仅针对本地回环 (lo) 接口，当使用 &lt;code&gt;iptables -L&lt;/code&gt; 查看时进行了省略，使用 iptables-save 可以得到完整的防火墙规则如下&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-A INPUT -i lo -j ACCEPT
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item></channel></rss>

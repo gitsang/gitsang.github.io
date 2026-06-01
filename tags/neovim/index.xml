@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Neovim on Sang's Blog</title><link>https://gitsang.github.io/tags/neovim/</link><description>Recent content in Neovim on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Tue, 25 Feb 2025 09:28:45 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/neovim/index.xml" rel="self" type="application/rss+xml"/><item><title>在 Neovim 中实现 AI 自动补全</title><link>https://gitsang.github.io/trash/neovim/ai-autocomplete-for-neovim/</link><pubDate>Tue, 25 Feb 2025 09:28:45 +0800</pubDate><guid>https://gitsang.github.io/trash/neovim/ai-autocomplete-for-neovim/</guid><description>&lt;h2 id="讨论"&gt;&lt;a href="#%e8%ae%a8%e8%ae%ba" class="header-anchor"&gt;&lt;/a&gt;讨论
+&lt;/h2&gt;&lt;p&gt;这里有关于 Neovim Autocomplete 和其他 AI 插件的讨论：https://github.com/neovim/neovim/discussions/28162&lt;/p&gt;
+&lt;p&gt;这里有一个 continue-dev 支持 neovim 的 PR，但由于缺乏审查，已被关闭：https://github.com/continuedev/continue/pull/2098&lt;/p&gt;
+&lt;p&gt;这是 continue-dev 中的讨论 Issue，https://github.com/continuedev/continue/issues/917&lt;/p&gt;
+&lt;h2 id="插件列表"&gt;&lt;a href="#%e6%8f%92%e4%bb%b6%e5%88%97%e8%a1%a8" class="header-anchor"&gt;&lt;/a&gt;插件列表
+&lt;/h2&gt;&lt;h3 id="对话和修改"&gt;&lt;a href="#%e5%af%b9%e8%af%9d%e5%92%8c%e4%bf%ae%e6%94%b9" class="header-anchor"&gt;&lt;/a&gt;对话和修改
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://github.com/yetone/avante.nvim" target="_blank" rel="noopener"
+&gt;https://github.com/yetone/avante.nvim&lt;/a&gt; 目前 Star 数量最多的插件，但在非 Lazyvim 中界面展示并不美好，还有一些奇怪的渲染，比如强制对 Markdown 渲染让人有些恼火&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://github.com/olimorris/codecompanion.nvim" target="_blank" rel="noopener"
+&gt;https://github.com/olimorris/codecompanion.nvim&lt;/a&gt; 似乎必 Avante 更容易配置，且界面更加友好&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://github.com/Robitx/gp.nvim" target="_blank" rel="noopener"
+&gt;https://github.com/Robitx/gp.nvim&lt;/a&gt; 讨论度比较高的插件&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://github.com/frankroeder/parrot.nvim" target="_blank" rel="noopener"
+&gt;https://github.com/frankroeder/parrot.nvim&lt;/a&gt; 基于 gp.nvim 的 fork&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="自动补全"&gt;&lt;a href="#%e8%87%aa%e5%8a%a8%e8%a1%a5%e5%85%a8" class="header-anchor"&gt;&lt;/a&gt;自动补全
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://github.com/huggingface/llm.nvim" target="_blank" rel="noopener"
+&gt;https://github.com/huggingface/llm.nvim&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Sysctl on Sang's Blog</title><link>https://gitsang.github.io/tags/sysctl/</link><description>Recent content in Sysctl on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 May 2025 10:45:32 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/sysctl/index.xml" rel="self" type="application/rss+xml"/><item><title>开启 IPv6 SLAAC 自动配置</title><link>https://gitsang.github.io/p/enable-ipv6-slaac/</link><pubDate>Wed, 04 Dec 2024 10:43:07 +0800</pubDate><guid>https://gitsang.github.io/p/enable-ipv6-slaac/</guid><description>&lt;!-- markdown-front-matter --&gt;
+&lt;h2 id="1-sysctl-配置"&gt;&lt;a href="#1-sysctl-%e9%85%8d%e7%bd%ae" class="header-anchor"&gt;&lt;/a&gt;1. sysctl 配置
+&lt;/h2&gt;&lt;p&gt;在某些情况下，IPv6 并不会自动配置，需要手动开启 sysctl 选项&lt;/p&gt;
+&lt;p&gt;编辑 &lt;code&gt;/etc/sysctl.conf&lt;/code&gt; 文件，并在末尾添加以下内容，输入 &lt;code&gt;sysctl -p&lt;/code&gt; 立即生效配置&lt;/p&gt;
+&lt;p&gt;此选项将开启 IPv6 功能，通常情况下，只需要配置此选项即可开启 IPv6&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;net.ipv6.conf.default.disable_ipv6 = 0
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;net.ipv6.conf.all.disable_ipv6 = 0
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;此选项将允许数据包在 Interface 之间转发，当你的网络接口是使用桥接时，通常需要开启此选项&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;net.ipv6.conf.default.forwarding = 1
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;net.ipv6.conf.all.forwarding = 1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;此选项将允许接收路由器通告，如果上面两个选项配置后仍然无法获取 IPv6 地址，可以尝试开启以下选项&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;net.ipv6.conf.all.accept_ra = 1
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;net.ipv6.conf.default.accept_ra = 1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;此选项用于开启 SLAAC (Stateless Address Autoconfiguration)，一般默认是开着的&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;net.ipv6.conf.all.autoconf = 1
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;net.ipv6.conf.default.autoconf = 1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="2-网络接口配置"&gt;&lt;a href="#2-%e7%bd%91%e7%bb%9c%e6%8e%a5%e5%8f%a3%e9%85%8d%e7%bd%ae" class="header-anchor"&gt;&lt;/a&gt;2. 网络接口配置
+&lt;/h2&gt;&lt;p&gt;编辑 &lt;code&gt;/etc/network/interfaces&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;iface vmbr0 inet6 auto
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;当 inet6 配置为 &lt;code&gt;auto&lt;/code&gt; 时将使用 SLAAC 自动配置&lt;/p&gt;</description></item></channel></rss>

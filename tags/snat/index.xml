@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>SNAT on Sang's Blog</title><link>https://gitsang.github.io/tags/snat/</link><description>Recent content in SNAT on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 May 2025 10:48:37 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/snat/index.xml" rel="self" type="application/rss+xml"/><item><title>使用 iptables 进行端口映射</title><link>https://gitsang.github.io/p/iptables-port-mapping/</link><pubDate>Sat, 14 Mar 2020 14:53:28 +0800</pubDate><guid>https://gitsang.github.io/p/iptables-port-mapping/</guid><description>&lt;!-- markdown-front-matter --&gt;
+&lt;h2 id="1-使用-iptables-进行端口映射"&gt;&lt;a href="#1-%e4%bd%bf%e7%94%a8-iptables-%e8%bf%9b%e8%a1%8c%e7%ab%af%e5%8f%a3%e6%98%a0%e5%b0%84" class="header-anchor"&gt;&lt;/a&gt;1. 使用 iptables 进行端口映射&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;sup id="fnref:2"&gt;&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt;
+&lt;/h2&gt;&lt;h3 id="11-第一步--打开端口映射功能-"&gt;&lt;a href="#11-%e7%ac%ac%e4%b8%80%e6%ad%a5--%e6%89%93%e5%bc%80%e7%ab%af%e5%8f%a3%e6%98%a0%e5%b0%84%e5%8a%9f%e8%83%bd-" class="header-anchor"&gt;&lt;/a&gt;1.1 第一步 : 打开端口映射功能 :
+&lt;/h3&gt;&lt;h4 id="111-方法一--允许数据包转发"&gt;&lt;a href="#111-%e6%96%b9%e6%b3%95%e4%b8%80--%e5%85%81%e8%ae%b8%e6%95%b0%e6%8d%ae%e5%8c%85%e8%bd%ac%e5%8f%91" class="header-anchor"&gt;&lt;/a&gt;1.1.1 方法一 : (允许数据包转发)
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo echo &amp;#39;1&amp;#39; &amp;gt; /proc/sys/net/ipv4/ip_forward
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id="112-方法二-"&gt;&lt;a href="#112-%e6%96%b9%e6%b3%95%e4%ba%8c-" class="header-anchor"&gt;&lt;/a&gt;1.1.2 方法二 :
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;vim /etc/sysctl.conf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;将 &lt;code&gt;;net.ipv4.ip_forward = 0&lt;/code&gt; 这一行的注视去掉 , 并将 0 改为 1&lt;/p&gt;
+&lt;p&gt;修改后的结果为 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;net.ipv4.ip_forward = 1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="12-第二步--进行映射-"&gt;&lt;a href="#12-%e7%ac%ac%e4%ba%8c%e6%ad%a5--%e8%bf%9b%e8%a1%8c%e6%98%a0%e5%b0%84-" class="header-anchor"&gt;&lt;/a&gt;1.2 第二步 : 进行映射 :
+&lt;/h3&gt;&lt;p&gt;DNAT&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;iptables -t nat -A PREROUTING -d 本机IP -p tcp --dport 本机端口 -j DNAT --to-destination 目标机IP:目标机端口
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;SNAT&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;iptables -t nat -A PREROUTING -d 本机IP -p tcp --dport 本机端口 -j SNAT --to-destination 目标机IP:目标机端口
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="2-参考"&gt;&lt;a href="#2-%e5%8f%82%e8%80%83" class="header-anchor"&gt;&lt;/a&gt;2. 参考：
+&lt;/h2&gt;&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;&lt;a class="link" href="https://www.jianshu.com/p/d3f30fb9ebf6" target="_blank" rel="noopener"
+&gt;Linux 端口映射&lt;/a&gt;&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;&lt;a class="link" href="https://blog.csdn.net/zzhongcy/article/details/42738285" target="_blank" rel="noopener"
+&gt;iptables端口转发&lt;/a&gt;&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</description></item></channel></rss>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Filesystem Extension on Sang's Blog</title><link>https://gitsang.github.io/tags/filesystem-extension/</link><description>Recent content in Filesystem Extension on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 May 2025 10:40:51 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/filesystem-extension/index.xml" rel="self" type="application/rss+xml"/><item><title>非 LVM 分区动态扩容</title><link>https://gitsang.github.io/p/lvm/</link><pubDate>Fri, 09 May 2025 19:17:37 +0800</pubDate><guid>https://gitsang.github.io/p/lvm/</guid><description>&lt;!-- markdown-front-matter --&gt;
+&lt;blockquote&gt;
+&lt;p&gt;非 LVM 分区实现动态扩容，适用于系统分区扩容，无需格式化磁盘，无需重新挂载磁盘&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="1-扩容步骤"&gt;&lt;a href="#1-%e6%89%a9%e5%ae%b9%e6%ad%a5%e9%aa%a4" class="header-anchor"&gt;&lt;/a&gt;1. 扩容步骤
+&lt;/h2&gt;&lt;p&gt;以 &lt;code&gt;/dev/sda2&lt;/code&gt; 扩容为例，假设 &lt;code&gt;/dev/sda&lt;/code&gt; 空间足够（或已通过虚拟化管理平台增加容量）&lt;/p&gt;
+&lt;p&gt;使用 &lt;code&gt;fdisk -l&lt;/code&gt; 命令可看到 &lt;code&gt;/dev/sda&lt;/code&gt; 磁盘总容量 200GiB，&lt;code&gt;/dev/sda2&lt;/code&gt; 分区容量 100GiB&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Disk /dev/sda: 200 GiB, 214748364800 bytes, 419430400 sectors
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Disk model: QEMU HARDDISK
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Units: sectors of 1 * 512 = 512 bytes
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Sector size (logical/physical): 512 bytes / 512 bytes
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;I/O size (minimum/optimal): 512 bytes / 512 bytes
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Disklabel type: gpt
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Disk identifier: 1459CE9A-A8E1-4934-8EC6-17C7BA97E9E0
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Device Start End Sectors Size Type
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/dev/sda1 2048 4095 2048 1M BIOS boot
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/dev/sda2 4096 419430366 209711087 100G Linux filesystem
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;现将 &lt;code&gt;/dev/sda2&lt;/code&gt; 分区扩容到 200GiB&lt;/p&gt;
+&lt;h3 id="11-重新分区"&gt;&lt;a href="#11-%e9%87%8d%e6%96%b0%e5%88%86%e5%8c%ba" class="header-anchor"&gt;&lt;/a&gt;1.1 重新分区
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;fdisk /dev/sda
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;输入 &lt;code&gt;p&lt;/code&gt; 查看分区情况，确认 &lt;code&gt;/dev/sda2&lt;/code&gt; 所在的位置和大小。&lt;/li&gt;
+&lt;li&gt;输入 &lt;code&gt;d&lt;/code&gt; 删除分区 &lt;code&gt;/dev/sda2&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;输入 &lt;code&gt;n&lt;/code&gt; 创建一个新的分区。&lt;/li&gt;
+&lt;li&gt;选择主分区或扩展分区（根据你的需要）。&lt;/li&gt;
+&lt;li&gt;按照提示输入分区编号（如果有多个分区）。&lt;/li&gt;
+&lt;li&gt;按照提示输入新的起始扇区（通常是默认值）。&lt;/li&gt;
+&lt;li&gt;按照提示输入新的结束扇区，确保分区大小为200G。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;如果出现提示是否保留文件索引，选择 &lt;code&gt;保留&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;输入 &lt;code&gt;w&lt;/code&gt; 保存更改并退出。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;再次输入 &lt;code&gt;fdisk -l&lt;/code&gt; 应该能看到 &lt;code&gt;/dev/sda2&lt;/code&gt; 已扩容成功&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Disk /dev/sda: 200 GiB, 214748364800 bytes, 419430400 sectors
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Disk model: QEMU HARDDISK
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Units: sectors of 1 * 512 = 512 bytes
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Sector size (logical/physical): 512 bytes / 512 bytes
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;I/O size (minimum/optimal): 512 bytes / 512 bytes
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Disklabel type: gpt
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Disk identifier: 1459CE9A-A8E1-4934-8EC6-17C7BA97E9E0
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Device Start End Sectors Size Type
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/dev/sda1 2048 4095 2048 1M BIOS boot
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/dev/sda2 4096 419430366 419426271 200G Linux filesystem
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="12-扩展文件系统"&gt;&lt;a href="#12-%e6%89%a9%e5%b1%95%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f" class="header-anchor"&gt;&lt;/a&gt;1.2 扩展文件系统
+&lt;/h3&gt;&lt;p&gt;输入 &lt;code&gt;df -h&lt;/code&gt; 命令查看文件系统大小&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Filesystem Size Used Avail Use% Mounted on
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;tmpfs 6.3G 1.6M 6.3G 1% /run
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/dev/sda2 99G 81G 18G 81% /
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;可以看到 &lt;code&gt;/dev/sda2&lt;/code&gt; 文件系统空间仍未改变&lt;/p&gt;
+&lt;p&gt;对于 &lt;code&gt;ext4&lt;/code&gt; 系统，可以使用 &lt;code&gt;resize2fs /dev/sda2&lt;/code&gt; 命令扩展文件系统&lt;/p&gt;
+&lt;p&gt;再次输入 &lt;code&gt;df -h&lt;/code&gt; 命令，可以看到 &lt;code&gt;/dev/sda2&lt;/code&gt; 文件系统空间完成扩容&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Filesystem Size Used Avail Use% Mounted on
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;tmpfs 6.3G 1.6M 6.3G 1% /run
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/dev/sda2 197G 81G 108G 43% /
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;tmpfs 32G 0 32G 0% /dev/shm
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;tmpfs 5.0M 0 5.0M 0% /run/lock
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;tmpfs 6.3G 4.0K 6.3G 1% /run/user/1000
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item></channel></rss>

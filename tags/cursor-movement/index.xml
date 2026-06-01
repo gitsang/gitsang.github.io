@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cursor Movement on Sang's Blog</title><link>https://gitsang.github.io/tags/cursor-movement/</link><description>Recent content in Cursor Movement on Sang's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 May 2025 10:45:17 +0800</lastBuildDate><atom:link href="https://gitsang.github.io/tags/cursor-movement/index.xml" rel="self" type="application/rss+xml"/><item><title>Delete Space Overline Using Vim Record</title><link>https://gitsang.github.io/trash/delete-space-over-line-using-vim-record/</link><pubDate>Thu, 07 May 2020 20:45:49 +0800</pubDate><guid>https://gitsang.github.io/trash/delete-space-over-line-using-vim-record/</guid><description>&lt;!-- markdown-front-matter --&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-vim" data-lang="vim"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;qd&lt;/span&gt;$&lt;span class="nx"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;space&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;space&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;esc&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nx"&gt;g_ldwjq&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;gg10000&lt;/span&gt;@&lt;span class="nx"&gt;d&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="1-说明"&gt;&lt;a href="#1-%e8%af%b4%e6%98%8e" class="header-anchor"&gt;&lt;/a&gt;1. 说明
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;使用 vim 自带 record 功能
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;q&amp;lt;?&amp;gt;&lt;/code&gt; 启动录制，保存在 &lt;code&gt;&amp;lt;?&amp;gt;&lt;/code&gt; 键&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;q&lt;/code&gt; 结束录制&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@&amp;lt;?&amp;gt;&lt;/code&gt; 调用 &lt;code&gt;&amp;lt;?&amp;gt;&lt;/code&gt; 键录制结果&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;num@&amp;lt;?&amp;gt;&lt;/code&gt; 调用 num 次 &lt;code&gt;&amp;lt;?&amp;gt;&lt;/code&gt; 键录制结果&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;在末尾 &lt;code&gt;dw&lt;/code&gt; 删除空格&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$a&amp;lt;space&amp;gt;&lt;/code&gt; 添加空格防止末尾无空格情况删除掉最后一个字符&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$a&amp;lt;space&amp;gt;&amp;lt;space&amp;gt;&lt;/code&gt; 添加两个空格防止空行情况下出现错误&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;g_&lt;/code&gt; 移动到最后一个非空字符，有些人会使用 &lt;code&gt;$be&lt;/code&gt; &lt;code&gt;$ge&lt;/code&gt; 等方式移动到最后一个非空字符，但大部分方式是有问题的，详见 &lt;a class="link" href="https://www.zhihu.com/question/26221661" target="_blank" rel="noopener"
+&gt;vim如何移动到光标所在行最后一个非空字符，而不是末尾？&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;最后按 &lt;code&gt;j&lt;/code&gt; 自动下一行&lt;/li&gt;
+&lt;/ol&gt;</description></item></channel></rss>
