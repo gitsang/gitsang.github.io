@@ -1,5 +1,5 @@
 ---
-title: Build SSH Tunnel
+title: 搭建 SSH 隧道
 slug: build-ssh-tunnel
 description: |-
 date: "2020-03-14T14:53:28+08:00"
@@ -7,6 +7,7 @@ lastmod: "2025-05-12T10:44:44+08:00"
 weight: 1
 categories:
   - "linux"
+  - "network"
 tags:
   - "SSH reverse tunnel"
   - "network access"

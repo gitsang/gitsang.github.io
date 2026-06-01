@@ -1,5 +1,5 @@
 ---
-title: Using Swap
+title: 创建和自动挂载 Swap 分区
 slug: using-swap
 description: Instructions on creating, formatting, and enabling a swap file in Linux, including configuration for automatic activation at boot.
 date: "2021-04-13T11:38:00+08:00"
@@ -7,6 +7,7 @@ lastmod: "2025-05-12T10:47:59+08:00"
 weight: 1
 categories:
   - "linux"
+  - "server"
 tags:
   - "Linux"
   - "swap file"

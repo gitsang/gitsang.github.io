@@ -6,6 +6,7 @@ date: "2020-08-28T16:08:25+08:00"
 lastmod: "2025-05-12T10:42:00+08:00"
 weight: 100
 categories:
+  - "program-language"
   - "golang"
 tags:
   - "Golang"
